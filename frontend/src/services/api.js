@@ -96,3 +96,13 @@ export const getZoneCatalog = filters => {
   const query = params.toString();
   return apiRequest(`/api/admin/zones${query ? `?${query}` : ""}`);
 };
+
+export const getAdminVendors = (filters = {}, signal) => {
+  const params = new URLSearchParams();
+  Object.entries(filters).forEach(([key, value]) => value !== "" && value != null && params.set(key, value));
+  return apiRequest(`/api/admin/vendors?${params}`, {signal});
+};
+
+export const getAdminVendorDetails = (vendorId, signal) => apiRequest(`/api/admin/vendors/${encodeURIComponent(vendorId)}/details`, {signal});
+
+export const getVendorAccountSettings = signal => apiRequest("/api/vendors/me/account-settings", {signal});

@@ -1007,6 +1007,40 @@ def approve_allocation_request(
             released_allocation = connection.execute(
                 "SELECT * FROM allocations WHERE allocation_id = ?", (active["allocation_id"],)
             ).fetchone()
+            # Use the same write transaction: any later approval failure also
+            # rolls back this release and both audit histories. Do not call the
+            # public slot service here, which opens a separate transaction.
+            old_slots = connection.execute(
+                "SELECT * FROM pilot_slots WHERE zone_id = ? AND assigned_vendor_id = ?",
+                (old_zone_id, request["vendor_id"]),
+            ).fetchall()
+            slot_timestamp = datetime.now(timezone.utc).isoformat(timespec="microseconds")
+            for slot in old_slots:
+                connection.execute(
+                    """UPDATE pilot_slots
+                       SET status = 'AVAILABLE', assigned_vendor_id = NULL, updated_at = ?
+                       WHERE zone_id = ? AND slot_id = ?""",
+                    (slot_timestamp, old_zone_id, slot["slot_id"]),
+                )
+                release_details = {
+                    "status": "AVAILABLE", "assigned_vendor_id": None,
+                    "reason": "RELOCATION", "request_id": request_id,
+                    "released_allocation_id": active["allocation_id"],
+                    "new_zone_id": request["zone_id"],
+                }
+                connection.execute(
+                    """INSERT INTO pilot_slot_events
+                       (zone_id, slot_id, actor, before_json, after_json, created_at)
+                       VALUES (?, ?, ?, ?, ?, ?)""",
+                    (old_zone_id, slot["slot_id"], approved_by,
+                     json.dumps(dict(slot)), json.dumps(release_details), slot_timestamp),
+                )
+                _audit(
+                    connection, "SLOT_ASSIGNMENT_RELEASED", "pilot_slot",
+                    f"{old_zone_id}/{slot['slot_id']}", approved_by,
+                    {**release_details, "vendor_id": request["vendor_id"],
+                     "zone_id": old_zone_id, "slot_id": slot["slot_id"]}, slot_timestamp,
+                )
             old_details = {
                 "request_id": request_id,
                 "vendor_id": request["vendor_id"],

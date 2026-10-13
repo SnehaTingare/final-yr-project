@@ -188,6 +188,7 @@ def _historical_identity_map(
                 # but does not provide a distinct business/stall name.
                 "business_name":
                     None,
+                "source_division": _optional_text(row.get("division")),
             }
 
 
@@ -982,3 +983,120 @@ def clear_vendor_service_caches() -> None:
     _historical_vendor_map.cache_clear()
 
     valid_divisions.cache_clear()
+
+def list_admin_vendors(*, q="", business_category="", division="", page=1, page_size=25, database_path=DATABASE_PATH):
+    """Admin-only directory projection; existing sources remain authoritative."""
+    from backend.repositories.database import connect
+
+    historical = _historical_vendor_map(str(Path(HISTORICAL_VENDOR_PATH).resolve()))
+    identities = _historical_identity_map(str(Path(HISTORICAL_IDENTITY_PATH).resolve()))
+    connection = connect(database_path)
+    try:
+        operational = {row["vendor_id"]: dict(row) for row in connection.execute("SELECT * FROM operational_vendors")}
+        accounts = {row["vendor_id"]: bool(row["verified"]) for row in connection.execute(
+            "SELECT vendor_id, MAX(is_verified) AS verified FROM vendor_auth_identities GROUP BY vendor_id"
+        )}
+    finally:
+        connection.close()
+    records = []
+    for vendor_id in historical.keys() | operational.keys():
+        source = historical.get(vendor_id)
+        overlay = operational.get(vendor_id)
+        identity = identities.get(vendor_id, {})
+        records.append({
+            "vendor_id": vendor_id,
+            "application_vendor_id": overlay.get("application_vendor_id") if overlay else None,
+            "full_name": overlay.get("full_name") if overlay else identity.get("full_name"),
+            "business_name": overlay.get("business_name") if overlay else identity.get("business_name"),
+            "business_category": overlay.get("business_category") if overlay else source.get("business_category"),
+            "source_division": (identity.get("source_division") or source.get("preferred_division")) if source else None,
+            "preferred_division": overlay.get("preferred_division") if overlay else source.get("preferred_division"),
+            "record_source": "HISTORICAL" if source else "OPERATIONAL",
+            "has_profile_overlay": bool(source and overlay),
+            "registration_status": "PROFILE_REGISTERED" if overlay else "HISTORICAL_RECORD",
+            "account_status": "PHONE_VERIFIED" if accounts.get(vendor_id) else "UNCLAIMED" if vendor_id in accounts else "NO_LINKED_IDENTITY",
+        })
+    categories = sorted({row["business_category"] for row in records if row["business_category"]})
+    divisions = sorted({row["source_division"] or row["preferred_division"] for row in records if row["source_division"] or row["preferred_division"]})
+    query = q.strip().casefold()
+    filtered = [row for row in records
+                if (not query or any(query in str(row.get(key) or "").casefold() for key in ("vendor_id", "application_vendor_id", "full_name", "business_name")))
+                and (not business_category or row["business_category"] == business_category)
+                and (not division or (row["source_division"] or row["preferred_division"]) == division)]
+    filtered.sort(key=lambda row: (str(row["full_name"] or row["business_name"] or "").casefold(), row["vendor_id"]))
+    total = len(filtered)
+    pages = max(1, (total + page_size - 1) // page_size)
+    page = min(page, pages)
+    return {"vendors": filtered[(page - 1) * page_size:page * page_size], "total": total, "page": page,
+            "page_size": page_size, "pages": pages, "categories": categories, "divisions": divisions}
+
+
+def admin_vendor_details(vendor_id, database_path=DATABASE_PATH):
+    """Read existing vendor relationships without creating identity or allocation state."""
+    from backend.repositories.database import connect
+    profile = get_vendor_profile(vendor_id, database_path=database_path)
+    if profile is None:
+        raise OperationalNotFoundError("Vendor profile not found")
+    historical = _historical_vendor_map(str(Path(HISTORICAL_VENDOR_PATH).resolve())).get(vendor_id)
+    identity = _historical_identity_map(str(Path(HISTORICAL_IDENTITY_PATH).resolve())).get(vendor_id, {})
+    connection = connect(database_path)
+    try:
+        connection.execute("BEGIN")
+        operational = connection.execute("SELECT 1 FROM operational_vendors WHERE vendor_id = ?", (vendor_id,)).fetchone()
+        account = connection.execute("SELECT COUNT(*) AS total, MAX(is_verified) AS verified FROM vendor_auth_identities WHERE vendor_id = ?", (vendor_id,)).fetchone()
+        allocations = [dict(row) for row in connection.execute("SELECT * FROM allocations WHERE vendor_id = ? ORDER BY allocated_at DESC, allocation_id DESC", (vendor_id,))]
+        requests = [dict(row) for row in connection.execute("SELECT * FROM allocation_requests WHERE vendor_id = ? ORDER BY created_at DESC, request_id DESC", (vendor_id,))]
+        active = next((row for row in allocations if row["status"] == "ACTIVE" and any(request["request_id"] == row["request_id"] and request["status"] == "APPROVED" and request["zone_id"] == row["zone_id"] for request in requests)), None)
+        slot = connection.execute("SELECT zone_id, slot_id, status, width_m, depth_m FROM pilot_slots WHERE assigned_vendor_id = ? AND is_deleted = 0 AND geometry_crs = 'EPSG:4326'", (vendor_id,)).fetchone()
+        assigned = dict(slot) if slot and active and slot["zone_id"] == active["zone_id"] else None
+    finally:
+        connection.close()
+    association = None
+    if historical:
+        with Path(HISTORICAL_VENDOR_PATH).open(newline="", encoding="utf-8-sig") as source:
+            row = next((row for row in csv.DictReader(source) if row.get("vendor_id") == vendor_id), {})
+            association = _optional_text(row.get("proposed_zone_id"))
+    return {"profile": profile, "record_source": "HISTORICAL" if historical else "OPERATIONAL",
+            "source_division": identity.get("source_division") or (historical.get("preferred_division") if historical else None),
+            "historical_proposed_zone_id": association,
+            "registration_status": "PROFILE_REGISTERED" if operational else "HISTORICAL_RECORD",
+            "account_status": "PHONE_VERIFIED" if account["verified"] else "UNCLAIMED" if account["total"] else "NO_LINKED_IDENTITY",
+            "active_allocation": active, "allocations": allocations, "requests": requests, "assigned_slot": assigned}
+
+
+def vendor_account_information(vendor_id, database_path=DATABASE_PATH):
+    """Own-account projection. Never return phones, hashes, sessions or secrets."""
+    from backend.repositories.database import connect
+    from backend.core.config import get_auth_settings
+    from backend.services.authentication import AuthError, normalize_indian_mobile, phone_hmac
+    profile = get_vendor_profile(vendor_id, database_path=database_path)
+    if profile is None:
+        raise OperationalNotFoundError("Vendor profile not found")
+    connection = connect(database_path)
+    try:
+        connection.execute("BEGIN")
+        identities = [dict(row) for row in connection.execute("SELECT phone_hash, vendor_source, is_verified FROM vendor_auth_identities WHERE vendor_id = ?", (vendor_id,))]
+        overlay = bool(connection.execute("SELECT 1 FROM operational_vendors WHERE vendor_id = ?", (vendor_id,)).fetchone())
+        requests = [dict(row) for row in connection.execute("SELECT request_id, zone_id, request_type, status, business_category, preferred_division, created_at, reviewed_at, rejection_reason FROM allocation_requests WHERE vendor_id = ? ORDER BY created_at DESC", (vendor_id,))]
+        allocations = [dict(row) for row in connection.execute("SELECT allocation_id, zone_id, request_id, status, allocated_at, released_at FROM allocations WHERE vendor_id = ? ORDER BY allocated_at DESC", (vendor_id,))]
+    finally:
+        connection.close()
+    masked = set()
+    if HISTORICAL_IDENTITY_PATH.is_file():
+        hashes = {row["phone_hash"] for row in identities}
+        with HISTORICAL_IDENTITY_PATH.open(newline="", encoding="utf-8-sig") as source:
+            row = next((row for row in csv.DictReader(source) if row.get("vendor_id") == vendor_id), {})
+            for key in ("phone_number", "alternate_phone"):
+                try:
+                    number = normalize_indian_mobile(row.get(key, ""))
+                    if phone_hmac(number) in hashes:
+                        masked.add("******" + number[-4:])
+                except AuthError:
+                    pass
+    settings = get_auth_settings()
+    return {"profile": profile, "masked_mobile": next(iter(masked)) if len(masked) == 1 else None,
+            "authenticated": True, "development_authentication": settings.otp_provider == "development",
+            "identity_verification_recorded": any(bool(row["is_verified"]) for row in identities),
+            "historical_identity_linked": any(row["vendor_source"] == "HISTORICAL" for row in identities),
+            "has_operational_profile": overlay, "phone_change_available": False, "recovery_available": False,
+            "requests": requests, "allocations": allocations}

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {BarChart3, Building2, ChevronRight, FileText, Layers, LayoutDashboard, LogOut, MapPin, Menu, ShieldCheck, UserRound, X} from "lucide-react";
+import VendorDirectory from "../features/admin/VendorDirectory.jsx";
 import AdminDashboard from "../features/admin/AdminDashboard.jsx";
 import AuthLanding from "../features/auth/AuthLanding.jsx";
 import RecommendationPage from "../features/recommendations/RecommendationPage.jsx";
@@ -15,6 +16,7 @@ import {profileDisplayName, publicVendorId} from "../shared/utils/profileIdentit
 
 
 const ADMIN_NAV = [
+  {id: "vendors", title: "Vendors", icon: UserRound},
   {id: "admin", title: "Admin dashboard", icon: ShieldCheck},
   {id: "overview", title: "Research overview", icon: LayoutDashboard},
   {id: "zones", title: "Zone registry", icon: Layers},
@@ -33,15 +35,18 @@ const VENDOR_PATHS = {
   "vendor-recommendations": "/vendor/recommendations",
   "vendor-requests": "/vendor/requests",
   "vendor-profile": "/vendor/profile",
+  "vendor-settings": "/vendor/settings",
 };
 
 export default function ImplementationApp() {
   const {t, applyProfileLanguage} = useI18n();
   const [session, setSession] = useState(null);
+  const [logoutError, setLogoutError] = useState("");
   const [checking, setChecking] = useState(true);
   const [page, setPage] = useState("vendor-dashboard");
   const [recommendationZoneId, setRecommendationZoneId] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [slotTarget, setSlotTarget] = useState(null);
   const [requestedDivision, setRequestedDivision] = useState("");
 
   const routeFromPath = next => {
@@ -86,13 +91,13 @@ export default function ImplementationApp() {
   }, [session]);
 
   const signOut = async () => {
-    try { await logout(); } finally {
-      setSession(null); setPage("vendor-dashboard"); setRecommendationZoneId(""); window.history.replaceState({}, "", "/login");
-    }
+    setLogoutError("");
+    try {await logout();} catch (err) {setLogoutError(err.message); return;}
+    setSession(null); setPage("vendor-dashboard"); setRecommendationZoneId(""); window.history.replaceState({}, "", "/login");
   };
   const refreshSession = async () => applySession(await getCurrentUser());
   const navigate = id => {
-    const allowed = (session?.role === "ADMIN" ? ADMIN_NAV : VENDOR_NAV).some(item => item.id === id);
+    const allowed = (session?.role === "ADMIN" ? ADMIN_NAV : VENDOR_NAV).some(item => item.id === id) || (session?.role === "VENDOR" && id === "vendor-settings");
     const safe = allowed ? id : session?.role === "ADMIN" ? "admin" : "vendor-dashboard";
     setPage(safe); setRecommendationZoneId(""); setMobileOpen(false);
     window.history.replaceState({}, "", session?.role === "ADMIN" ? `/admin/${safe}` : VENDOR_PATHS[safe] || "/vendor");
@@ -116,19 +121,21 @@ export default function ImplementationApp() {
   if (onboarding) return <VendorPortal onboarding onRegistered={refreshSession}/>;
 
   const nav = session.role === "ADMIN" ? ADMIN_NAV : VENDOR_NAV;
-  const current = nav.find(item => item.id === page) || (page === "vendor-recommendation-detail" ? VENDOR_NAV[1] : nav[0]);
+  const current = nav.find(item => item.id === page || (page === "vendor-settings" && item.id === "vendor-profile")) || (page === "vendor-recommendation-detail" ? VENDOR_NAV[1] : nav[0]);
   const navTitle = item => session.role === "ADMIN" ? item.title : t(item.titleKey);
   const vendorName = profileDisplayName(session.vendor_profile, {application: t("identity.applicationVendor"), registered: t("identity.registeredVendor")});
   return <div className={`implementation-shell ${onboarding ? "" : "service-app"}`}><aside className={`implementation-sidebar ${mobileOpen ? "mobile-open" : ""}`}>
     <div className="brand"><BrandIdentity compact subtitle={session.role === "ADMIN" ? "NMC Officer Workspace" : t("nav.vendorServices")}/><button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label={session.role === "ADMIN" ? "Close menu" : t("nav.close")}><X size={19}/></button></div>
-    <div className="sidebar-section-label">{session.role === "ADMIN" ? (onboarding ? "PROFILE SETUP" : "YOUR WORKSPACE") : t(onboarding ? "nav.profileSetup" : "nav.workspace")}</div><nav className="implementation-nav" aria-label={session.role === "ADMIN" ? "Main navigation" : t("nav.workspace")}>{nav.map(item => {const active = page === item.id || (item.id === "vendor-recommendations" && page === "vendor-recommendation-detail"); return <button key={item.id} className={active ? "active" : ""} onClick={() => navigate(item.id)}><item.icon size={18}/><span>{navTitle(item)}</span>{active && <ChevronRight size={15} className="nav-arrow"/>}</button>;})}</nav>
+    <div className="sidebar-section-label">{session.role === "ADMIN" ? (onboarding ? "PROFILE SETUP" : "YOUR WORKSPACE") : t(onboarding ? "nav.profileSetup" : "nav.workspace")}</div><nav className="implementation-nav" aria-label={session.role === "ADMIN" ? "Main navigation" : t("nav.workspace")}>{nav.map(item => {const active = page === item.id || (item.id === "vendor-recommendations" && page === "vendor-recommendation-detail") || (item.id === "vendor-profile" && page === "vendor-settings"); return <button key={item.id} className={active ? "active" : ""} onClick={() => navigate(item.id)}><item.icon size={18}/><span>{navTitle(item)}</span>{active && <ChevronRight size={15} className="nav-arrow"/>}</button>;})}</nav>
     <div className="sidebar-bottom auth-session-card"><div className="sidebar-bottom-label">{session.role === "ADMIN" ? "SIGNED IN AS" : t("nav.signedInAs")}</div><strong>{session.role === "ADMIN" ? session.admin_id : vendorName}</strong><p>{session.role === "ADMIN" ? "ADMIN" : onboarding ? t("nav.newOnboarding") : t(session.vendor_profile?.vendor_type === "NEW" ? "identity.applicationLabel" : "identity.registeredVendor")}</p>{session.role !== "ADMIN" && session.vendor_id && <small>{t(session.vendor_profile?.vendor_type === "NEW" ? "identity.applicationId" : "identity.vendorId", {id: publicVendorId(session.vendor_profile)})}</small>}<button onClick={signOut}><LogOut size={14}/> {session.role === "ADMIN" ? "Log out" : t("nav.logout")}</button></div>
   </aside>
   {mobileOpen && <button className="sidebar-backdrop" onClick={() => setMobileOpen(false)} aria-label={session.role === "ADMIN" ? "Close navigation" : t("nav.close")}/>}
   <div className="implementation-content"><header className="implementation-topbar"><button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label={session.role === "ADMIN" ? "Open navigation" : t("nav.open")}><Menu size={20}/></button><div className="topbar-breadcrumb">{session.role === "ADMIN" ? "Officer workspace" : t("nav.vendorWorkspace")} <ChevronRight size={13}/> <strong>{onboarding ? (session.role === "ADMIN" ? "Profile setup" : t("nav.profileSetup")) : navTitle(current)}</strong></div><div className="topbar-right"><span className="topbar-dot"/> {session.role === "ADMIN" ? "Authenticated" : t("nav.authenticated")} <span className="topbar-avatar">{session.role === "ADMIN" ? "N" : "V"}</span></div></header>
   <div className="implementation-view">
+    {logoutError && <p role="alert" className="vendor-action-notice">{logoutError}</p>}
     {(session.role === "VENDOR" || onboarding) && <VendorPortal sessionProfile={session.vendor_profile} onboarding={onboarding} view={page} detailZoneId={recommendationZoneId} onNavigate={navigate} onOpenRecommendation={openRecommendation} onBackRecommendations={backToRecommendations} onRegistered={refreshSession}/>}
-    {session.role === "ADMIN" && page === "admin" && <AdminDashboard adminId={session.admin_id}/>}
+    {session.role === "ADMIN" && page === "admin" && <AdminDashboard adminId={session.admin_id} slotTarget={slotTarget}/>}
+    {session.role === "ADMIN" && page === "vendors" && <VendorDirectory onViewSlot={slot => {setSlotTarget({...slot}); navigate("admin");}}/>}
     {session.role === "ADMIN" && page === "overview" && <OverviewPage navigate={navigate}/>}
     {session.role === "ADMIN" && page === "zones" && <ZoneRegistryPage openZone={openZone}/>}
     {session.role === "ADMIN" && page === "recommend" && <RecommendationPage key={requestedDivision || "default"} initialDivision={requestedDivision}/>}

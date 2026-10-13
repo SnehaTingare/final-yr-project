@@ -1,6 +1,6 @@
 import React, {createContext, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {
-  DEFAULT_LANGUAGE, hasDeliberateLanguage, normalizeLanguage,
+  DEFAULT_LANGUAGE, normalizeLanguage,
   persistLanguage, readStoredLanguage, setDocumentLanguage, translate,
 } from "./index.js";
 
@@ -19,10 +19,8 @@ export function I18nProvider({children}) {
 
   const applyProfileLanguage = useCallback(savedLanguage => {
     if (!savedLanguage || typeof window === "undefined") return;
-    if (!hasDeliberateLanguage(window.localStorage)) {
-      const normalized = persistLanguage(window.localStorage, savedLanguage, false);
-      setLanguageState(normalized);
-    }
+    const normalized = persistLanguage(window.localStorage, savedLanguage, false);
+    setLanguageState(normalized);
   }, []);
 
   useEffect(() => { setDocumentLanguage(language); }, [language]);

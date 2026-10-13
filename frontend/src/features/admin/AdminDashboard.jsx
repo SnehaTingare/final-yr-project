@@ -1,12 +1,12 @@
-import {zoneName} from "../../shared/utils/displayLabels.js";
+import VendorDetails from "./VendorDetails.jsx";
+import {zoneName, officialZoneDivision} from "../../shared/utils/displayLabels.js";
 import {AdminHome, PendingRequests, ZoneManagement, AllocationRecords, ZoneExplorer} from "./AdminTabPanels.jsx";
 import React, {useEffect, useMemo, useReducer, useState} from "react";
 
 import "leaflet/dist/leaflet.css";
 import {Activity, AlertTriangle, Building2, Check, ClipboardList, RefreshCw, ShieldCheck, Users, X, XCircle} from "lucide-react";
-import {approveAllocationRequest, getActiveAllocation, getAdminOverview, getAllocationRequests, getAllocations, getVendorProfile, getZoneCatalog, getZoneGeometry, rejectAllocationRequest, updateZoneLiveStatus} from "../../services/api.js";
+import {approveAllocationRequest, getAdminOverview, getAllocationRequests, getAllocations, getZoneCatalog, getZoneGeometry, rejectAllocationRequest, updateZoneLiveStatus} from "../../services/api.js";
 
-import {publicVendorId} from "../../shared/utils/profileIdentity.js";
 import ToastRegion from "../../shared/ui/ToastRegion.jsx";
 const PilotSlotMap = React.lazy(() => import("../pilot-slots/PilotSlotMap.jsx"));
 import {initialPilotState, pilotReducer, PILOT_ZONE_IDS} from "../pilot-slots/pilotState.js";
@@ -17,13 +17,15 @@ import "../../shared/maps/MapGrouping.css";
 import {TABS, STATUS_COLORS, pretty, display, when} from "./viewModel.js";
 
 import {StatusBadge} from "./AdminPrimitives.jsx";
-export default function AdminDashboard({adminId = "Officer"}) {
+export default function AdminDashboard({adminId = "Officer", slotTarget = null}) {
   const [tab, setTab] = useState("overview");
   const [overview, setOverview] = useState(null);
   const [pending, setPending] = useState([]);
   const [zones, setZones] = useState([]);
   const [allocations, setAllocations] = useState([]);
   const [geometry, setGeometry] = useState(null);
+  const [zoneLoad, setZoneLoad] = useState({loading: true, error: "", ready: false});
+  const [geometryError, setGeometryError] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -32,8 +34,10 @@ export default function AdminDashboard({adminId = "Officer"}) {
   const [mapStatuses, setMapStatuses] = useState(Object.keys(STATUS_COLORS));
   const [selectedZone, setSelectedZone] = useState(null);
   const [pilot, dispatchPilot] = useReducer(pilotReducer, initialPilotState);
+  const [focusedSlot, setFocusedSlot] = useState(null);
   const [pilotZone,setPilotZone] = useState("NN_F_013");
-  const openPilot = () => {setPilotZone(selectedZone?.zone_id || pilotZone);dispatchPilot({type: "open"}); setTab("map"); setSelectedZone(null);};
+  const [explorerDivision, setExplorerDivision] = useState("");
+  const openPilot = (zone = selectedZone) => {const target = zone?.zone_id ? zone : selectedZone; setExplorerDivision(officialZoneDivision(target || pilotZone)); setPilotZone(target?.zone_id || pilotZone);dispatchPilot({type: "open"}); setTab("map"); setSelectedZone(null);};
   const [requestDetail, setRequestDetail] = useState(null);
   const [dialog, setDialog] = useState(null);
   const [statusTarget, setStatusTarget] = useState(null);
@@ -43,16 +47,26 @@ export default function AdminDashboard({adminId = "Officer"}) {
 
   const refresh = async (message = "") => {
     setLoading(true); setError("");
-    try {
-      const [summary, requestData, zoneData, allocationData, geo] = await Promise.all([
-        getAdminOverview(), getAllocationRequests("PENDING"), getZoneCatalog({}), getAllocations(),
-        geometry ? Promise.resolve(geometry) : getZoneGeometry(),
-      ]);
-      setOverview(summary); setPending(requestData.requests); setZones(zoneData.zones);
-      setAllocations(allocationData.allocations); setGeometry(geo);
-      if (selectedZone) setSelectedZone(zoneData.zones.find(zone => zone.zone_id === selectedZone.zone_id) || null);
-      if (message) setNotice(message);
-    } catch (err) { setError(err.message); } finally { setLoading(false); }
+    setZoneLoad(current => ({...current, loading: true, error: ""}));
+    const results = await Promise.allSettled([
+      getAdminOverview(), getAllocationRequests("PENDING"), getZoneCatalog({}), getAllocations(),
+      geometry ? Promise.resolve(geometry) : getZoneGeometry(),
+    ]);
+    const [summary, requestData, zoneData, allocationData, geo] = results;
+    if (summary.status === "fulfilled") setOverview(summary.value);
+    if (requestData.status === "fulfilled") setPending(requestData.value.requests);
+    if (allocationData.status === "fulfilled") setAllocations(allocationData.value.allocations);
+    if (zoneData.status === "fulfilled" && Array.isArray(zoneData.value?.zones) && zoneData.value.zones.length) {
+      setZones(zoneData.value.zones);
+      setZoneLoad({loading: false, error: "", ready: true});
+      if (selectedZone) setSelectedZone(zoneData.value.zones.find(zone => zone.zone_id === selectedZone.zone_id) || null);
+    } else setZoneLoad(current => ({...current, loading: false, error: zoneData.reason?.message || "Official zone records are unavailable. Refresh to try again."}));
+    if (geo.status === "fulfilled") {setGeometry(geo.value); setGeometryError("");}
+    else setGeometryError(geo.reason?.message || "GIS references are unavailable. Use the zone list below.");
+    const failures = results.filter(result => result.status === "rejected");
+    if (failures.length) setError(failures.map(result => result.reason?.message || "Data unavailable").join("; "));
+    else if (message) setNotice(message);
+    setLoading(false);
   };
   useEffect(() => { refresh(); }, []);
 
@@ -64,17 +78,10 @@ export default function AdminDashboard({adminId = "Officer"}) {
     && (!zoneFilters.q || `${zone.zone_id} ${zone.official_description}`.toLowerCase().includes(zoneFilters.q.toLowerCase()))
   ), [zones, zoneFilters]);
   const filteredAllocations = allocations.filter(item => !allocationFilter || item.status === allocationFilter);
-  const mappedZones = filteredZones.filter(zone => mapStatuses.includes(zone.live_status));
 
-  const openRequest = async request => {
-    setError("");
-    try {
-      const [vendor, active] = await Promise.all([
-        getVendorProfile(request.vendor_id), getActiveAllocation(request.vendor_id),
-      ]);
-      setRequestDetail({request, vendor, active: active.allocation, zone: zones.find(zone => zone.zone_id === request.zone_id)});
-    } catch (err) { setError(err.message); }
-  };
+  const openRequest = request => setRequestDetail({vendor_id: request.vendor_id, request});
+  const viewAssignedSlot = slot => {setRequestDetail(null); setFocusedSlot(slot); setPilotZone(slot.zone_id); setExplorerDivision(officialZoneDivision(slot.zone_id)); dispatchPilot({type: "open"}); setTab("map");};
+  useEffect(() => {if (slotTarget) viewAssignedSlot(slotTarget);}, [slotTarget]);
   const approve = async () => {
     if (!adminId.trim()) { setError("Enter an Admin ID before approval."); return; }
     setLoading(true); setError("");
@@ -142,11 +149,12 @@ export default function AdminDashboard({adminId = "Officer"}) {
 
     {tab === "allocations" && <AllocationRecords filteredAllocations={filteredAllocations} allocationFilter={allocationFilter} setAllocationFilter={setAllocationFilter} setRequestDetail={setRequestDetail} zones={zones} setSelectedZone={setSelectedZone} setError={setError}/>}
 
-    {tab === "map" && !pilot.open && <ZoneExplorer mappedZones={mappedZones} zoneFilters={zoneFilters} setZoneFilters={setZoneFilters} divisions={divisions} mapStatuses={mapStatuses} setMapStatuses={setMapStatuses} geometry={geometry} setSelectedZone={setSelectedZone}/>}
+    {tab === "map" && !pilot.open && <ZoneExplorer zoneLoad={zoneLoad} geometryError={geometryError} onRetry={() => refresh()} zones={zones} division={explorerDivision} setDivision={setExplorerDivision} onPilot={openPilot} zoneFilters={zoneFilters} setZoneFilters={setZoneFilters} mapStatuses={mapStatuses} setMapStatuses={setMapStatuses} geometry={geometry} setSelectedZone={setSelectedZone}/>}
 
-    {pilot.visited && <React.Suspense fallback={<p role="status">Loading geographic pilot…</p>}><PilotSlotMap zoneId={pilotZone} onZoneChange={setPilotZone} onViewVendor={async allocation => {try {const [vendor,active] = await Promise.all([getVendorProfile(allocation.vendor_id),getActiveAllocation(allocation.vendor_id)]);setRequestDetail({vendor,active:active.allocation,zone:zones.find(z => z.zone_id === allocation.zone_id)});} catch(e) {setError(e.message);}}} admin session={pilot} dispatch={dispatchPilot} visible={tab === "map" && pilot.open} onBack={() => dispatchPilot({type: "close"})} allocations={allocations}/></React.Suspense>}
+    {tab === "map" && pilot.open && <nav className="admin-explorer-breadcrumbs" aria-label="Zone explorer breadcrumbs"><button onClick={() => {setExplorerDivision(""); dispatchPilot({type: "close"});}}>Nashik City</button><span>/</span><button onClick={() => dispatchPilot({type: "close"})}>{officialZoneDivision(pilotZone)}</button><span>/</span><strong>{zoneName(pilotZone)}</strong><span>/</span><strong>Slot Map</strong></nav>}
+    {pilot.visited && <React.Suspense fallback={<p role="status">Loading geographic pilot…</p>}><PilotSlotMap zoneId={pilotZone} onZoneChange={zoneId => {setPilotZone(zoneId); setExplorerDivision(officialZoneDivision(zoneId));}} onViewVendor={allocation => setRequestDetail({vendor_id: allocation.vendor_id})} focusSlotId={focusedSlot?.zone_id === pilotZone ? focusedSlot.slot_id : null} admin session={pilot} dispatch={dispatchPilot} visible={tab === "map" && pilot.open} onBack={() => dispatchPilot({type: "close"})} allocations={allocations}/></React.Suspense>}
 
-    {requestDetail && <div className="admin-drawer-backdrop" onClick={() => setRequestDetail(null)}><aside className="admin-drawer" onClick={event => event.stopPropagation()}><button className="drawer-close" onClick={() => setRequestDetail(null)}><X size={18}/></button><span className="admin-eyebrow">{requestDetail.request ? "REQUEST DETAILS" : "VENDOR & ALLOCATION"}</span><h2>{requestDetail.request?.request_id || publicVendorId(requestDetail.vendor)}</h2>{requestDetail.request && <StatusBadge status={requestDetail.request.status}/>}<div className="drawer-grid"><div><span>{requestDetail.vendor.vendor_type === "NEW" ? "Application Vendor ID" : "Vendor ID"}</span><strong>{publicVendorId(requestDetail.vendor)}</strong></div><div><span>Vendor type</span><strong>{pretty(requestDetail.vendor.vendor_type)}</strong></div><div><span>Business</span><strong>{pretty(requestDetail.request?.business_category || requestDetail.vendor.business_category)}</strong></div><div><span>Priority</span><strong>{pretty(requestDetail.vendor.priority_profile)}</strong></div><div><span>Request type</span><strong>{pretty(requestDetail.request?.request_type || "—")}</strong></div><div><span>Created</span><strong>{when(requestDetail.request?.created_at)}</strong></div><div><span>Current zone</span><strong>{requestDetail.active ? zoneName(requestDetail.active) : "Not assigned"}</strong></div><div><span>Target zone</span><strong>{requestDetail.zone?.zone_id || "—"}</strong></div><div><span>Division</span><strong>{requestDetail.zone?.division || "—"}</strong></div><div><span>Live status</span><strong>{requestDetail.zone?.live_status || "—"}</strong></div><div><span>Official capacity</span><strong>{display(requestDetail.zone?.official_capacity)}</strong></div><div><span>Current vendors</span><strong>{display(requestDetail.zone?.current_vendor_count)}</strong></div><div><span>Available</span><strong>{display(requestDetail.zone?.available_capacity)}</strong></div></div>{requestDetail.zone && <p className="drawer-description">{requestDetail.zone.official_description}</p>}{requestDetail.request && <div className="drawer-actions"><button className="admin-approve" onClick={() => setDialog({type: "approve", ...requestDetail.request})}>Approve request</button><button className="admin-reject" onClick={() => setDialog({type: "reject", ...requestDetail.request})}>Reject request</button></div>}</aside></div>}
+    {requestDetail && <VendorDetails vendorId={requestDetail.vendor_id || requestDetail.vendor?.vendor_id} requestId={requestDetail.request?.request_id} onClose={() => setRequestDetail(null)} onViewSlot={viewAssignedSlot} onDecision={(type, request) => setDialog({type, ...request})}/>}
 
     {selectedZone && <div className="admin-drawer-backdrop" onClick={() => setSelectedZone(null)}><aside className="admin-drawer" onClick={event => event.stopPropagation()}><button className="drawer-close" onClick={() => setSelectedZone(null)}><X size={18}/></button><span className="admin-eyebrow">ZONE DETAILS</span><h2>{zoneName(selectedZone)}</h2><StatusBadge status={selectedZone.live_status}/><p className="drawer-description">{selectedZone.official_description}</p><div className="drawer-grid"><div><span>Division</span><strong>{selectedZone.division}</strong></div><div><span>Policy type</span><strong>{pretty(selectedZone.zone_type)}</strong></div><div><span>Official capacity</span><strong>{display(selectedZone.official_capacity)}</strong></div><div><span>Current vendors</span><strong>{selectedZone.current_vendor_count}</strong></div><div><span>Available</span><strong>{display(selectedZone.available_capacity)}</strong></div><div><span>Reference status</span><strong>{pretty(selectedZone.reference_audit_status || "Not audited")}</strong></div><div><span>Active allocations</span><strong>{allocations.filter(item => item.zone_id === selectedZone.zone_id && item.status === "ACTIVE").length}</strong></div><div><span>Pending requests</span><strong>{pending.filter(item => item.zone_id === selectedZone.zone_id).length}</strong></div></div>{PILOT_ZONE_IDS.includes(selectedZone.zone_id) && <button onClick={openPilot}>View Slot Map</button>}{selectedZone.zone_type === "FREE" ? <div className="zone-status-actions"><span>Manual operational status</span><p>FULL remains capacity-derived. Opening a zero-capacity zone keeps it FULL.</p><div>{["OPEN", "CLOSED", "SUSPENDED"].map(status => <button key={status} disabled={loading || selectedZone.live_status === status} onClick={() => changeStatus(status)}>{status}</button>)}</div></div> : <div className="policy-lock"><ShieldCheck size={17}/> Policy-controlled {pretty(selectedZone.zone_type)} zones cannot be changed here.</div>}</aside></div>}
 

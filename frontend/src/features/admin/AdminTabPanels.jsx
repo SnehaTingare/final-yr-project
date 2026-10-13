@@ -1,11 +1,12 @@
-import {zoneName} from "../../shared/utils/displayLabels.js";
-import React from "react";
+import {zoneName, officialZoneDivision, zoneMapLocation} from "../../shared/utils/displayLabels.js";
+import React, {useEffect, useMemo, useState} from "react";
 
 import {ChevronRight, ClipboardList, Eye, Search, Users} from "lucide-react";
-import {getVendorProfile} from "../../services/api.js";
+import {getPilotLayout} from "../../services/api.js";
 
 import {STATUS_COLORS, pretty, display, when} from "./viewModel.js";
-import {AdminZoneMap} from "./AdminZoneMap.jsx";
+import {PILOT_ZONE_IDS} from "../pilot-slots/pilotState.js";
+import {AdminZoneMap, divisionFeatures, spatialDivisionZones} from "./AdminZoneMap.jsx";
 import {StatusBadge, DataTable} from "./AdminPrimitives.jsx";
 
 export function AdminHome({pending, allocationCounts, summaryCards, zoneCounts, setTab, setAllocationFilter, setZoneFilters}) {
@@ -21,9 +22,53 @@ export function ZoneManagement({filteredZones, zoneFilters, setZoneFilters, divi
 }
 
 export function AllocationRecords({filteredAllocations, allocationFilter, setAllocationFilter, setRequestDetail, zones, setSelectedZone, setError}) {
-  return <section><div className="admin-section-heading"><div><span className="admin-eyebrow">CONFIRMED RECORDS</span><h2>Allocations</h2></div><span className="admin-count">{filteredAllocations.length} records</span></div><div className="admin-filters compact"><select value={allocationFilter} onChange={event => setAllocationFilter(event.target.value)}><option value="">All allocations</option><option>ACTIVE</option><option>RELEASED</option></select></div>{filteredAllocations.length === 0 ? <div className="admin-empty"><Users size={28}/><h3>No allocations found</h3></div> : <DataTable><thead><tr><th>Allocation ID</th><th>Vendor</th><th>Zone</th><th>Status</th><th>Allocated</th><th>Released</th><th>Approved by</th><th>Request</th><th>Links</th></tr></thead><tbody>{filteredAllocations.map(item => <tr key={item.allocation_id}><td><strong>{item.allocation_id}</strong></td><td><strong>{item.vendor_name || "Registered Vendor"}</strong><small className="admin-secondary-id">{item.vendor_type === "NEW" ? item.application_vendor_id || "Application ID pending" : item.vendor_id}</small></td><td>{zoneName(item)}</td><td><StatusBadge status={item.status}/></td><td>{when(item.allocated_at)}</td><td>{when(item.released_at)}</td><td>{item.approved_by || "Not recorded"}</td><td>{item.request_id || "Not recorded"}</td><td><div className="table-actions"><button onClick={async () => {try {const vendor = await getVendorProfile(item.vendor_id); setRequestDetail({vendor, active: item, request: null, zone: zones.find(zone => zone.zone_id === item.zone_id)});} catch (err) {setError(err.message);}}}>Vendor</button><button onClick={() => setSelectedZone(zones.find(zone => zone.zone_id === item.zone_id))}>Zone</button></div></td></tr>)}</tbody></DataTable>}</section>;
+  return <section><div className="admin-section-heading"><div><span className="admin-eyebrow">CONFIRMED RECORDS</span><h2>Allocations</h2></div><span className="admin-count">{filteredAllocations.length} records</span></div><div className="admin-filters compact"><select value={allocationFilter} onChange={event => setAllocationFilter(event.target.value)}><option value="">All allocations</option><option>ACTIVE</option><option>RELEASED</option></select></div>{filteredAllocations.length === 0 ? <div className="admin-empty"><Users size={28}/><h3>No allocations found</h3></div> : <DataTable><thead><tr><th>Allocation ID</th><th>Vendor</th><th>Zone</th><th>Status</th><th>Allocated</th><th>Released</th><th>Approved by</th><th>Request</th><th>Links</th></tr></thead><tbody>{filteredAllocations.map(item => <tr key={item.allocation_id}><td><strong>{item.allocation_id}</strong></td><td><strong>{item.vendor_name || "Registered Vendor"}</strong><small className="admin-secondary-id">{item.vendor_type === "NEW" ? item.application_vendor_id || "Application ID pending" : item.vendor_id}</small></td><td>{zoneName(item)}</td><td><StatusBadge status={item.status}/></td><td>{when(item.allocated_at)}</td><td>{when(item.released_at)}</td><td>{item.approved_by || "Not recorded"}</td><td>{item.request_id || "Not recorded"}</td><td><div className="table-actions"><button onClick={() => setRequestDetail({vendor_id: item.vendor_id})}>Vendor</button><button onClick={() => setSelectedZone(zones.find(zone => zone.zone_id === item.zone_id))}>Zone</button></div></td></tr>)}</tbody></DataTable>}</section>;
 }
 
-export function ZoneExplorer({mappedZones, zoneFilters, setZoneFilters, divisions, mapStatuses, setMapStatuses, geometry, setSelectedZone}) {
-  return <section><div className="admin-section-heading"><div><span className="admin-eyebrow">ZONE EXPLORER</span><h2>All-zone operational map</h2><p>Search and filter all canonical zone records. Zones without usable references remain available in the registry.</p></div><span className="admin-count">{mappedZones.length} mapped records</span></div><div className="admin-filters map-explorer-filters"><label className="admin-search"><Search size={15}/><input value={zoneFilters.q} onChange={event => setZoneFilters(current => ({...current, q: event.target.value}))} placeholder="Search zone ID or description"/></label><select value={zoneFilters.division} onChange={event => setZoneFilters(current => ({...current, division: event.target.value}))}><option value="">All divisions</option>{divisions.map(item => <option key={item}>{item}</option>)}</select><select value={zoneFilters.zone_type} onChange={event => setZoneFilters(current => ({...current, zone_type: event.target.value}))}><option value="">All zone types</option><option>FREE</option><option>RESTRICTED</option><option>NO_VENDING</option></select></div><div className="map-status-filters">{Object.keys(STATUS_COLORS).map(status => <label key={status}><input type="checkbox" checked={mapStatuses.includes(status)} onChange={() => setMapStatuses(current => current.includes(status) ? current.filter(item => item !== status) : [...current, status])}/><i style={{background: STATUS_COLORS[status]}}/>{pretty(status)}</label>)}</div><AdminZoneMap zones={mappedZones} geometry={geometry} onZone={setSelectedZone}/></section>;
+export function ZoneExplorer({zoneLoad, geometryError, onRetry, zones, zoneFilters, setZoneFilters, mapStatuses, setMapStatuses, geometry, setSelectedZone, division, setDivision, onPilot}) {
+  const [referenceEnabled, setReferenceEnabled] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [sheetExpanded, setSheetExpanded] = useState(false);
+  const [savedPilots, setSavedPilots] = useState({});
+
+  useEffect(() => {setSelectedId(null); setSheetExpanded(false);}, [division]);
+  useEffect(() => {
+    let active = true;
+    Promise.allSettled(PILOT_ZONE_IDS.map(async id => ({id, layout: await getPilotLayout(id)}))).then(results => {
+      if (active) setSavedPilots(Object.fromEntries(results.filter(result => result.status === "fulfilled").map(result => [result.value.id, Boolean(result.value.layout?.slots?.length)])));
+    });
+    return () => {active = false;};
+  }, []);
+  const divisionRecords = useMemo(() => spatialDivisionZones(zones, division, geometry, referenceEnabled), [zones, division, geometry, referenceEnabled]);
+  const records = useMemo(() => divisionRecords.filter(zone => (!zoneFilters.q || `${zoneName(zone)} ${zone.zone_id} ${zone.official_description || ""}`.toLowerCase().includes(zoneFilters.q.toLowerCase()))
+    && (!zoneFilters.zone_type || zone.zone_type === zoneFilters.zone_type)
+    && (!zone.live_status || mapStatuses.includes(zone.live_status))), [divisionRecords, zoneFilters.q, zoneFilters.zone_type, mapStatuses]);
+  const selected = zones.find(zone => zone.zone_id === selectedId);
+  const selectZone = zone => {setSelectedId(zone.zone_id); setSheetExpanded(true);};
+  const citywide = zones.filter(zone => officialZoneDivision(zone) === "Citywide" && zone.zone_type === "NO_VENDING");
+  if (!zoneLoad.ready || zoneLoad.error) return <section className="admin-division-explorer"><h2>Zone Explorer</h2><p role={zoneLoad.error ? "alert" : "status"}>{zoneLoad.error || "Loading official zone records..."}</p>{zoneLoad.error && <button onClick={onRetry} disabled={zoneLoad.loading}>Retry loading zones</button>}</section>;
+  return <section className="admin-division-explorer">
+    <nav className="admin-explorer-breadcrumbs" aria-label="Zone explorer breadcrumbs"><button onClick={() => setDivision("")}>Nashik City</button>{division && <><span>/</span><strong>{division}</strong></>}</nav>
+    <div className="admin-section-heading"><div><h2>{division || "Explore six divisions"}</h2><p>{division ? `${divisionRecords.length} spatially included zones - ${records.length} shown` : "Select a colored division to browse its official zones."}</p></div></div>
+    <p className="admin-illustrative-note">Illustrative polygons: spatial inclusion is display-only, not official administrative membership.</p>
+    {zoneLoad.loading && <p role="status">Refreshing official records...</p>}
+    {geometryError && <p role="alert">{geometryError}</p>}
+    {!division && <div className="admin-division-buttons">{divisionFeatures.map(feature => <button key={feature.properties.division_id} onClick={() => setDivision(feature.properties.division)}><i style={{background: feature.properties.display_color}}/>{feature.properties.name}<small>{spatialDivisionZones(zones, feature.properties.division, geometry, referenceEnabled).length} display locations inside</small></button>)}</div>}
+    <div className={`admin-zone-workspace ${division ? "has-division" : ""}`}>
+      <AdminZoneMap zones={records} geometry={geometry} onZone={selectZone} selectedZoneId={selected?.zone_id} referenceEnabled={referenceEnabled} onReferenceChange={setReferenceEnabled} division={division} onDivision={setDivision}/>
+      {division && <aside className={`admin-zone-browser ${sheetExpanded ? "expanded" : ""}`} aria-label="Division zones">
+        <button className="admin-zone-sheet-toggle" onClick={() => setSheetExpanded(value => !value)} aria-expanded={sheetExpanded}>{division} - {divisionRecords.length} zones <span>{sheetExpanded ? "Collapse" : "Browse zones"}</span></button>
+        <div className="admin-zone-browser-content">
+          <label className="admin-search"><Search size={15}/><input aria-label="Search division zones" value={zoneFilters.q} onChange={event => setZoneFilters(current => ({...current, q: event.target.value}))} placeholder="Search zones"/></label>
+          <select aria-label="Zone type" value={zoneFilters.zone_type} onChange={event => setZoneFilters(current => ({...current, zone_type: event.target.value}))}><option value="">All zone types</option><option value="FREE">Free vending</option><option value="RESTRICTED">Restricted vending</option><option value="NO_VENDING">No vending</option></select>
+          <details className="service-disclosure"><summary>Operational status filters</summary><div className="map-status-filters">{Object.keys(STATUS_COLORS).map(status => <label key={status}><input type="checkbox" checked={mapStatuses.includes(status)} onChange={() => setMapStatuses(current => current.includes(status) ? current.filter(item => item !== status) : [...current, status])}/>{pretty(status)}</label>)}</div></details>
+          {selected && <article className="admin-zone-selection" aria-live="polite"><h3>{zoneName(selected)}</h3><StatusBadge status={selected.live_status}/><p>{pretty(selected.zone_type)} | Listed capacity: {display(selected.official_capacity)} | Available: {display(selected.available_capacity)}</p><p>Official division: {officialZoneDivision(selected)}</p>{officialZoneDivision(selected) !== division && <p>Displayed inside the {division} illustrative polygon; officially assigned to {officialZoneDivision(selected)}.</p>}<p>{selected.official_description}</p><p>{zoneMapLocation(selected).label}</p>{zoneMapLocation(selected).record && <><p>Confidence: {pretty(zoneMapLocation(selected).record.confidence)}</p><p>{zoneMapLocation(selected).record.location_note}</p></>}<div className="table-actions"><button onClick={() => setSelectedZone(selected)}>Operational details</button>{savedPilots[selected.zone_id] && <button onClick={() => onPilot(selected)}>View Slot Map</button>}</div></article>}
+          <div className="admin-zone-record-list">{records.map(zone => <button key={zone.zone_id} className={`${selected?.zone_id === zone.zone_id ? "selected" : ""} ${PILOT_ZONE_IDS.includes(zone.zone_id) ? "pilot" : ""}`} aria-pressed={selected?.zone_id === zone.zone_id} onClick={() => selectZone(zone)}><strong>{zoneName(zone)}</strong><small>{pretty(zone.live_status)} | Listed capacity: {display(zone.official_capacity)}</small>{PILOT_ZONE_IDS.includes(zone.zone_id) && <b className="admin-pilot-label">Mapped pilot zone</b>}<small>{zoneMapLocation(zone).label}</small></button>)}</div>
+          {!records.length && <p>No zones match the current filters.</p>}
+          <button onClick={() => {setZoneFilters(current => ({...current, q: "", zone_type: ""})); setMapStatuses(Object.keys(STATUS_COLORS));}}>Clear map filters</button>
+        </div>
+      </aside>}
+    </div>
+    <details className="service-disclosure"><summary>Citywide no-vending records ({citywide.length})</summary><p>These citywide records are separate from the six divisions.</p><div className="admin-zone-record-list">{citywide.map(zone => <button key={zone.zone_id} onClick={() => setSelectedZone(zone)}><strong>{zoneName(zone)}</strong><small>{zone.zone_id}</small><span>Zone details</span></button>)}</div></details>
+  </section>;
 }
