@@ -28,40 +28,82 @@ const VENDOR_NAV = [
   {id: "vendor-requests", titleKey: "nav.requests", icon: FileText},
   {id: "vendor-profile", titleKey: "nav.profile", icon: UserRound},
 ];
+const VENDOR_PATHS = {
+  "vendor-dashboard": "/vendor",
+  "vendor-recommendations": "/vendor/recommendations",
+  "vendor-requests": "/vendor/requests",
+  "vendor-profile": "/vendor/profile",
+};
 
 export default function ImplementationApp() {
   const {t, applyProfileLanguage} = useI18n();
   const [session, setSession] = useState(null);
   const [checking, setChecking] = useState(true);
   const [page, setPage] = useState("vendor-dashboard");
+  const [recommendationZoneId, setRecommendationZoneId] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [requestedDivision, setRequestedDivision] = useState("");
 
-  const applySession = next => {
+  const routeFromPath = next => {
+    if (next?.role !== "VENDOR") return null;
+    const match = window.location.pathname.match(/^\/vendor\/recommendations\/([^/]+)\/?$/);
+    if (match) return {page: "vendor-recommendation-detail", zoneId: decodeURIComponent(match[1])};
+    const vendorPage = Object.entries(VENDOR_PATHS).find(([, path]) => window.location.pathname === path)?.[0];
+    if (vendorPage) return {page: vendorPage, zoneId: ""};
+    return null;
+  };
+  const applySession = (next, {preserveRoute = false} = {}) => {
     if (next?.role === "VENDOR") applyProfileLanguage(next.vendor_profile?.preferred_language);
     setSession(next);
     const admin = next?.role === "ADMIN";
+    const preserved = preserveRoute ? routeFromPath(next) : null;
+    if (preserved) {
+      setPage(preserved.page); setRecommendationZoneId(preserved.zoneId || "");
+      return;
+    }
     const nextPage = admin ? "admin" : "vendor-dashboard";
-    setPage(nextPage);
+    setPage(nextPage); setRecommendationZoneId("");
     window.history.replaceState({}, "", admin ? "/admin" : "/vendor");
   };
   useEffect(() => {
-    getCurrentUser().then(applySession).catch(() => {
+    getCurrentUser().then(next => applySession(next, {preserveRoute: true})).catch(() => {
       setSession(null); window.history.replaceState({}, "", "/login");
     }).finally(() => setChecking(false));
   }, []);
+  useEffect(() => {
+    const handlePopState = () => {
+      if (session?.role !== "VENDOR") return;
+      const route = routeFromPath(session);
+      if (route) {
+        setPage(route.page); setRecommendationZoneId(route.zoneId || "");
+      } else {
+        const vendorPage = VENDOR_NAV.find(item => window.location.pathname.endsWith(`/${item.id}`))?.id || "vendor-dashboard";
+        setPage(vendorPage); setRecommendationZoneId("");
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [session]);
 
   const signOut = async () => {
     try { await logout(); } finally {
-      setSession(null); setPage("vendor-dashboard"); window.history.replaceState({}, "", "/login");
+      setSession(null); setPage("vendor-dashboard"); setRecommendationZoneId(""); window.history.replaceState({}, "", "/login");
     }
   };
   const refreshSession = async () => applySession(await getCurrentUser());
   const navigate = id => {
     const allowed = (session?.role === "ADMIN" ? ADMIN_NAV : VENDOR_NAV).some(item => item.id === id);
     const safe = allowed ? id : session?.role === "ADMIN" ? "admin" : "vendor-dashboard";
-    setPage(safe); setMobileOpen(false);
-    window.history.replaceState({}, "", `${session?.role === "ADMIN" ? "/admin" : "/vendor"}/${safe}`);
+    setPage(safe); setRecommendationZoneId(""); setMobileOpen(false);
+    window.history.replaceState({}, "", session?.role === "ADMIN" ? `/admin/${safe}` : VENDOR_PATHS[safe] || "/vendor");
+  };
+  const openRecommendation = zoneId => {
+    setRecommendationZoneId(zoneId); setPage("vendor-recommendation-detail"); setMobileOpen(false);
+    window.history.pushState({}, "", `/vendor/recommendations/${encodeURIComponent(zoneId)}`);
+  };
+  const backToRecommendations = () => {
+    setRecommendationZoneId(""); setPage("vendor-recommendations");
+    window.history.pushState({}, "", VENDOR_PATHS["vendor-recommendations"]);
   };
   const openZone = division => {
     setRequestedDivision(division === "Citywide" ? "" : division); navigate("recommend");
@@ -74,18 +116,18 @@ export default function ImplementationApp() {
   if (onboarding) return <VendorPortal onboarding onRegistered={refreshSession}/>;
 
   const nav = session.role === "ADMIN" ? ADMIN_NAV : VENDOR_NAV;
-  const current = nav.find(item => item.id === page) || nav[0];
+  const current = nav.find(item => item.id === page) || (page === "vendor-recommendation-detail" ? VENDOR_NAV[1] : nav[0]);
   const navTitle = item => session.role === "ADMIN" ? item.title : t(item.titleKey);
   const vendorName = profileDisplayName(session.vendor_profile, {application: t("identity.applicationVendor"), registered: t("identity.registeredVendor")});
   return <div className={`implementation-shell ${onboarding ? "" : "service-app"}`}><aside className={`implementation-sidebar ${mobileOpen ? "mobile-open" : ""}`}>
     <div className="brand"><BrandIdentity compact subtitle={session.role === "ADMIN" ? "NMC Officer Workspace" : t("nav.vendorServices")}/><button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label={session.role === "ADMIN" ? "Close menu" : t("nav.close")}><X size={19}/></button></div>
-    <div className="sidebar-section-label">{session.role === "ADMIN" ? (onboarding ? "PROFILE SETUP" : "YOUR WORKSPACE") : t(onboarding ? "nav.profileSetup" : "nav.workspace")}</div><nav className="implementation-nav" aria-label={session.role === "ADMIN" ? "Main navigation" : t("nav.workspace")}>{nav.map(item => <button key={item.id} className={page === item.id ? "active" : ""} onClick={() => navigate(item.id)}><item.icon size={18}/><span>{navTitle(item)}</span>{page === item.id && <ChevronRight size={15} className="nav-arrow"/>}</button>)}</nav>
+    <div className="sidebar-section-label">{session.role === "ADMIN" ? (onboarding ? "PROFILE SETUP" : "YOUR WORKSPACE") : t(onboarding ? "nav.profileSetup" : "nav.workspace")}</div><nav className="implementation-nav" aria-label={session.role === "ADMIN" ? "Main navigation" : t("nav.workspace")}>{nav.map(item => {const active = page === item.id || (item.id === "vendor-recommendations" && page === "vendor-recommendation-detail"); return <button key={item.id} className={active ? "active" : ""} onClick={() => navigate(item.id)}><item.icon size={18}/><span>{navTitle(item)}</span>{active && <ChevronRight size={15} className="nav-arrow"/>}</button>;})}</nav>
     <div className="sidebar-bottom auth-session-card"><div className="sidebar-bottom-label">{session.role === "ADMIN" ? "SIGNED IN AS" : t("nav.signedInAs")}</div><strong>{session.role === "ADMIN" ? session.admin_id : vendorName}</strong><p>{session.role === "ADMIN" ? "ADMIN" : onboarding ? t("nav.newOnboarding") : t(session.vendor_profile?.vendor_type === "NEW" ? "identity.applicationLabel" : "identity.registeredVendor")}</p>{session.role !== "ADMIN" && session.vendor_id && <small>{t(session.vendor_profile?.vendor_type === "NEW" ? "identity.applicationId" : "identity.vendorId", {id: publicVendorId(session.vendor_profile)})}</small>}<button onClick={signOut}><LogOut size={14}/> {session.role === "ADMIN" ? "Log out" : t("nav.logout")}</button></div>
   </aside>
   {mobileOpen && <button className="sidebar-backdrop" onClick={() => setMobileOpen(false)} aria-label={session.role === "ADMIN" ? "Close navigation" : t("nav.close")}/>}
   <div className="implementation-content"><header className="implementation-topbar"><button className="mobile-menu" onClick={() => setMobileOpen(true)} aria-label={session.role === "ADMIN" ? "Open navigation" : t("nav.open")}><Menu size={20}/></button><div className="topbar-breadcrumb">{session.role === "ADMIN" ? "Officer workspace" : t("nav.vendorWorkspace")} <ChevronRight size={13}/> <strong>{onboarding ? (session.role === "ADMIN" ? "Profile setup" : t("nav.profileSetup")) : navTitle(current)}</strong></div><div className="topbar-right"><span className="topbar-dot"/> {session.role === "ADMIN" ? "Authenticated" : t("nav.authenticated")} <span className="topbar-avatar">{session.role === "ADMIN" ? "N" : "V"}</span></div></header>
   <div className="implementation-view">
-    {(session.role === "VENDOR" || onboarding) && <VendorPortal sessionProfile={session.vendor_profile} onboarding={onboarding} view={page} onNavigate={navigate} onRegistered={refreshSession}/>}
+    {(session.role === "VENDOR" || onboarding) && <VendorPortal sessionProfile={session.vendor_profile} onboarding={onboarding} view={page} detailZoneId={recommendationZoneId} onNavigate={navigate} onOpenRecommendation={openRecommendation} onBackRecommendations={backToRecommendations} onRegistered={refreshSession}/>}
     {session.role === "ADMIN" && page === "admin" && <AdminDashboard adminId={session.admin_id}/>}
     {session.role === "ADMIN" && page === "overview" && <OverviewPage navigate={navigate}/>}
     {session.role === "ADMIN" && page === "zones" && <ZoneRegistryPage openZone={openZone}/>}

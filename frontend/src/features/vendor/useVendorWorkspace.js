@@ -35,11 +35,10 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   const [recommendationData, setRecommendationData] = useState(null);
   const [mapContext, setMapContext] = useState({zones: [], current_zone_id: null, pending_zone_id: null});
   const [selectedId, setSelectedId] = useState("");
-  const [detailZone, setDetailZone] = useState(null);
   const [confirmZone, setConfirmZone] = useState(null);
   const [cancelTarget, setCancelTarget] = useState(null);
   const [preferenceConfirm, setPreferenceConfirm] = useState(false);
-  useDialogFocus(Boolean(confirmZone || detailZone || cancelTarget || preferenceConfirm), ".vendor-zone-drawer, .vendor-confirm");
+  useDialogFocus(Boolean(confirmZone || cancelTarget || preferenceConfirm), ".vendor-confirm");
   const [dashboard, setDashboard] = useState(null);
   const [dashboardLoading, setDashboardLoading] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -47,7 +46,7 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   const [success, setSuccess] = useState("");
   const [mapUnavailableIds, setMapUnavailableIds] = useState(null);
   const languagePatchRef = useRef("");
-  const stage = onboarding ? "register" : view === "vendor-profile" ? "profile" : view === "vendor-recommendations" && !dashboard?.action_state?.has_pending_request ? "recommendations" : "dashboard";
+  const stage = onboarding ? "register" : view === "vendor-profile" ? "profile" : view === "vendor-recommendation-detail" ? "recommendation-detail" : view === "vendor-recommendations" && !dashboard?.action_state?.has_pending_request ? "recommendations" : "dashboard";
   const setStage = next => onNavigate(next === "profile" ? "vendor-profile" : next === "recommendations" ? "vendor-recommendations" : "vendor-dashboard");
   const handleGeometryStatus = useCallback(ids => setMapUnavailableIds(ids ? new Set(ids) : null), []);
 
@@ -97,7 +96,7 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     if (recommendationData) setPreferenceConfirm(true);
     else persistProfile();
   };
-  const findZones = () => run(async () => {
+  const findZones = ({navigate = true} = {}) => run(async () => {
     const active = await getActiveAllocation(profile.vendor_id);
     setActiveAllocation(active.allocation);
     const [data, context] = await Promise.all([
@@ -108,10 +107,12 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
       getVendorEligibleZones(),
     ]);
     setMapUnavailableIds(null);
-    setMapContext(context); setRecommendationData(data); setSelectedId(data.recommendations[0]?.zone_id || ""); onNavigate("vendor-recommendations");
+    setMapContext(context); setRecommendationData(data); setSelectedId(data.recommendations[0]?.zone_id || "");
+    if (navigate) onNavigate("vendor-recommendations");
   });
   useEffect(() => {
-    if (view === "vendor-recommendations" && profile && !recommendationData && !dashboard?.action_state?.has_pending_request) findZones();
+    const recommendationView = view === "vendor-recommendations" || view === "vendor-recommendation-detail";
+    if (recommendationView && profile && !recommendationData && (view === "vendor-recommendation-detail" || !dashboard?.action_state?.has_pending_request)) findZones({navigate: false});
   }, [view, profile?.vendor_id, dashboard?.action_state?.has_pending_request]);
   const submitZone = () => run(async () => {
     const requestType = activeAllocation ? "RELOCATION" : "NEW_ALLOCATION";
@@ -128,14 +129,14 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     await refreshDashboard(true); setSuccess(t("requests.cancelledNotice"));
   });
   useEffect(() => {
-    if (!confirmZone && !detailZone && !cancelTarget && !preferenceConfirm) return undefined;
+    if (!confirmZone && !cancelTarget && !preferenceConfirm) return undefined;
     const close = event => {
       if (event.key !== "Escape") return;
-      setConfirmZone(null); setDetailZone(null); setCancelTarget(null); setPreferenceConfirm(false);
+      setConfirmZone(null); setCancelTarget(null); setPreferenceConfirm(false);
     };
     document.addEventListener("keydown", close);
     return () => document.removeEventListener("keydown", close);
-  }, [confirmZone, detailZone, cancelTarget, preferenceConfirm]);
+  }, [confirmZone, cancelTarget, preferenceConfirm]);
   const changeLanguage = next => {
     selectLanguage(next);
     setDraft(current => ({...current, preferred_language: next}));
@@ -158,5 +159,5 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   const hour = new Date().getHours();
   const greetingPeriod = t(hour < 12 ? "vendor.morning" : hour < 17 ? "vendor.afternoon" : "vendor.evening");
 
-  return {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, detailZone, setDetailZone, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod};
+  return {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod};
 }
