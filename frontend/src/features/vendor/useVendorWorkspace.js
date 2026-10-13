@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useReducer, useRef, useState} from "react";
 
-import {cancelAllocationRequest, createAllocationRequest, getActiveAllocation, getOptions, getRecommendations, getVendorDashboard, getVendorEligibleZones, registerVendor, updateVendorProfile, getPilotLayout} from "../../services/api.js";
+import {cancelAllocationRequest, createAllocationRequest, getActiveAllocation, getOptions, getRecommendations, getVendorDashboard, getVendorProfile, getVendorEligibleZones, registerVendor, updateVendorProfile, getPilotLayout} from "../../services/api.js";
 
 import {profileDisplayName} from "../../shared/utils/profileIdentity.js";
 import {useDialogFocus} from "../../shared/utils/dialogFocus.js";
@@ -54,6 +54,12 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   useEffect(() => {
     if (!sessionProfile) return;
     setProfile(sessionProfile); setDraft(draftFromProfile(sessionProfile));
+  }, [sessionProfile?.vendor_id]);
+  useEffect(() => {
+    if (!sessionProfile?.vendor_id) return;
+    let active = true;
+    getVendorProfile(sessionProfile.vendor_id).then(vendor => {if (active) {setProfile(vendor); setDraft(draftFromProfile(vendor));}}).catch(err => {if (active) {setError(err.message);}});
+    return () => {active = false;};
   }, [sessionProfile?.vendor_id]);
   const run = async action => {
     setBusy(true); setError(""); setSuccess("");

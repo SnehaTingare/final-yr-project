@@ -13,6 +13,7 @@ this module.
 from __future__ import annotations
 
 import csv
+import json
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -1100,3 +1101,36 @@ def vendor_account_information(vendor_id, database_path=DATABASE_PATH):
             "historical_identity_linked": any(row["vendor_source"] == "HISTORICAL" for row in identities),
             "has_operational_profile": overlay, "phone_change_available": False, "recovery_available": False,
             "requests": requests, "allocations": allocations}
+
+
+def vendor_activity(vendor_id, database_path=DATABASE_PATH):
+    """Read factual own-vendor activity; no delivery or unread state is implied."""
+    from backend.repositories.database import connect
+    if get_vendor_profile(vendor_id, database_path=database_path) is None:
+        raise OperationalNotFoundError("Vendor profile not found")
+    connection = connect(database_path)
+    try:
+        connection.execute("BEGIN")
+        requests = [dict(row) for row in connection.execute("SELECT request_id, zone_id, request_type, status, created_at, reviewed_at, updated_at, rejection_reason FROM allocation_requests WHERE vendor_id = ?", (vendor_id,))]
+        allocations = [dict(row) for row in connection.execute("SELECT a.*, r.request_type FROM allocations a LEFT JOIN allocation_requests r ON r.request_id = a.request_id WHERE a.vendor_id = ?", (vendor_id,))]
+        slot_events = connection.execute("SELECT event_id, zone_id, slot_id, before_json, after_json, created_at FROM pilot_slot_events WHERE json_extract(after_json, '$.assigned_vendor_id') = ?", (vendor_id,)).fetchall()
+        current_slot = connection.execute("""SELECT s.zone_id, s.slot_id FROM pilot_slots s JOIN allocations a ON a.vendor_id = s.assigned_vendor_id AND a.zone_id = s.zone_id AND a.status = 'ACTIVE' JOIN allocation_requests r ON r.request_id = a.request_id AND r.status = 'APPROVED' AND r.vendor_id = a.vendor_id AND r.zone_id = a.zone_id WHERE s.assigned_vendor_id = ? AND s.is_deleted = 0 AND s.geometry_crs = 'EPSG:4326'""", (vendor_id,)).fetchone()
+    finally:
+        connection.close()
+    events = []
+    for row in requests:
+        base = {"request_id": row["request_id"], "zone_id": row["zone_id"], "status": row["status"], "request_type": row["request_type"]}
+        events.append({**base, "id": row["request_id"] + ":submitted", "kind": "SUBMITTED", "timestamp": row["created_at"]})
+        if row["status"] in {"APPROVED", "REJECTED", "CANCELLED"}:
+            events.append({**base, "id": row["request_id"] + ":decision", "kind": row["status"], "timestamp": row["updated_at"] if row["status"] == "CANCELLED" else row["reviewed_at"], "reason": row["rejection_reason"] if row["status"] == "REJECTED" else None})
+    for row in allocations:
+        if row["request_type"] == "RELOCATION":
+            previous = next((old["zone_id"] for old in allocations if old["status"] == "RELEASED" and old["released_at"] == row["allocated_at"] and old["allocation_id"] != row["allocation_id"]), None)
+            events.append({"id": row["allocation_id"], "kind": "RELOCATED", "timestamp": row["allocated_at"], "zone_id": row["zone_id"], "previous_zone_id": previous, "request_id": row["request_id"], "status": row["status"]})
+    for row in slot_events:
+        before, after = json.loads(row["before_json"]), json.loads(row["after_json"])
+        if before.get("assigned_vendor_id") == vendor_id:
+            continue
+        events.append({"id": "slot:" + str(row["event_id"]), "kind": "SLOT_ASSIGNED", "timestamp": row["created_at"], "zone_id": row["zone_id"], "slot_id": row["slot_id"], "status": after.get("status"), "can_view_slot": bool(current_slot and current_slot["zone_id"] == row["zone_id"] and current_slot["slot_id"] == row["slot_id"])})
+    events.sort(key=lambda event: (event["timestamp"] or "", event["id"]), reverse=True)
+    return {"events": events, "mode": "ACTIVITY_HISTORY"}

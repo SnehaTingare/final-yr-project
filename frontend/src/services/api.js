@@ -10,18 +10,20 @@ export async function apiRequest(path, options = {}) {
   let response;
   try {
     response = await fetch(`${API_BASE}${path}`, {credentials: "include", ...options});
-  } catch {
-    throw new Error("Unable to reach the service. Check that the backend is running and try again.");
+  } catch (cause) {
+    if (cause?.name === "AbortError") throw cause;
+    const error = new Error("Unable to reach the service. Check that the backend is running and try again.");
+    error.code = "NETWORK_UNAVAILABLE"; throw error;
   }
   let body;
   try {
     body = await response.json();
   } catch {
-    throw new Error(`The service returned an unreadable response (${response.status}).`);
+    const error = new Error(`The service returned an unreadable response (${response.status}).`); error.status = response.status; throw error;
   }
   if (!response.ok) {
     const detail = typeof body.detail === "string" ? body.detail : "The request could not be completed.";
-    throw new Error(detail);
+    const error = new Error(detail); error.status = response.status; throw error;
   }
   return body;
 }
@@ -106,3 +108,5 @@ export const getAdminVendors = (filters = {}, signal) => {
 export const getAdminVendorDetails = (vendorId, signal) => apiRequest(`/api/admin/vendors/${encodeURIComponent(vendorId)}/details`, {signal});
 
 export const getVendorAccountSettings = signal => apiRequest("/api/vendors/me/account-settings", {signal});
+
+export const getVendorActivity = signal => apiRequest("/api/vendors/me/activity", {signal});

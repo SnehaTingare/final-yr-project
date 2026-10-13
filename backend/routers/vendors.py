@@ -966,3 +966,13 @@ def vendor_account_settings(request: FastAPIRequest):
         return vendor_account_information(session["vendor_id"], dependencies.DATABASE_PATH)
     except (OperationalNotFoundError, OperationalValidationError) as exc:
         operational_error(exc)
+
+
+@router.get("/api/vendors/me/activity", tags=["Vendors"])
+def vendor_notifications_activity(request: FastAPIRequest):
+    session = request_session(request, "VENDOR")
+    from backend.services.vendors import vendor_activity
+    try:
+        return vendor_activity(session["vendor_id"], dependencies.DATABASE_PATH)
+    except (OperationalNotFoundError, OperationalValidationError) as exc:
+        operational_error(exc)
