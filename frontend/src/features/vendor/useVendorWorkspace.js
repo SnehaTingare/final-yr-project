@@ -6,7 +6,7 @@ import {profileDisplayName} from "../../shared/utils/profileIdentity.js";
 import {useDialogFocus} from "../../shared/utils/dialogFocus.js";
 import {useI18n} from "../../i18n/react.jsx";
 
-import {initialPilotState, pilotReducer} from "../pilot-slots/pilotState.js";
+import {initialPilotState, pilotReducer, PILOT_ZONE_IDS} from "../pilot-slots/pilotState.js";
 
 function draftFromProfile(profile) {
   return {
@@ -65,8 +65,8 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     try {
       const data = await getVendorDashboard();
       setDashboard(data); setActiveAllocation(data.active_allocation);
-      if (data.active_allocation?.zone_id === "NN_F_013") {
-        try {setPilotSummary(await getPilotLayout());} catch {setPilotSummary(null);}
+      if (PILOT_ZONE_IDS.includes(data.active_allocation?.zone_id)) {
+        try {setPilotSummary(await getPilotLayout(data.active_allocation.zone_id));} catch {setPilotSummary(null);}
       } else setPilotSummary(null);
       return data;
     } catch (err) {

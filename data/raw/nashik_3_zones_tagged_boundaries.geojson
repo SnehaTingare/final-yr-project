@@ -1,0 +1,269 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 1151,
+        "boundary_id": "PAN-A",
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "official_listed_capacity": 10,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.794158,
+              20.021332
+            ],
+            [
+              73.793967,
+              20.021359
+            ],
+            [
+              73.793579,
+              20.018907
+            ],
+            [
+              73.79377,
+              20.01888
+            ],
+            [
+              73.794158,
+              20.021332
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 1793,
+        "boundary_id": "PAN-B",
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "official_listed_capacity": 10,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.793598,
+              20.018577
+            ],
+            [
+              73.793336,
+              20.016757
+            ],
+            [
+              73.793486,
+              20.016732
+            ],
+            [
+              73.793776,
+              20.018552
+            ],
+            [
+              73.793598,
+              20.018577
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 2324,
+        "boundary_id": "SAT-A",
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "official_listed_capacity": 35,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.718331,
+              20.03275
+            ],
+            [
+              73.718379,
+              20.032533
+            ],
+            [
+              73.718519,
+              20.032528
+            ],
+            [
+              73.718546,
+              20.032452
+            ],
+            [
+              73.718782,
+              20.032266
+            ],
+            [
+              73.718819,
+              20.032714
+            ],
+            [
+              73.718508,
+              20.032855
+            ],
+            [
+              73.718331,
+              20.03275
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 2839,
+        "boundary_id": "NR-A",
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "official_listed_capacity": 30,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.834475,
+              19.955591
+            ],
+            [
+              73.83461,
+              19.95377
+            ],
+            [
+              73.834685,
+              19.953765
+            ],
+            [
+              73.834583,
+              19.955581
+            ],
+            [
+              73.834475,
+              19.955591
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 2918,
+        "boundary_id": "NR-B",
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "official_listed_capacity": 30,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.8363,
+              19.955369
+            ],
+            [
+              73.837608,
+              19.954381
+            ],
+            [
+              73.83748,
+              19.95433
+            ],
+            [
+              73.836209,
+              19.955288
+            ],
+            [
+              73.8363,
+              19.955369
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 3007,
+        "boundary_id": "NR-C",
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "official_listed_capacity": 30,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.834229,
+              19.956176
+            ],
+            [
+              73.834229,
+              19.955702
+            ],
+            [
+              73.83416,
+              19.955722
+            ],
+            [
+              73.834154,
+              19.956266
+            ],
+            [
+              73.834229,
+              19.956176
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

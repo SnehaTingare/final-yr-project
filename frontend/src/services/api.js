@@ -33,15 +33,16 @@ const jsonOptions = (method, body) => ({
 });
 
 export const getOptions = () => apiRequest("/api/options");
-export const getPilotLayout = () => apiRequest("/api/pilot/layout");
-export const previewPilotGeometry = (config, obstructions) => apiRequest("/api/pilot/preview", jsonOptions("POST", {config, obstructions}));
-export const validatePilotGeometry = (layout, poses = {}) => apiRequest("/api/pilot/validate", jsonOptions("POST", {layout, poses}));
-export const savePilotGeometry = layout => apiRequest("/api/pilot/layout", jsonOptions("PATCH", {layout, review_confirmed: true}));
-export const getPilotDestination = () => apiRequest("/api/pilot/navigation");
+const pilotPath = (path, zoneId) => `${path}${zoneId ? `?zone_id=${encodeURIComponent(zoneId)}` : ""}`;
+export const getPilotLayout = zoneId => apiRequest(pilotPath("/api/pilot/layout",zoneId));
+export const previewPilotGeometry = (config, obstructions, zoneId) => apiRequest(pilotPath("/api/pilot/preview",zoneId), jsonOptions("POST", {config, obstructions}));
+export const validatePilotGeometry = (layout, poses = {}, zoneId) => apiRequest(pilotPath("/api/pilot/validate",zoneId), jsonOptions("POST", {layout, poses}));
+export const savePilotGeometry = (layout,zoneId) => apiRequest(pilotPath("/api/pilot/layout",zoneId), jsonOptions("PATCH", {layout, review_confirmed: true}));
+export const getPilotDestination = zoneId => apiRequest(pilotPath("/api/pilot/navigation",zoneId));
 export const getPilotRoute = p => apiRequest("/api/pilot/route", jsonOptions("POST", {longitude: p.longitude, latitude: p.latitude}));
-export const initializePilotLayout = () => apiRequest("/api/pilot/initialize", {method: "POST"});
-export const updatePilotSlot = (slotId, body) =>
-  apiRequest(`/api/pilot/slots/${encodeURIComponent(slotId)}`, jsonOptions("PATCH", body));
+export const initializePilotLayout = zoneId => apiRequest(pilotPath("/api/pilot/initialize",zoneId), {method: "POST"});
+export const updatePilotSlot = (slotId, body, zoneId) =>
+  apiRequest(pilotPath(`/api/pilot/slots/${encodeURIComponent(slotId)}`,zoneId), jsonOptions("PATCH", body));
 export const registerVendor = profile => apiRequest("/api/vendors", jsonOptions("POST", profile));
 export const getVendorProfile = vendorId => apiRequest(`/api/vendors/${encodeURIComponent(vendorId)}`);
 export const updateVendorProfile = (vendorId, updates) =>

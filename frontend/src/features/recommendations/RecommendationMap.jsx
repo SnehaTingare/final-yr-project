@@ -1,3 +1,4 @@
+import {zoneName} from "../../shared/utils/displayLabels.js";
 import React, {useEffect, useMemo, useState} from "react";
 import {MapContainer, TileLayer, CircleMarker, Popup, useMap} from "react-leaflet";
 import L from "leaflet";
@@ -33,7 +34,7 @@ export function MapView({results,selectedId,onSelect}){
       {points.map(p=><CircleMarker key={p.zone_id} center={p.position} radius={p.zone_id===selectedId?11:8}
         pathOptions={{color:"#fff",weight:2.5,fillColor:p.zone_id===selectedId?"#174b38":"#64748b",fillOpacity:1}}
         eventHandlers={{click:()=>onSelect(p.zone_id)}}>
-        <Popup><strong>{p.zone_id}</strong><br/>{p.official_description}<br/><small>Analytical reference point</small></Popup>
+        <Popup><strong>{zoneName(p)}</strong><br/>{p.zone_id}<br/><small>Analytical reference point</small></Popup>
       </CircleMarker>)}
     </MapContainer>
     <div className="map-overlay"><MapPin size={13}/> Approximate reference points</div>

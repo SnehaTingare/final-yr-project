@@ -15,41 +15,41 @@ from fastapi import APIRouter
 router = APIRouter()
 
 @router.get("/api/pilot/layout")
-def get_pilot_layout(request: FastAPIRequest):
-    return authorized_pilot_layout(request)
+def get_pilot_layout(request: FastAPIRequest, zone_id: str | None = None):
+    return authorized_pilot_layout(request, zone_id)
 
 @router.post("/api/pilot/initialize")
-def initialize_pilot_layout(request: FastAPIRequest):
+def initialize_pilot_layout(request: FastAPIRequest, zone_id: str = pilot_slots.PILOT_ZONE_ID):
     request_session(request, "ADMIN")
-    return pilot_operation(lambda: pilot_slots.initialize_demo(dependencies.DATABASE_PATH))
+    return pilot_operation(lambda: pilot_slots.initialize_demo(dependencies.DATABASE_PATH, zone_id))
 
 @router.get("/api/pilot/slots/{slot_id}")
-def get_pilot_slot(slot_id: str, request: FastAPIRequest):
-    layout = authorized_pilot_layout(request)
+def get_pilot_slot(slot_id: str, request: FastAPIRequest, zone_id: str | None = None):
+    layout = authorized_pilot_layout(request, zone_id)
     slot = next((s for s in layout["slots"] if s["slot_id"] == slot_id), None)
     if slot is None:
         raise HTTPException(404, "Unknown pilot slot")
     return slot
 
 @router.patch("/api/pilot/slots/{slot_id}")
-def patch_pilot_slot(slot_id: str, body: PilotSlotUpdate, request: FastAPIRequest):
+def patch_pilot_slot(slot_id: str, body: PilotSlotUpdate, request: FastAPIRequest, zone_id: str = pilot_slots.PILOT_ZONE_ID):
     session = request_session(request, "ADMIN")
     return pilot_operation(lambda: pilot_slots.update_slot(
         slot_id, body.status, body.assigned_vendor_id, actor=session["admin_id"],
-        expected_updated_at=body.expected_updated_at, database_path=dependencies.DATABASE_PATH))
+        expected_updated_at=body.expected_updated_at, database_path=dependencies.DATABASE_PATH, zone_id=zone_id))
 
 @router.post("/api/pilot/preview")
-def preview_pilot_geometry(body: PilotGeometryPreview, request: FastAPIRequest):
+def preview_pilot_geometry(body: PilotGeometryPreview, request: FastAPIRequest, zone_id: str = pilot_slots.PILOT_ZONE_ID):
     request_session(request, "ADMIN")
-    return pilot_operation(lambda: pilot_slots.preview_geographic(body.config, dependencies.DATABASE_PATH, body.obstructions))
+    return pilot_operation(lambda: pilot_slots.preview_geographic(body.config, dependencies.DATABASE_PATH, body.obstructions, zone_id))
 
 @router.post("/api/pilot/validate")
-def validate_pilot_edit(body: PilotGeometryEdit, request: FastAPIRequest):
+def validate_pilot_edit(body: PilotGeometryEdit, request: FastAPIRequest, zone_id: str = pilot_slots.PILOT_ZONE_ID):
     request_session(request, "ADMIN")
-    return pilot_operation(lambda: pilot_slots.preview_edit(body.layout, body.poses, dependencies.DATABASE_PATH))
+    return pilot_operation(lambda: pilot_slots.preview_edit(body.layout, body.poses, dependencies.DATABASE_PATH, zone_id))
 
 @router.patch("/api/pilot/layout")
-def save_pilot_geometry(body: PilotGeometrySave, request: FastAPIRequest):
+def save_pilot_geometry(body: PilotGeometrySave, request: FastAPIRequest, zone_id: str = pilot_slots.PILOT_ZONE_ID):
     session = request_session(request, "ADMIN")
     return pilot_operation(lambda: pilot_slots.save_geographic(body.layout, actor=session["admin_id"],
-        review_confirmed=body.review_confirmed, database_path=dependencies.DATABASE_PATH))
+        review_confirmed=body.review_confirmed, database_path=dependencies.DATABASE_PATH, zone_id=zone_id))

@@ -1,3 +1,4 @@
+import {zoneName,zoneDescription} from "../../shared/utils/displayLabels.js";
 import React, {useMemo, useState} from "react";
 import {AlertCircle, ArrowLeft, Building2, Check, CheckCircle2, ChevronDown, Clock3, MapPin} from "lucide-react";
 import {categoryLabel, factorLabel, factorSummary, statusLabel} from "../../i18n/index.js";
@@ -43,7 +44,7 @@ function FactorCard({factor, language, t, expanded, onToggle}) {
   const level = value == null ? "unknown" : strengthKey(value);
   const evidenceId = `factor-evidence-${factor.key}`;
   return <article className={`recommendation-factor-card strength-${level}`}>
-    <div className="factor-card-heading"><h3>{shortFactorLabel(t, factor)}</h3><div className="factor-card-score"><strong>{value == null ? "—" : Math.round(value)}</strong><span>/100</span></div></div>
+    <div className="factor-card-heading"><h3>{shortFactorLabel(t, factor)}</h3><div className="factor-card-score"><strong>{value == null ? t("common.notRecorded") : Math.round(value)}</strong><span>/100</span></div></div>
     <span className="factor-strength-label">{value == null ? t("common.unknown") : t(`recommend.strength.${level}`)}</span>
     <div className="recommendation-factor-bar" role="progressbar" aria-label={shortFactorLabel(t, factor)} aria-valuemin="0" aria-valuemax="100" aria-valuenow={value == null ? undefined : Math.round(value)}><span style={{width: `${value || 0}%`}}/></div>
     <p>{factorSummary(language, factor.key, factor.summary)}</p>
@@ -73,8 +74,8 @@ export default function RecommendationDetailPage({zone, recommendations, mapCont
   return <section className="recommendation-detail-page">
     <button className="vendor-back recommendation-detail-back" onClick={onBack}><ArrowLeft size={16}/> {t("recommend.backRecommendations")}</button>
     <header className="recommendation-detail-header">
-      <div><span className="recommendation-detail-rank">{t("recommend.recommendedZone", {rank: zone.rank})}</span><h1>{zone.zone_id}</h1><p>{zone.official_description || t("fallback.zoneDescription")}</p><div className="recommendation-detail-location"><MapPin size={14}/><span>{zone.zone_division || t("common.notSpecified")}</span></div></div>
-      <div className="recommendation-detail-score"><span>{t("recommend.suitability")}</span><strong>{score(zone.score)}</strong><small>/100</small><em>{t("recommend.recommendedForBusiness")}: {categoryLabel(language, profile?.business_category)}</em></div>
+      <div><span className="recommendation-detail-rank">{t("recommend.recommendedZone", {rank: zone.rank})}</span><h1>{zoneName(zone,t("display.zoneMissing"))}</h1><p>{zoneDescription(zone,t("fallback.zoneDescription"))}</p><small>{zone.zone_id}</small><div className="recommendation-detail-location"><MapPin size={14}/><span>{zone.zone_division || t("common.notSpecified")}</span></div></div>
+      <div className="recommendation-detail-score"><span>{t("recommend.suitability")}</span><strong>{score(zone.score,t("common.notRecorded"))}</strong><small>/100</small><em>{t("recommend.recommendedForBusiness")}: {categoryLabel(language, profile?.business_category)}</em></div>
     </header>
 
     <div className="recommendation-summary-cards recommendation-operational-summary">
@@ -100,7 +101,7 @@ export default function RecommendationDetailPage({zone, recommendations, mapCont
 
     <details className="recommendation-calculation">
       <summary><span><strong>{t("recommend.calculationTitle")}</strong><small>{t("recommend.calculationSummary")}</small></span><ChevronDown size={18}/></summary>
-      <div className="recommendation-calculation-body"><p>{t("recommend.calculationHelp")}</p><div className="recommendation-calculation-table"><table><thead><tr><th>{t("recommend.factorColumn")}</th><th>{t("common.score")}</th><th>{t("common.weight")}</th><th>{t("common.contribution")}</th></tr></thead><tbody>{factors.map(factor => <tr key={factor.key}><th>{factorLabel(language, factor.key, factor.label)}</th><td>{normalizedScore(factor.score) == null ? "—" : Math.round(normalizedScore(factor.score))}</td><td>{factor.weight == null ? "—" : `${Number(factor.weight).toFixed(1)}%`}</td><td>{factor.contribution == null ? "—" : `+${score(factor.contribution)}`}</td></tr>)}</tbody></table></div></div>
+      <div className="recommendation-calculation-body"><p>{t("recommend.calculationHelp")}</p><div className="recommendation-calculation-table"><table><thead><tr><th>{t("recommend.factorColumn")}</th><th>{t("common.score")}</th><th>{t("common.weight")}</th><th>{t("common.contribution")}</th></tr></thead><tbody>{factors.map(factor => <tr key={factor.key}><th>{factorLabel(language, factor.key, factor.label)}</th><td>{normalizedScore(factor.score) == null ? t("common.notRecorded") : Math.round(normalizedScore(factor.score))}</td><td>{factor.weight == null ? t("common.notRecorded") : `${Number(factor.weight).toFixed(1)}%`}</td><td>{factor.contribution == null ? t("common.notRecorded") : `+${score(factor.contribution,t("common.notRecorded"))}`}</td></tr>)}</tbody></table></div></div>
     </details>
 
     <section className={`recommendation-detail-action ${pending ? "blocked" : ""}`}>

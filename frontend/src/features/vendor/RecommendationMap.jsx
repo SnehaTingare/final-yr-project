@@ -1,3 +1,4 @@
+import {zoneName} from "../../shared/utils/displayLabels.js";
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap} from "react-leaflet";
 import L from "leaflet";
@@ -54,7 +55,7 @@ export function RecommendationMap({recommendations, context, selectedId, onFocus
   return <div className="vendor-map-wrap" id="vendor-recommendation-map">
     {error && <div className="vendor-inline-error">{t("recommend.mapError", {message: error})}</div>}
     <div className="vendor-map-toolbar"><div><strong>{t("recommend.mapTitle")}</strong><span>{showAll ? t("recommend.allZonesHelp") : t("recommend.recommendationsHelp")}</span></div><button className="vendor-secondary" onClick={() => setShowAll(value => !value)}>{t(showAll ? "recommend.showRecommendations" : "recommend.viewAllZones")}</button></div>
-    <div className="map-recommendation-index" aria-label={t("recommend.mapIndexLabel")}>{recommendations.map(zone => <button key={zone.zone_id} className={selectedId === zone.zone_id ? "active" : ""} aria-pressed={selectedId === zone.zone_id} onClick={() => (onFocus || onSelect)(zone.zone_id)}><b style={{background: RANK_COLORS[zone.rank]}}>{zone.rank}</b><span>{zone.zone_id}</span><small>{score(zone.score)}</small></button>)}</div>
+    <div className="map-recommendation-index" aria-label={t("recommend.mapIndexLabel")}>{recommendations.map(zone => <button key={zone.zone_id} className={selectedId === zone.zone_id ? "active" : ""} aria-pressed={selectedId === zone.zone_id} onClick={() => (onFocus || onSelect)(zone.zone_id)}><b style={{background: RANK_COLORS[zone.rank]}}>{zone.rank}</b><span>{zoneName(zone,t("display.zoneMissing"))}</span><small>{score(zone.score,t("common.notRecorded"))}</small></button>)}</div>
     <MapContainer center={[19.9975, 73.7898]} zoom={12} scrollWheelZoom={false} className="vendor-map">
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
       <MapFocus groups={model.groups} selectedId={selectedId} markerRefs={markerRefs}/>
@@ -65,10 +66,10 @@ export function RecommendationMap({recommendations, context, selectedId, onFocus
         radius={selected ? 15 : recommended ? 12 : group.shared ? 9 : 6}
         pathOptions={{color: selected ? "#0f2e48" : "#fff", weight: selected ? 4 : 2, dashArray: pending ? "3 2" : undefined, fillOpacity: recommended || current || pending ? 1 : .45, fillColor: current ? "#287b78" : pending ? "#b46a18" : recommended ? RANK_COLORS[primary.rank] || "#174b77" : available ? "#778b9b" : "#aeb7bf"}}
       >
-        {(recommended || group.shared) ? <Tooltip permanent direction="center" className={`rank-tooltip ${recommendationRanks.length > 1 ? "shared-ranks" : ""} ${!recommended ? "subtle-count" : ""}`}>{markerLabel}</Tooltip> : <Tooltip>{primary.zone_id}</Tooltip>}
+        {(recommended || group.shared) ? <Tooltip permanent direction="center" className={`rank-tooltip ${recommendationRanks.length > 1 ? "shared-ranks" : ""} ${!recommended ? "subtle-count" : ""}`}>{markerLabel}</Tooltip> : <Tooltip>{zoneName(primary,t("display.zoneMissing"))}</Tooltip>}
         <Popup className="shared-reference-popup" minWidth={group.shared ? 285 : 220}>
           <strong>{group.shared ? t("recommend.shared") : t("recommend.rankReference", {rank: primary.rank})}</strong>
-          <div className="shared-zone-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onSelect(zone.zone_id)}><b>{zone.is_recommendation ? `#${zone.rank}` : "•"}</b><span>{zone.zone_id}</span><em>{zone.is_recommendation ? score(zone.score) : zone.zone_id === context?.current_zone_id ? t("recommend.currentLegend") : zone.zone_id === context?.pending_zone_id ? t("recommend.pendingLegend") : statusLabel(language, zone.live_status)}</em></button>)}</div>
+          <div className="shared-zone-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onSelect(zone.zone_id)}><b>{zone.is_recommendation ? `#${zone.rank}` : "•"}</b><span>{zoneName(zone,t("display.zoneMissing"))}</span><em>{zone.is_recommendation ? score(zone.score,t("common.notRecorded")) : zone.zone_id === context?.current_zone_id ? t("recommend.currentLegend") : zone.zone_id === context?.pending_zone_id ? t("recommend.pendingLegend") : statusLabel(language, zone.live_status)}</em></button>)}</div>
           {group.shared && <p>{t("recommend.sharedNotice")}</p>}
           {!group.shared && <small>{t("recommend.availableCapacity", {capacity: primary.available_capacity == null ? t("common.notSpecified") : primary.available_capacity})}</small>}
         </Popup>

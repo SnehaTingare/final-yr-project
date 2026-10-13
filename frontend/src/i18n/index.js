@@ -1,3 +1,4 @@
+import displayLabels from "./displayLabels.js";
 import en from "./en.js";
 import mr from "./mr.js";
 import hi from "./hi.js";
@@ -7,7 +8,7 @@ export const SUPPORTED_LANGUAGES = ["en", "mr", "hi"];
 export const LANGUAGE_STORAGE_KEY = "nmc_vendor_language";
 export const LANGUAGE_OVERRIDE_KEY = "nmc_vendor_language_deliberate";
 export const LOCALES = {en: "en-IN", mr: "mr-IN", hi: "hi-IN"};
-export const dictionaries = {en, mr, hi};
+export const dictionaries = {en: {...en,...displayLabels.en}, mr: {...mr,...displayLabels.mr}, hi: {...hi,...displayLabels.hi}};
 
 export function normalizeLanguage(language) {
   return SUPPORTED_LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE;
@@ -26,9 +27,10 @@ export function translate(language, key, parameters = {}) {
 }
 
 const displayValue = (language, prefix, value, fallback) => {
+  if (value == null || String(value).trim() === "") return fallback || translate(language, "common.notRecorded");
   const key = `${prefix}.${value}`;
   const result = translate(language, key);
-  return result === key ? (fallback ?? value ?? translate(language, "common.unknown")) : result;
+  return result === key ? (fallback ?? String(value).replaceAll("_", " ").toLowerCase().replace(/\b\w/g, c => c.toUpperCase())) : result;
 };
 export const statusLabel = (language, value, fallback) => displayValue(language, "status", value, fallback);
 export const categoryLabel = (language, value, fallback) => displayValue(language, "category", value || "unknown", fallback);
@@ -39,7 +41,7 @@ export const factorLabel = (language, key, fallback) => displayValue(language, "
 export const factorSummary = (language, key, fallback) => displayValue(language, "factor", `${key}.summary`, fallback);
 
 export function formatDate(language, value) {
-  if (!value) return translate(language, "common.notRecorded");
+  if (!value || !Number.isFinite(new Date(value).getTime())) return translate(language, "common.notRecorded");
   return new Intl.DateTimeFormat(LOCALES[normalizeLanguage(language)], {
     dateStyle: "medium", timeStyle: "short",
   }).format(new Date(value));

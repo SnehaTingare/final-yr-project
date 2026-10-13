@@ -11,13 +11,13 @@ from fastapi import APIRouter
 router = APIRouter()
 
 @router.get("/api/pilot/navigation")
-def pilot_navigation_destination(request: FastAPIRequest):
+def pilot_navigation_destination(request: FastAPIRequest, zone_id: str | None = None):
     request_session(request, "VENDOR")
-    return pilot_navigation.destination(authorized_pilot_layout(request))
+    return pilot_navigation.destination(authorized_pilot_layout(request, zone_id))
 
 @router.post("/api/pilot/route")
-def pilot_walking_route(body: PilotRouteRequest, request: FastAPIRequest):
+def pilot_walking_route(body: PilotRouteRequest, request: FastAPIRequest, zone_id: str | None = None):
     session = request_session(request, "VENDOR")
-    target = pilot_navigation.destination(authorized_pilot_layout(request))
+    target = pilot_navigation.destination(authorized_pilot_layout(request, zone_id))
     return pilot_operation(lambda: pilot_navigation.walking_route([body.longitude, body.latitude], target,
         identity=session["vendor_id"]))

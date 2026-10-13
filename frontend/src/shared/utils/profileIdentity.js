@@ -1,5 +1,5 @@
 export function profileDisplayName(profile, fallbacks = {}) {
-  const name = profile?.full_name?.trim();
+  const name = profile?.business_name?.trim() || profile?.full_name?.trim();
   if (name) return name;
   return profile?.vendor_type === "EXISTING_IMPORTED"
     ? (fallbacks.registered || "Registered Vendor")

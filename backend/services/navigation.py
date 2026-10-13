@@ -30,7 +30,7 @@ def destination(layout):
     # Without observed approach evidence, request network snapping near the slot
     # and expose its actual returned endpoint. Never invent the final connector.
     return {"assigned": True, "navigable": True, "slot_id": slot["slot_id"],
-            "zone_id": "NN_F_013", "parent_boundary_id": slot["parent_boundary_id"],
+            "zone_id": layout["zone_id"], "parent_boundary_id": slot["parent_boundary_id"],
             "slot_point": [lon, lat], "requested_access_point": [access["longitude"], access["latitude"]] if access else [lon, lat],
             "approach_observed": bool(access and access.get("observed")),
             "approach_note": access.get("note", "") if access else "No observed pedestrian approach point has been recorded.",

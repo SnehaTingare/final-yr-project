@@ -1,0 +1,4050 @@
+{
+  "type": "FeatureCollection",
+  "provenance": [
+    {
+      "file": "nashik_3_zones_tagged_boundaries.geojson",
+      "sha256": "52850f91f8d06cd2ed906749ea842589632a18ccbfda3bf15f9fa99edd977640",
+      "feature_count": 6,
+      "collection_metadata": {
+        "type": "FeatureCollection"
+      }
+    },
+    {
+      "file": "nashik_3_zones_provisional_slot_preview.geojson",
+      "sha256": "19858d3d659c672309a9ee4cf96d1a6f1b2152ba2d7e6ac4801b5fe7cb6ff0d8",
+      "feature_count": 75,
+      "collection_metadata": {
+        "type": "FeatureCollection"
+      }
+    }
+  ],
+  "verification": "PROVISIONAL_NOT_SURVEYED",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 1151,
+        "boundary_id": "PAN-A",
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "official_listed_capacity": 10,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN",
+        "pilot_feature_type": "boundary",
+        "pilot_source_file": "nashik_3_zones_tagged_boundaries.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.794158,
+              20.021332
+            ],
+            [
+              73.793967,
+              20.021359
+            ],
+            [
+              73.793579,
+              20.018907
+            ],
+            [
+              73.79377,
+              20.01888
+            ],
+            [
+              73.794158,
+              20.021332
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 1793,
+        "boundary_id": "PAN-B",
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "official_listed_capacity": 10,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN",
+        "pilot_feature_type": "boundary",
+        "pilot_source_file": "nashik_3_zones_tagged_boundaries.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.793598,
+              20.018577
+            ],
+            [
+              73.793336,
+              20.016757
+            ],
+            [
+              73.793486,
+              20.016732
+            ],
+            [
+              73.793776,
+              20.018552
+            ],
+            [
+              73.793598,
+              20.018577
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 2324,
+        "boundary_id": "SAT-A",
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "official_listed_capacity": 35,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN",
+        "pilot_feature_type": "boundary",
+        "pilot_source_file": "nashik_3_zones_tagged_boundaries.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.718331,
+              20.03275
+            ],
+            [
+              73.718379,
+              20.032533
+            ],
+            [
+              73.718519,
+              20.032528
+            ],
+            [
+              73.718546,
+              20.032452
+            ],
+            [
+              73.718782,
+              20.032266
+            ],
+            [
+              73.718819,
+              20.032714
+            ],
+            [
+              73.718508,
+              20.032855
+            ],
+            [
+              73.718331,
+              20.03275
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 2839,
+        "boundary_id": "NR-A",
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "official_listed_capacity": 30,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN",
+        "pilot_feature_type": "boundary",
+        "pilot_source_file": "nashik_3_zones_tagged_boundaries.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.834475,
+              19.955591
+            ],
+            [
+              73.83461,
+              19.95377
+            ],
+            [
+              73.834685,
+              19.953765
+            ],
+            [
+              73.834583,
+              19.955581
+            ],
+            [
+              73.834475,
+              19.955591
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 2918,
+        "boundary_id": "NR-B",
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "official_listed_capacity": 30,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN",
+        "pilot_feature_type": "boundary",
+        "pilot_source_file": "nashik_3_zones_tagged_boundaries.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.8363,
+              19.955369
+            ],
+            [
+              73.837608,
+              19.954381
+            ],
+            [
+              73.83748,
+              19.95433
+            ],
+            [
+              73.836209,
+              19.955288
+            ],
+            [
+              73.8363,
+              19.955369
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "source_geoman_id": 3007,
+        "boundary_id": "NR-C",
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "official_listed_capacity": 30,
+        "geometry_role": "PROPOSED_VENDING_FOOTPRINT",
+        "verification": "ILLUSTRATIVE_UNVERIFIED",
+        "legal_authorization": "NOT_VERIFIED",
+        "orientation": "UNVERIFIED",
+        "source": "USER_DRAWN_GEOMAN",
+        "pilot_feature_type": "boundary",
+        "pilot_source_file": "nashik_3_zones_tagged_boundaries.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.834229,
+              19.956176
+            ],
+            [
+              73.834229,
+              19.955702
+            ],
+            [
+              73.83416,
+              19.955722
+            ],
+            [
+              73.834154,
+              19.956266
+            ],
+            [
+              73.834229,
+              19.956176
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-A",
+        "source_geoman_id": 1151,
+        "slot_id": "S001",
+        "slot_key": "PAN_F_019:S001",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79390328064227,
+              20.01996384963634
+            ],
+            [
+              73.79387491886551,
+              20.019967858860184
+            ],
+            [
+              73.79387067703739,
+              20.019941052344308
+            ],
+            [
+              73.79389903880936,
+              20.019937043120887
+            ],
+            [
+              73.79390328064227,
+              20.01996384963634
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-A",
+        "source_geoman_id": 1151,
+        "slot_id": "S002",
+        "slot_key": "PAN_F_019:S002",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79391600614805,
+              20.020044269182062
+            ],
+            [
+              73.79388764435696,
+              20.020048278407188
+            ],
+            [
+              73.7938834025253,
+              20.020021471891624
+            ],
+            [
+              73.79391176431162,
+              20.020017462666928
+            ],
+            [
+              73.79391600614805,
+              20.020044269182062
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-A",
+        "source_geoman_id": 1151,
+        "slot_id": "S003",
+        "slot_key": "PAN_F_019:S003",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79392873166448,
+              20.020124688726817
+            ],
+            [
+              73.79390036985906,
+              20.02012869795322
+            ],
+            [
+              73.79389612802385,
+              20.020101891437978
+            ],
+            [
+              73.79392448982449,
+              20.020097882212006
+            ],
+            [
+              73.79392873166448,
+              20.020124688726817
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-A",
+        "source_geoman_id": 1151,
+        "slot_id": "S004",
+        "slot_key": "PAN_F_019:S004",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79394145719154,
+              20.020205108270623
+            ],
+            [
+              73.79391309537179,
+              20.020209117498297
+            ],
+            [
+              73.79390885353303,
+              20.02018231098338
+            ],
+            [
+              73.79393721534801,
+              20.02017830175613
+            ],
+            [
+              73.79394145719154,
+              20.020205108270623
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-A",
+        "source_geoman_id": 1151,
+        "slot_id": "S005",
+        "slot_key": "PAN_F_019:S005",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79395418272925,
+              20.02028552781346
+            ],
+            [
+              73.79392582089514,
+              20.020289537042412
+            ],
+            [
+              73.79392157905284,
+              20.020262730527815
+            ],
+            [
+              73.79394994088216,
+              20.02025872129929
+            ],
+            [
+              73.79395418272925,
+              20.02028552781346
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-B",
+        "source_geoman_id": 1793,
+        "slot_id": "S006",
+        "slot_key": "PAN_F_019:S006",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79357583185259,
+              20.01749903575135
+            ],
+            [
+              73.79354746652827,
+              20.017503019661824
+            ],
+            [
+              73.793543251549,
+              20.017476209367736
+            ],
+            [
+              73.79357161686853,
+              20.017472225457684
+            ],
+            [
+              73.79357583185259,
+              20.01749903575135
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-B",
+        "source_geoman_id": 1793,
+        "slot_id": "S007",
+        "slot_key": "PAN_F_019:S007",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79358847681182,
+              20.017579466631716
+            ],
+            [
+              73.79356011147316,
+              20.01758345054346
+            ],
+            [
+              73.79355589649036,
+              20.017556640249676
+            ],
+            [
+              73.79358426182424,
+              20.01755265633836
+            ],
+            [
+              73.79358847681182,
+              20.017579466631716
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-B",
+        "source_geoman_id": 1793,
+        "slot_id": "S008",
+        "slot_key": "PAN_F_019:S008",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79360112178159,
+              20.017659897511127
+            ],
+            [
+              73.79357275642859,
+              20.01766388142413
+            ],
+            [
+              73.79356854144227,
+              20.01763707113068
+            ],
+            [
+              73.79359690679048,
+              20.017633087218094
+            ],
+            [
+              73.79360112178159,
+              20.017659897511127
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-B",
+        "source_geoman_id": 1793,
+        "slot_id": "S009",
+        "slot_key": "PAN_F_019:S009",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.79361376676192,
+              20.017740328389582
+            ],
+            [
+              73.79358540139457,
+              20.017744312303844
+            ],
+            [
+              73.79358118640474,
+              20.01771750201072
+            ],
+            [
+              73.79360955176729,
+              20.017713518096873
+            ],
+            [
+              73.79361376676192,
+              20.017740328389582
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "PAN_F_019",
+        "zone_display_name": "Dattanagar Garden, Peth Road",
+        "boundary_id": "PAN-B",
+        "source_geoman_id": 1793,
+        "slot_id": "S010",
+        "slot_key": "PAN_F_019:S010",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7936264117528,
+              20.01782075926709
+            ],
+            [
+              73.7935980463711,
+              20.01782474318262
+            ],
+            [
+              73.79359383137776,
+              20.017797932889803
+            ],
+            [
+              73.79362219675465,
+              20.017793948974692
+            ],
+            [
+              73.7936264117528,
+              20.01782075926709
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S001",
+        "slot_key": "SAT_F_014:S001",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71878580934292,
+              20.032681925592037
+            ],
+            [
+              73.71876934694967,
+              20.032659731881992
+            ],
+            [
+              73.71879283021212,
+              20.03264417350084
+            ],
+            [
+              73.71880929260729,
+              20.032666367208837
+            ],
+            [
+              73.71878580934292,
+              20.032681925592037
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S002",
+        "slot_key": "SAT_F_014:S002",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7187349289212,
+              20.032715635410653
+            ],
+            [
+              73.71871846653217,
+              20.03269344169615
+            ],
+            [
+              73.71874194980442,
+              20.032677883322368
+            ],
+            [
+              73.7187584121954,
+              20.03270007703481
+            ],
+            [
+              73.7187349289212,
+              20.032715635410653
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S003",
+        "slot_key": "SAT_F_014:S003",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71868404847822,
+              20.032749345213315
+            ],
+            [
+              73.71866758609342,
+              20.032727151494353
+            ],
+            [
+              73.7186910693755,
+              20.032711593127935
+            ],
+            [
+              73.71870753176223,
+              20.032733786844837
+            ],
+            [
+              73.71868404847822,
+              20.032749345213315
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S004",
+        "slot_key": "SAT_F_014:S004",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71863316801401,
+              20.03278305500003
+            ],
+            [
+              73.71861670563341,
+              20.032760861276618
+            ],
+            [
+              73.71864018892529,
+              20.032745302917554
+            ],
+            [
+              73.71865665130782,
+              20.03276749663891
+            ],
+            [
+              73.71863316801401,
+              20.03278305500003
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S005",
+        "slot_key": "SAT_F_014:S005",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71875014082995,
+              20.032633839218583
+            ],
+            [
+              73.71873367844654,
+              20.032611645505636
+            ],
+            [
+              73.71875716170476,
+              20.032596087128947
+            ],
+            [
+              73.71877362409013,
+              20.032618280839834
+            ],
+            [
+              73.71875014082995,
+              20.032633839218583
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S006",
+        "slot_key": "SAT_F_014:S006",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71869926041737,
+              20.032667549027543
+            ],
+            [
+              73.71868279803816,
+              20.032645355310148
+            ],
+            [
+              73.7187062813062,
+              20.032629796940817
+            ],
+            [
+              73.71872274368737,
+              20.032651990656156
+            ],
+            [
+              73.71869926041737,
+              20.032667549027543
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S007",
+        "slot_key": "SAT_F_014:S007",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71864837998355,
+              20.032701258820552
+            ],
+            [
+              73.71863191760853,
+              20.03267906509871
+            ],
+            [
+              73.71865540088639,
+              20.03266350673674
+            ],
+            [
+              73.71867186326334,
+              20.03268570045653
+            ],
+            [
+              73.71864837998355,
+              20.032701258820552
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S008",
+        "slot_key": "SAT_F_014:S008",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71859749952844,
+              20.032734968597623
+            ],
+            [
+              73.71858103715766,
+              20.032712774871314
+            ],
+            [
+              73.71860452044533,
+              20.032697216516706
+            ],
+            [
+              73.71862098281805,
+              20.032719410240954
+            ],
+            [
+              73.71859749952844,
+              20.032734968597623
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S009",
+        "slot_key": "SAT_F_014:S009",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7185466190521,
+              20.032768678358728
+            ],
+            [
+              73.71853015668555,
+              20.032746484627978
+            ],
+            [
+              73.71855363998301,
+              20.03273092628073
+            ],
+            [
+              73.71857010235152,
+              20.032753120009428
+            ],
+            [
+              73.7185466190521,
+              20.032768678358728
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S010",
+        "slot_key": "SAT_F_014:S010",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71849573855451,
+              20.032802388103907
+            ],
+            [
+              73.71847927619217,
+              20.032780194368698
+            ],
+            [
+              73.71850275949943,
+              20.0327646360288
+            ],
+            [
+              73.71851922186373,
+              20.032786829761957
+            ],
+            [
+              73.71849573855451,
+              20.032802388103907
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S011",
+        "slot_key": "SAT_F_014:S011",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71876535272044,
+              20.032552043023596
+            ],
+            [
+              73.71874889034261,
+              20.032529849312223
+            ],
+            [
+              73.71877237358682,
+              20.032514290932617
+            ],
+            [
+              73.71878883596659,
+              20.032536484641945
+            ],
+            [
+              73.71876535272044,
+              20.032552043023596
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S012",
+        "slot_key": "SAT_F_014:S012",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71871447233826,
+              20.03258575283886
+            ],
+            [
+              73.71869800996464,
+              20.03256355912303
+            ],
+            [
+              73.71872149321865,
+              20.032548000750793
+            ],
+            [
+              73.71873795559422,
+              20.032570194464565
+            ],
+            [
+              73.71871447233826,
+              20.03258575283886
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S013",
+        "slot_key": "SAT_F_014:S013",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7186635919348,
+              20.03261946263817
+            ],
+            [
+              73.7186471295654,
+              20.032597268917883
+            ],
+            [
+              73.71867061282923,
+              20.032581710553018
+            ],
+            [
+              73.71868707520058,
+              20.032603904271237
+            ],
+            [
+              73.7186635919348,
+              20.03261946263817
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S014",
+        "slot_key": "SAT_F_014:S014",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71851095059694,
+              20.032720591940407
+            ],
+            [
+              73.71849448824018,
+              20.032698398206772
+            ],
+            [
+              73.71851797153344,
+              20.032682839863977
+            ],
+            [
+              73.71853443389213,
+              20.032705033595565
+            ],
+            [
+              73.71851095059694,
+              20.032720591940407
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S015",
+        "slot_key": "SAT_F_014:S015",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71846007010846,
+              20.03275430167593
+            ],
+            [
+              73.71844360775593,
+              20.032732107937832
+            ],
+            [
+              73.718467091059,
+              20.0327165496024
+            ],
+            [
+              73.71848355341349,
+              20.03273874333844
+            ],
+            [
+              73.71846007010846,
+              20.03275430167593
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S016",
+        "slot_key": "SAT_F_014:S016",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71840918959876,
+              20.0327880113955
+            ],
+            [
+              73.71839272725043,
+              20.032765817652948
+            ],
+            [
+              73.7184162105633,
+              20.03275025932488
+            ],
+            [
+              73.71843267291356,
+              20.032772453065373
+            ],
+            [
+              73.71840918959876,
+              20.0327880113955
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S017",
+        "slot_key": "SAT_F_014:S017",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71872968424087,
+              20.03250395664727
+            ],
+            [
+              73.71871322187285,
+              20.032481762933
+            ],
+            [
+              73.71873670511283,
+              20.032466204557863
+            ],
+            [
+              73.7187531674828,
+              20.032488398270065
+            ],
+            [
+              73.71872968424087,
+              20.03250395664727
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S018",
+        "slot_key": "SAT_F_014:S018",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7186788038678,
+              20.03253766645288
+            ],
+            [
+              73.718662341504,
+              20.032515472734158
+            ],
+            [
+              73.7186858247538,
+              20.032499914366376
+            ],
+            [
+              73.71870228711956,
+              20.03252210808304
+            ],
+            [
+              73.7186788038678,
+              20.03253766645288
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S019",
+        "slot_key": "SAT_F_014:S019",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71862792347349,
+              20.03257137624254
+            ],
+            [
+              73.71861146111391,
+              20.03254918251937
+            ],
+            [
+              73.71863494437352,
+              20.032533624158944
+            ],
+            [
+              73.71865140673505,
+              20.032555817880066
+            ],
+            [
+              73.71862792347349,
+              20.03257137624254
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S020",
+        "slot_key": "SAT_F_014:S020",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71857704305792,
+              20.032605086016254
+            ],
+            [
+              73.71856058070254,
+              20.032582892288634
+            ],
+            [
+              73.71858406397196,
+              20.032567333935567
+            ],
+            [
+              73.71860052632928,
+              20.032589527661138
+            ],
+            [
+              73.71857704305792,
+              20.032605086016254
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S021",
+        "slot_key": "SAT_F_014:S021",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.7185261626211,
+              20.032638795774016
+            ],
+            [
+              73.71850970026993,
+              20.032616602041944
+            ],
+            [
+              73.71853318354917,
+              20.03260104369624
+            ],
+            [
+              73.71854964590229,
+              20.032623237426268
+            ],
+            [
+              73.7185261626211,
+              20.032638795774016
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S022",
+        "slot_key": "SAT_F_014:S022",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71847528216303,
+              20.032672505515833
+            ],
+            [
+              73.71845881981608,
+              20.032650311779307
+            ],
+            [
+              73.71848230310512,
+              20.03263475344097
+            ],
+            [
+              73.718498765454,
+              20.03265694717544
+            ],
+            [
+              73.71847528216303,
+              20.032672505515833
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S023",
+        "slot_key": "SAT_F_014:S023",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71842440168369,
+              20.032706215241703
+            ],
+            [
+              73.71840793934096,
+              20.032684021500724
+            ],
+            [
+              73.71843142263981,
+              20.032668463169742
+            ],
+            [
+              73.71844788498449,
+              20.03269065690867
+            ],
+            [
+              73.71842440168369,
+              20.032706215241703
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S024",
+        "slot_key": "SAT_F_014:S024",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71837352118311,
+              20.032739924951624
+            ],
+            [
+              73.7183570588446,
+              20.032717731206183
+            ],
+            [
+              73.71838054215326,
+              20.032702172882576
+            ],
+            [
+              73.71839700449371,
+              20.032724366625953
+            ],
+            [
+              73.71837352118311,
+              20.032739924951624
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S025",
+        "slot_key": "SAT_F_014:S025",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71874489612522,
+              20.032422160452768
+            ],
+            [
+              73.71872843376279,
+              20.032399966740076
+            ],
+            [
+              73.71875191698875,
+              20.032384408362017
+            ],
+            [
+              73.71876837935312,
+              20.032406602072662
+            ],
+            [
+              73.71874489612522,
+              20.032422160452768
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S026",
+        "slot_key": "SAT_F_014:S026",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71869401578255,
+              20.03245587026468
+            ],
+            [
+              73.71867755342433,
+              20.032433676547527
+            ],
+            [
+              73.71870103666011,
+              20.03241811817684
+            ],
+            [
+              73.71871749902026,
+              20.032440311891932
+            ],
+            [
+              73.71869401578255,
+              20.03245587026468
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S027",
+        "slot_key": "SAT_F_014:S027",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71864313541862,
+              20.032489580060645
+            ],
+            [
+              73.7186266730646,
+              20.032467386339036
+            ],
+            [
+              73.7186501563102,
+              20.03245182797571
+            ],
+            [
+              73.71866661866613,
+              20.032474021695258
+            ],
+            [
+              73.71864313541862,
+              20.032489580060645
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S028",
+        "slot_key": "SAT_F_014:S028",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71859225503344,
+              20.032523289840654
+            ],
+            [
+              73.71857579268365,
+              20.032501096114597
+            ],
+            [
+              73.71859927593904,
+              20.032485537758625
+            ],
+            [
+              73.71861573829078,
+              20.032507731482628
+            ],
+            [
+              73.71859225503344,
+              20.032523289840654
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S029",
+        "slot_key": "SAT_F_014:S029",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.718541374627,
+              20.03255699960472
+            ],
+            [
+              73.71852491228142,
+              20.03253480587421
+            ],
+            [
+              73.71854839554663,
+              20.0325192475256
+            ],
+            [
+              73.71856485789415,
+              20.03254144125405
+            ],
+            [
+              73.718541374627,
+              20.03255699960472
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S030",
+        "slot_key": "SAT_F_014:S030",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71849049419932,
+              20.03259070935284
+            ],
+            [
+              73.71847403185795,
+              20.032568515617875
+            ],
+            [
+              73.71849751513297,
+              20.032552957276618
+            ],
+            [
+              73.71851397747626,
+              20.03257515100953
+            ],
+            [
+              73.71849049419932,
+              20.03259070935284
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S031",
+        "slot_key": "SAT_F_014:S031",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71843961375038,
+              20.032624419085003
+            ],
+            [
+              73.71842315141322,
+              20.032602225345585
+            ],
+            [
+              73.71844663469805,
+              20.0325866670117
+            ],
+            [
+              73.71846309703713,
+              20.032608860749058
+            ],
+            [
+              73.71843961375038,
+              20.032624419085003
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S032",
+        "slot_key": "SAT_F_014:S032",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71838873328016,
+              20.032658128801224
+            ],
+            [
+              73.71837227094726,
+              20.032635935057353
+            ],
+            [
+              73.71839575424187,
+              20.03262037673082
+            ],
+            [
+              73.71841221657674,
+              20.03264257047264
+            ],
+            [
+              73.71838873328016,
+              20.032658128801224
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S033",
+        "slot_key": "SAT_F_014:S033",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.718709227679,
+              20.032374074073573
+            ],
+            [
+              73.7186927653264,
+              20.03235188035799
+            ],
+            [
+              73.71871624854815,
+              20.03233632198439
+            ],
+            [
+              73.7187327109027,
+              20.032358515697922
+            ],
+            [
+              73.718709227679,
+              20.032374074073573
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S034",
+        "slot_key": "SAT_F_014:S034",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71865834734547,
+              20.03240778387583
+            ],
+            [
+              73.71864188499707,
+              20.032385590155794
+            ],
+            [
+              73.71866536822863,
+              20.032370031789554
+            ],
+            [
+              73.71868183057897,
+              20.032392225507543
+            ],
+            [
+              73.71865834734547,
+              20.03240778387583
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "SAT_F_014",
+        "zone_display_name": "Gangapur Gaon Vegetable Market",
+        "boundary_id": "SAT-A",
+        "source_geoman_id": 2324,
+        "slot_id": "S035",
+        "slot_key": "SAT_F_014:S035",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 3.5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "OPEN_MARKET_GRID",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.71840394535896,
+              20.03257633264791
+            ],
+            [
+              73.71838748303163,
+              20.032554138905603
+            ],
+            [
+              73.71841096631223,
+              20.03253858057617
+            ],
+            [
+              73.7184274286415,
+              20.03256077431643
+            ],
+            [
+              73.71840394535896,
+              20.03257633264791
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S001",
+        "slot_key": "NR_F_003:S001",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83452531604243,
+              19.95510912317571
+            ],
+            [
+              73.83455391173479,
+              19.955111018582116
+            ],
+            [
+              73.83455190719782,
+              19.955138057448167
+            ],
+            [
+              73.83452331150065,
+              19.9551361620412
+            ],
+            [
+              73.83452531604243,
+              19.95510912317571
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S002",
+        "slot_key": "NR_F_003:S002",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83453132966213,
+              19.955028006578406
+            ],
+            [
+              73.83455992534006,
+              19.955029901983135
+            ],
+            [
+              73.83455792080592,
+              19.955056940849595
+            ],
+            [
+              73.83452932512317,
+              19.95505504544431
+            ],
+            [
+              73.83453132966213,
+              19.955028006578406
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S003",
+        "slot_key": "NR_F_003:S003",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83453734327337,
+              19.954946889979873
+            ],
+            [
+              73.83456593893686,
+              19.954948785382918
+            ],
+            [
+              73.83456393440554,
+              19.954975824249786
+            ],
+            [
+              73.83453533873724,
+              19.95497392884619
+            ],
+            [
+              73.83453734327337,
+              19.954946889979873
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S004",
+        "slot_key": "NR_F_003:S004",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83454335687615,
+              19.9548657733801
+            ],
+            [
+              73.83457195252521,
+              19.954867668781464
+            ],
+            [
+              73.8345699479967,
+              19.954894707648744
+            ],
+            [
+              73.83454135234282,
+              19.95489281224683
+            ],
+            [
+              73.83454335687615,
+              19.9548657733801
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S005",
+        "slot_key": "NR_F_003:S005",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83454937047047,
+              19.95478465677909
+            ],
+            [
+              73.83457796610509,
+              19.95478655217877
+            ],
+            [
+              73.8345759615794,
+              19.95481359104647
+            ],
+            [
+              73.83454736593997,
+              19.954811695646228
+            ],
+            [
+              73.83454937047047,
+              19.95478465677909
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S006",
+        "slot_key": "NR_F_003:S006",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83455538405634,
+              19.95470354017684
+            ],
+            [
+              73.83458397967652,
+              19.954705435574848
+            ],
+            [
+              73.83458197515365,
+              19.954732474442963
+            ],
+            [
+              73.83455337952866,
+              19.9547305790444
+            ],
+            [
+              73.83455538405634,
+              19.95470354017684
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S007",
+        "slot_key": "NR_F_003:S007",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83456139763375,
+              19.954622423573355
+            ],
+            [
+              73.83458999323949,
+              19.954624318969685
+            ],
+            [
+              73.83458798871943,
+              19.954651357838213
+            ],
+            [
+              73.83455939310888,
+              19.954649462441324
+            ],
+            [
+              73.83456139763375,
+              19.954622423573355
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S008",
+        "slot_key": "NR_F_003:S008",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83456741120268,
+              19.95454130696864
+            ],
+            [
+              73.83459600679399,
+              19.954543202363286
+            ],
+            [
+              73.83459400227676,
+              19.954570241232222
+            ],
+            [
+              73.83456540668064,
+              19.954568345837014
+            ],
+            [
+              73.83456741120268,
+              19.95454130696864
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S009",
+        "slot_key": "NR_F_003:S009",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83457342476316,
+              19.954460190362692
+            ],
+            [
+              73.83460202034004,
+              19.95446208575565
+            ],
+            [
+              73.83460001582563,
+              19.954489124624995
+            ],
+            [
+              73.83457142024395,
+              19.95448722923147
+            ],
+            [
+              73.83457342476316,
+              19.954460190362692
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S010",
+        "slot_key": "NR_F_003:S010",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.8345794383152,
+              19.954379073755494
+            ],
+            [
+              73.83460803387763,
+              19.954380969146776
+            ],
+            [
+              73.83460602936604,
+              19.95440800801654
+            ],
+            [
+              73.8345774337988,
+              19.95440611262469
+            ],
+            [
+              73.8345794383152,
+              19.954379073755494
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S011",
+        "slot_key": "NR_F_003:S011",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83458545185877,
+              19.954297957147066
+            ],
+            [
+              73.83461404740676,
+              19.954299852536664
+            ],
+            [
+              73.83461204289799,
+              19.954326891406843
+            ],
+            [
+              73.83458344734518,
+              19.954324996016677
+            ],
+            [
+              73.83458545185877,
+              19.954297957147066
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-A",
+        "source_geoman_id": 2839,
+        "slot_id": "S012",
+        "slot_key": "NR_F_003:S012",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83459146539388,
+              19.954216840537395
+            ],
+            [
+              73.83462006092745,
+              19.954218735925323
+            ],
+            [
+              73.83461805642149,
+              19.954245774795908
+            ],
+            [
+              73.83458946088311,
+              19.95424387940742
+            ],
+            [
+              73.83459146539388,
+              19.954216840537395
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S013",
+        "slot_key": "NR_F_003:S013",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83652372697233,
+              19.955073838189954
+            ],
+            [
+              73.83654159515893,
+              19.955095033456253
+            ],
+            [
+              73.83651917952581,
+              19.955111928852958
+            ],
+            [
+              73.83650131134054,
+              19.955090733584502
+            ],
+            [
+              73.83652372697233,
+              19.955073838189954
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S014",
+        "slot_key": "NR_F_003:S014",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83659097383938,
+              19.95502315198773
+            ],
+            [
+              73.83660884203003,
+              19.955044347247537
+            ],
+            [
+              73.83658642641105,
+              19.955061242653546
+            ],
+            [
+              73.83656855822176,
+              19.955040047391574
+            ],
+            [
+              73.83659097383938,
+              19.95502315198773
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S015",
+        "slot_key": "NR_F_003:S015",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.836658220664,
+              19.95497246575759
+            ],
+            [
+              73.83667608885867,
+              19.954993661010914
+            ],
+            [
+              73.83665367325383,
+              19.955010556426217
+            ],
+            [
+              73.8366358050605,
+              19.954989361170735
+            ],
+            [
+              73.836658220664,
+              19.95497246575759
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S016",
+        "slot_key": "NR_F_003:S016",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83672546744616,
+              19.954921779499543
+            ],
+            [
+              73.83674333564487,
+              19.954942974746373
+            ],
+            [
+              73.83672092005419,
+              19.954959870170985
+            ],
+            [
+              73.83670305185683,
+              19.95493867492199
+            ],
+            [
+              73.83672546744616,
+              19.954921779499543
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S017",
+        "slot_key": "NR_F_003:S017",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83679271418589,
+              19.954871093213583
+            ],
+            [
+              73.83681058238864,
+              19.954892288453923
+            ],
+            [
+              73.8367881668121,
+              19.95490918388784
+            ],
+            [
+              73.8367702986107,
+              19.954887988645336
+            ],
+            [
+              73.83679271418589,
+              19.954871093213583
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S018",
+        "slot_key": "NR_F_003:S018",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.8368599608832,
+              19.954820406899714
+            ],
+            [
+              73.83687782908996,
+              19.954841602133573
+            ],
+            [
+              73.83685541352757,
+              19.954858497576794
+            ],
+            [
+              73.83683754532214,
+              19.954837302340774
+            ],
+            [
+              73.8368599608832,
+              19.954820406899714
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S019",
+        "slot_key": "NR_F_003:S019",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83692720753805,
+              19.954769720557938
+            ],
+            [
+              73.83694507574884,
+              19.95479091578531
+            ],
+            [
+              73.8369226602006,
+              19.95480781123783
+            ],
+            [
+              73.83690479199115,
+              19.954786616008303
+            ],
+            [
+              73.83692720753805,
+              19.954769720557938
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S020",
+        "slot_key": "NR_F_003:S020",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83699445415046,
+              19.954719034188255
+            ],
+            [
+              73.83701232236528,
+              19.954740229409136
+            ],
+            [
+              73.83698990683119,
+              19.95475712487096
+            ],
+            [
+              73.8369720386177,
+              19.954735929647924
+            ],
+            [
+              73.83699445415046,
+              19.954719034188255
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S021",
+        "slot_key": "NR_F_003:S021",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83706170072044,
+              19.954668347790665
+            ],
+            [
+              73.83707956893929,
+              19.95468954300506
+            ],
+            [
+              73.83705715341934,
+              19.954706438476183
+            ],
+            [
+              73.83703928520183,
+              19.954685243259632
+            ],
+            [
+              73.83706170072044,
+              19.954668347790665
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S022",
+        "slot_key": "NR_F_003:S022",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83712894724796,
+              19.954617661365162
+            ],
+            [
+              73.83714681547086,
+              19.954638856573066
+            ],
+            [
+              73.83712439996506,
+              19.954655752053498
+            ],
+            [
+              73.83710653174352,
+              19.95463455684343
+            ],
+            [
+              73.83712894724796,
+              19.954617661365162
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S023",
+        "slot_key": "NR_F_003:S023",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83719619373306,
+              19.954566974911753
+            ],
+            [
+              73.83721406196,
+              19.95458817011317
+            ],
+            [
+              73.83719164646833,
+              19.95460506560291
+            ],
+            [
+              73.83717377824276,
+              19.95458387039932
+            ],
+            [
+              73.83719619373306,
+              19.954566974911753
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-B",
+        "source_geoman_id": 2918,
+        "slot_id": "S024",
+        "slot_key": "NR_F_003:S024",
+        "slot_size_m": "3.00 x 3.00",
+        "slot_width_m": 3.0,
+        "slot_depth_m": 3.0,
+        "planned_min_spacing_m": 6,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83726344017572,
+              19.95451628843044
+            ],
+            [
+              73.83728130840669,
+              19.954537483625362
+            ],
+            [
+              73.83725889292916,
+              19.954554379124396
+            ],
+            [
+              73.83724102469955,
+              19.954533183927307
+            ],
+            [
+              73.83726344017572,
+              19.95451628843044
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-C",
+        "source_geoman_id": 3007,
+        "slot_id": "S025",
+        "slot_key": "NR_F_003:S025",
+        "slot_size_m": "2.70 x 2.70",
+        "slot_width_m": 2.7,
+        "slot_depth_m": 2.7,
+        "planned_min_spacing_m": 5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83419177648493,
+              19.955822266174472
+            ],
+            [
+              73.83416597849688,
+              19.955822011767108
+            ],
+            [
+              73.83416624755542,
+              19.955797618402492
+            ],
+            [
+              73.8341920455395,
+              19.955797872809615
+            ],
+            [
+              73.83419177648493,
+              19.955822266174472
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-C",
+        "source_geoman_id": 3007,
+        "slot_id": "S026",
+        "slot_key": "NR_F_003:S026",
+        "slot_size_m": "2.70 x 2.70",
+        "slot_width_m": 2.7,
+        "slot_depth_m": 2.7,
+        "planned_min_spacing_m": 5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83419100917955,
+              19.955891832436823
+            ],
+            [
+              73.83416521118019,
+              19.95589157802878
+            ],
+            [
+              73.83416548023956,
+              19.955867184664363
+            ],
+            [
+              73.83419127823494,
+              19.95586743907216
+            ],
+            [
+              73.83419100917955,
+              19.955891832436823
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-C",
+        "source_geoman_id": 3007,
+        "slot_id": "S027",
+        "slot_key": "NR_F_003:S027",
+        "slot_size_m": "2.70 x 2.70",
+        "slot_width_m": 2.7,
+        "slot_depth_m": 2.7,
+        "planned_min_spacing_m": 5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83419024187177,
+              19.955961398698594
+            ],
+            [
+              73.83416444386114,
+              19.955961144289883
+            ],
+            [
+              73.83416471292135,
+              19.95593675092566
+            ],
+            [
+              73.83419051092802,
+              19.955937005334142
+            ],
+            [
+              73.83419024187177,
+              19.955961398698594
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-C",
+        "source_geoman_id": 3007,
+        "slot_id": "S028",
+        "slot_key": "NR_F_003:S028",
+        "slot_size_m": "2.70 x 2.70",
+        "slot_width_m": 2.7,
+        "slot_depth_m": 2.7,
+        "planned_min_spacing_m": 5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.83418947456163,
+              19.956030964959808
+            ],
+            [
+              73.8341636765397,
+              19.956030710550415
+            ],
+            [
+              73.83416394560074,
+              19.956006317186393
+            ],
+            [
+              73.83418974361871,
+              19.956006571595548
+            ],
+            [
+              73.83418947456163,
+              19.956030964959808
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-C",
+        "source_geoman_id": 3007,
+        "slot_id": "S029",
+        "slot_key": "NR_F_003:S029",
+        "slot_size_m": "2.70 x 2.70",
+        "slot_width_m": 2.7,
+        "slot_depth_m": 2.7,
+        "planned_min_spacing_m": 5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.8341887072491,
+              19.956100531220443
+            ],
+            [
+              73.83416290921588,
+              19.95610027681037
+            ],
+            [
+              73.83416317827775,
+              19.95607588344656
+            ],
+            [
+              73.83418897630702,
+              19.95607613785639
+            ],
+            [
+              73.8341887072491,
+              19.956100531220443
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zone_id": "NR_F_003",
+        "zone_display_name": "Rukmini Nagar, Datta Mandir Road",
+        "boundary_id": "NR-C",
+        "source_geoman_id": 3007,
+        "slot_id": "S030",
+        "slot_key": "NR_F_003:S030",
+        "slot_size_m": "2.70 x 2.70",
+        "slot_width_m": 2.7,
+        "slot_depth_m": 2.7,
+        "planned_min_spacing_m": 5,
+        "occupancy_status": "UNASSIGNED_DEMO",
+        "geometry_verification": "PROVISIONAL_UNVERIFIED",
+        "operational_enabled": false,
+        "legal_authorization": "NOT_VERIFIED",
+        "placement_method": "SINGLE_ROW",
+        "pedestrian_clearance_verified": false,
+        "pilot_feature_type": "slot",
+        "pilot_source_file": "nashik_3_zones_provisional_slot_preview.geojson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.8341879399342,
+              19.95617009748051
+            ],
+            [
+              73.83416214188966,
+              19.956169843069766
+            ],
+            [
+              73.83416241095237,
+              19.956145449706145
+            ],
+            [
+              73.83418820899294,
+              19.956145704116654
+            ],
+            [
+              73.8341879399342,
+              19.95617009748051
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

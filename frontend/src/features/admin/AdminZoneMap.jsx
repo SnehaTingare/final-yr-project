@@ -1,3 +1,4 @@
+import {zoneName} from "../../shared/utils/displayLabels.js";
 import React, {useEffect, useMemo, useState} from "react";
 import {CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap} from "react-leaflet";
 import L from "leaflet";
@@ -35,10 +36,10 @@ export function AdminZoneMap({zones, geometry, onZone}) {
       <AdminMapFocus groups={model.groups} resetVersion={resetVersion}/>
       {model.groups.map(group => {const primary = group.zones[0]; return <CircleMarker key={group.key} center={group.position} radius={group.shared ? 7 : 5}
         pathOptions={{color: group.shared ? "#3f586c" : "#fff", weight: group.shared ? 2 : 1.5, fillOpacity: group.shared ? .78 : .82, fillColor: group.shared ? "#718596" : STATUS_COLORS[primary.live_status] || "#64748b"}}>
-        <Tooltip direction="top">{group.shared ? `${group.zones.length} zones share this analytical reference` : primary.zone_id}</Tooltip>
+        <Tooltip direction="top">{group.shared ? `${group.zones.length} zones share this analytical reference` : zoneName(primary)}</Tooltip>
         <Popup className="admin-shared-popup" minWidth={group.shared ? 310 : 235}>
-          <strong>{group.shared ? "Shared analytical reference" : primary.zone_id}</strong>
-          <div className="admin-shared-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}><span><i style={{background: STATUS_COLORS[zone.live_status] || "#64748b"}}/><b>{zone.zone_id}</b></span><em>{zone.live_status}</em><small>{zone.available_capacity == null ? "Capacity unknown" : `${zone.available_capacity} available`}</small></button>)}</div>
+          <strong>{group.shared ? "Shared analytical reference" : zoneName(primary)}</strong>
+          <div className="admin-shared-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}><span><i style={{background: STATUS_COLORS[zone.live_status] || "#64748b"}}/><b>{zoneName(zone)}</b></span><em>{pretty(zone.live_status)}</em><small>{zone.available_capacity == null ? "Capacity unknown" : `${zone.available_capacity} available`}</small></button>)}</div>
           {group.shared && <p>These official zones share the same analytical GIS reference. They remain separate NMC zone records.</p>}
         </Popup>
       </CircleMarker>;})}

@@ -16,6 +16,8 @@ from shapely.errors import ShapelyError
 from backend.repositories.database import ROOT, OperationalValidationError
 
 BOUNDARY_PATH = ROOT / "data/pilot/lekha_nagar_boundaries.geojson"
+THREE_ZONE_PATH = ROOT / "data/pilot/nashik_three_zones.geojson"
+IMPORTED_ZONE_CAPACITIES = {"PAN_F_019": 10, "SAT_F_014": 35, "NR_F_003": 30}
 IDS = {"2974": "Boundary A", "3577": "Boundary B"}
 TO_METRIC = Transformer.from_crs(4326, 32643, always_xy=True)
 TO_MAP = Transformer.from_crs(32643, 4326, always_xy=True)
@@ -77,13 +79,13 @@ def heading(polygon):
     return max(edges)[1]
 
 
-def pose_geometry(longitude, latitude, angle):
+def pose_geometry(longitude, latitude, angle, width_m=2, depth_m=2):
     if not all(math.isfinite(v) for v in (longitude, latitude, angle)):
         raise OperationalValidationError("Slot pose must contain finite coordinates")
     if not 73.6 <= longitude <= 74 or not 19.8 <= latitude <= 20.2:
         raise OperationalValidationError("Slot position must be in the pilot locality")
     x, y = TO_METRIC.transform(longitude, latitude)
-    return geographic(affinity.rotate(box(x - 1, y - 1, x + 1, y + 1), angle, origin=(x, y)))
+    return geographic(affinity.rotate(box(x - width_m / 2, y - depth_m / 2, x + width_m / 2, y + depth_m / 2), angle, origin=(x, y)))
 
 
 def slot_pose(geometry):
@@ -129,6 +131,8 @@ def obstruction_geometry(longitude, latitude, radius_m=0.5):
 
 
 def validate_layout(layout, boundaries=None):
+    if layout.get("zone_id", "NN_F_013") != "NN_F_013":
+        return validate_imported_layout(layout, boundaries)
     boundaries = boundaries or load_boundaries()
     parents = {f["properties"]["boundary_id"]: metric(f["geometry"]) for f in boundaries["features"]}
     config = normalize_config(layout.get("config"))
@@ -192,6 +196,98 @@ def validate_layout(layout, boundaries=None):
             "dimension_tolerance_m": TOL, "containment": "PASS", "spacing": "PASS",
             "pedestrian_clearance": "PASS", "unknown_obstructions_assessed": False,
             "counts": {IDS[k]: sum(s["parent_boundary_id"] == k for s in slots) for k in IDS}}
+
+
+def imported_layout(zone_id):
+    """Read exact supplied features; never regenerate or repair their coordinates."""
+    if zone_id not in IMPORTED_ZONE_CAPACITIES:
+        raise OperationalValidationError("Unknown imported pilot zone")
+    raw = THREE_ZONE_PATH.read_bytes()
+    collection = json.loads(raw)
+    features = [f for f in collection["features"] if f["properties"]["zone_id"] == zone_id]
+    boundaries = []
+    slots = []
+    for f in features:
+        properties = f["properties"]
+        if properties["pilot_feature_type"] == "boundary":
+            boundaries.append({**f, "properties": {**properties, "name": properties["boundary_id"]}})
+        elif properties["pilot_feature_type"] == "slot":
+            slots.append({"zone_id": zone_id, "slot_id": properties["slot_id"],
+                          "parent_boundary_id": properties["boundary_id"], "geometry": f["geometry"],
+                          "width_m": properties["slot_width_m"], "depth_m": properties["slot_depth_m"],
+                          "spacing_m": properties["planned_min_spacing_m"], "source_properties": properties,
+                          "status": "AVAILABLE", "assigned_vendor_id": None})
+    if len(slots) != IMPORTED_ZONE_CAPACITIES[zone_id] or not boundaries:
+        raise OperationalValidationError("Imported pilot count does not match the supplied zone")
+    first = slots[0]
+    settings = {s["parent_boundary_id"]: {"width_m": s["width_m"], "depth_m": s["depth_m"], "spacing_m": s["spacing_m"]} for s in slots}
+    source_hash = hashlib.sha256(raw).hexdigest()
+    return {"zone_id": zone_id, "zone_display_name": features[0]["properties"]["zone_display_name"],
+            "georeferenced": True, "coordinate_system": "EPSG:4326", "metric_crs": "EPSG:32643",
+            "geometry_verification_status": "PROVISIONAL_NOT_SURVEYED", "operational_enabled": False,
+            "source_sha256": source_hash, "source_provenance": collection["provenance"],
+            "boundaries": {"type": "FeatureCollection", "features": boundaries, "source_sha256": source_hash},
+            "slots": slots, "dimension_spacing_by_boundary": settings,
+            "width_m": first["width_m"], "depth_m": first["depth_m"],
+            "spacing_m": first["spacing_m"], "clearance_m": None,
+            "config": {"spacing_m": first["spacing_m"], "clearance_m": None,
+                       "boundaries": {f["properties"]["boundary_id"]: {"angle": None, "side": "unverified"} for f in boundaries}},
+            "pedestrian_clearance_assumptions": {"verified": False, "corridor_geometry_supplied": False,
+                                                "note": "Slot spacing is not verified pedestrian clearance. Site review required."},
+            "corridors": [], "obstructions": [], "access_points": {}, "rejections": []}
+
+
+def boundaries_for_zone(zone_id):
+    return load_boundaries() if zone_id == "NN_F_013" else imported_layout(zone_id)["boundaries"]
+
+
+def validate_imported_layout(layout, boundaries=None):
+    source = imported_layout(layout["zone_id"])
+    boundaries = boundaries or source["boundaries"]
+    parents = {f["properties"]["boundary_id"]: metric(f["geometry"]) for f in boundaries["features"]}
+    issues, seen, polygons = [], set(), []
+    slots = layout.get("slots", [])
+    source_slots = {s["slot_id"]: s for s in source["slots"]}
+    if len(slots) > IMPORTED_ZONE_CAPACITIES[layout["zone_id"]]:
+        raise OperationalValidationError("Mapped slots exceed the pilot's listed capacity")
+    for slot in slots:
+        sid, parent = slot.get("slot_id"), slot.get("parent_boundary_id")
+        if sid not in source_slots or sid in seen or parent not in parents:
+            raise OperationalValidationError("Slots need unique IDs and a boundary in this zone")
+        seen.add(sid)
+        polygon = metric(slot["geometry"])
+        if polygon.geom_type != "Polygon" or polygon.interiors or len(polygon.exterior.coords) != 5:
+            raise OperationalValidationError(f"{sid}: expected a four-corner rectangle")
+        vertices = list(polygon.exterior.coords)
+        lengths = sorted(math.dist(a, b) for a, b in zip(vertices, vertices[1:]))
+        original = source_slots[sid]
+        width, depth = original["width_m"], original["depth_m"]
+        expected = sorted([width, width, depth, depth])
+        if slot.get("width_m") != width or slot.get("depth_m") != depth or any(abs(a - b) > TOL for a, b in zip(lengths, expected)) or abs(polygon.area - width * depth) > .005:
+            raise OperationalValidationError(f"{sid}: supplied slot dimensions must be preserved")
+        if abs(polygon.minimum_rotated_rectangle.area - polygon.area) > .005:
+            raise OperationalValidationError(f"{sid}: footprint must remain rectangular")
+        if not parents[parent].buffer(TOL).covers(polygon):
+            raise OperationalValidationError(f"{sid}: outside its supplied boundary")
+        for other_id, other in polygons:
+            if polygon.intersection(other).area > .0001:
+                raise OperationalValidationError(f"{sid}: overlaps {other_id}")
+            distance = polygon.distance(other)
+            required = max(original["spacing_m"], source_slots[other_id]["spacing_m"])
+            if distance + TOL < required:
+                issues.append(f"{sid}/{other_id}: {distance:.2f} m spacing; {required:g} m required")
+        for obstruction in layout.get("obstructions", []):
+            if polygon.intersects(metric(obstruction["geometry"])):
+                issues.append(f"{sid}: intersects a recorded obstruction")
+        polygons.append((sid, polygon))
+    for obstruction in layout.get("obstructions", []):
+        polygon = metric(obstruction["geometry"])
+        if polygon.geom_type != "Polygon" or not any(p.buffer(TOL).covers(polygon) for p in parents.values()):
+            raise OperationalValidationError("Obstruction must be inside a supplied boundary")
+    return {"valid": not issues, "slot_count": len(slots), "metric_crs": "EPSG:32643",
+            "containment": "PASS", "dimensions": "PASS", "overlaps": "PASS",
+            "spacing": "FAIL" if issues else "PASS", "issues": issues,
+            "reason": "; ".join(issues), "pedestrian_clearance": "UNVERIFIED_ASSUMPTION"}
 
 
 def generate_geographic(config=None, boundaries=None, obstructions=None):

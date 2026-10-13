@@ -45,3 +45,5 @@
  .pilot-panel.pilot-geographic .pilot-status{font-size:10px;padding:4px 6px}.slot-map-controls{left:48px;top:8px;right:8px;gap:4px}.pilot-panel.pilot-geographic .slot-map-controls button{font-size:10px;padding:6px 8px;min-height:32px}
  .slot-map-legend{left:8px;right:8px;bottom:auto;top:102px;padding:5px;font-size:9px;gap:4px 8px}.slot-map-information,.slot-tools-popover{top:146px;max-height:48%;width:calc(100% - 16px);right:8px}
 }
+
+.pilot-zone-selector{display:flex;align-items:center;gap:10px;font-size:12px;margin:8px 0}.pilot-zone-selector select{padding:8px;border:1px solid #cad9e3;border-radius:6px;background:#fff;max-width:100%;min-width:0}.pilot-zone-counts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;padding:8px 0;color:#526a7b}.pilot-zone-counts b{color:#19374e}
