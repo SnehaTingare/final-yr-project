@@ -71,6 +71,8 @@ export default function ImplementationApp() {
   if (!session) return <AuthLanding onAuthenticated={applySession}/>;
 
   const onboarding = session.role === "NEW_VENDOR_ONBOARDING";
+  if (onboarding) return <VendorPortal onboarding onRegistered={refreshSession}/>;
+
   const nav = session.role === "ADMIN" ? ADMIN_NAV : VENDOR_NAV;
   const current = nav.find(item => item.id === page) || nav[0];
   const navTitle = item => session.role === "ADMIN" ? item.title : t(item.titleKey);

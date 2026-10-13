@@ -91,22 +91,6 @@ EDITABLE_PROFILE_FIELDS = {
     "preferred_language",
 }
 
-<<<<<<< HEAD
-@lru_cache(maxsize=2)
-def _historical_identity_map(path: str = str(HISTORICAL_IDENTITY_PATH)) -> dict[str, dict[str, str | None]]:
-    source_path = Path(path)
-    if not source_path.is_file():
-        return {}
-    with source_path.open(newline="", encoding="utf-8-sig") as source:
-        return {
-            row["vendor_id"]: {
-                "full_name": (row.get("vendor_name_english") or "").strip() or None,
-                # The source has a business type, but no distinct stall/trade-name field.
-                "business_name": None,
-            }
-            for row in csv.DictReader(source)
-        }
-=======
 
 # ---------------------------------------------------------------------------
 # Small helpers
@@ -129,7 +113,6 @@ def _optional_text(
 # ---------------------------------------------------------------------------
 # Historical source loading
 # ---------------------------------------------------------------------------
->>>>>>> f45e08d6f0f9c630c2b5d375a02ca30ea8f20fef
 
 
 @lru_cache(maxsize=4)
