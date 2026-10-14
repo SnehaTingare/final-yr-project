@@ -92,18 +92,18 @@ def submit_allocation_request(
     )
 
 
-    if (
-        get_vendor_profile(
+    profile = get_vendor_profile(
             vendor_id,
             database_path=dependencies.DATABASE_PATH,
         )
-        is None
-    ):
+    if profile is None:
 
         raise HTTPException(
             http_status.HTTP_404_NOT_FOUND,
             f"Unknown vendor_id: {vendor_id}",
         )
+    if payload.business_category and payload.business_category != profile["business_category"]:
+        raise HTTPException(422, "Application business category must match the authenticated vendor profile")
 
 
     try:
@@ -115,7 +115,7 @@ def submit_allocation_request(
                 payload.request_type
             ),
             business_category=(
-                payload.business_category
+                profile["business_category"]
             ),
             preferred_division=(
                 payload.preferred_division

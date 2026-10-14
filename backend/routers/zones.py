@@ -22,7 +22,8 @@ from fastapi import status as http_status
 import json
 import csv
 import math
-from backend.decision_policy import load_base_weight_policy
+from backend.decision_policy import load_base_weight_policy, active_mcda_configuration
+from backend.geo.zone_locations import resolve_zone_locations
 from backend.core.security import operational_error
 import pandas as pd
 from backend.core.security import request_session
@@ -479,6 +480,12 @@ def admin_zones(
     ]
 
 
+    if active_mcda_configuration() is not None:
+        locations = resolve_zone_locations(dependencies.DATABASE_PATH)
+        for record in records:
+            record["resolved_location"] = locations[record["zone_id"]]
+            record["title"] = record["zone_id"]
+            record["description"] = record.get("official_description")
     return {
         "zones":
             records,
@@ -793,6 +800,15 @@ def catalog(
 
 def display_zone_geometry():
     """Display-only projection keyed by official IDs; never a model input."""
+    if active_mcda_configuration() is not None:
+        locations = resolve_zone_locations(dependencies.DATABASE_PATH)
+        features = [{"type":"Feature", "properties":{**row, "model_version":CATALOG["active_model_version"],
+                      "model_reference_source":row["location_source"], "location_status":row["location_source"],
+                      "official_boundary_verified":False, "model_features_recalculated":True},
+                     "geometry":{"type":"Point", "coordinates":row["coordinates"]} if row["coordinates"] else None}
+                    for row in locations.values()]
+        return {"type":"FeatureCollection", "features":features,
+                "notice":"Saved provisional pilot areas take precedence over manual pins; remaining references are manual or explicitly unverified analytical fallbacks."}
     def read(path):
         with path.open(encoding="utf-8-sig", newline="") as source:
             return list(csv.DictReader(source))
@@ -854,4 +870,4 @@ def zone_display_locations():
     try:
         return JSONResponse(display_zone_geometry())
     except (OSError, ValueError, KeyError) as exc:
-        raise HTTPException(503, "Display coordinate data is missing or invalid; check the manual mapping handoff.") from exc
+        raise HTTPException(503, f"Display coordinate data is unavailable: {exc}") from exc

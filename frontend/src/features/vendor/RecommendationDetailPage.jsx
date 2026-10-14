@@ -74,7 +74,7 @@ export default function RecommendationDetailPage({zone, recommendations, mapCont
   return <section className="recommendation-detail-page">
     <button className="vendor-back recommendation-detail-back" onClick={onBack}><ArrowLeft size={16}/> {t("recommend.backRecommendations")}</button>
     <header className="recommendation-detail-header">
-      <div><span className="recommendation-detail-rank">{t("recommend.recommendedZone", {rank: zone.rank})}</span><h1>{zoneName(zone,t("display.zoneMissing"))}</h1><p>{zoneDescription(zone,t("fallback.zoneDescription"))}</p><small>{zone.zone_id}</small><div className="recommendation-detail-location"><MapPin size={14}/><span>{zone.zone_division || t("common.notSpecified")}</span></div></div>
+      <div><span className="recommendation-detail-rank">{zone.rank ? t("recommend.recommendedZone", {rank: zone.rank}) : t("recommend.viewRecommendation")}</span><h1>{zone.zone_id}</h1><p>{zoneDescription(zone,t("fallback.zoneDescription"))}</p><small>{zoneName(zone,t("display.zoneMissing"))}</small><div className="recommendation-detail-location"><MapPin size={14}/><span>{zone.zone_division || t("common.notSpecified")}</span></div></div>
       <div className="recommendation-detail-score"><span>{t("recommend.suitability")}</span><strong>{score(zone.score,t("common.notRecorded"))}</strong><small>/100</small><em>{t("recommend.recommendedForBusiness")}: {categoryLabel(language, profile?.business_category)}</em></div>
     </header>
 

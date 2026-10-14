@@ -212,8 +212,9 @@ def main():
 
     # Candidate universe is a deterministic policy snapshot, not an allocation.
     # Unknown live capacity remains unknown; eligibility is conditional on verification.
-    eligible = zone.loc[(txt(zone.zone_type)=="FREE") &
-        (zone.geometry_usable_for_reference_model.astype(str).str.lower().isin(["true","1","yes"]))].copy()
+    eligible = zone.loc[txt(zone.zone_type)=="FREE"].copy()
+    if args.version != "manual-142-v2":
+        eligible = eligible.loc[eligible.geometry_usable_for_reference_model.astype(str).str.lower().isin(["true","1","yes"])].copy()
     eligible["candidate_policy_status"]="REQUIRES_LIVE_CAPACITY_AND_MUNICIPAL_CHECK"
     eligible.to_csv(OUT/"candidate_zone_snapshot.csv",index=False,encoding="utf-8-sig")
     registry["request_division"]=registry.vendor_division
