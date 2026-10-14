@@ -4,8 +4,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
   ArrowLeft, ArrowRight, Building2, Bus, Check, ChevronDown,
-  CircleParking, Clock3, FileText, Info, Languages, MapPin, RefreshCw, Store,
-  UserRound, X,
+  CircleParking, Clock3, FileText, ImagePlus, Info, Languages, MapPin, RefreshCw, Store,
+  Trash2, Upload, UserRound, X,
 } from "lucide-react";
 import {
   cancelAllocationRequest, createAllocationRequest, getActiveAllocation,
@@ -131,6 +131,28 @@ function PreferenceFields({draft, setDraft, options, disabled = false, onLanguag
   </div>;
 }
 
+function ProfilePhotoPanel({profile, photo, onPhotoChange, onRemove}) {
+  const {language, t} = useI18n();
+  const inputId = "vendor-profile-photo";
+  const displayName = profileDisplayName(profile);
+  const initials = displayName.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join("").toUpperCase() || "V";
+  return <>
+    <div className="profile-photo-heading"><div><span className="vendor-eyebrow">{t("profile.photoEyebrow")}</span><h2>{t("profile.photoTitle")}</h2></div><ImagePlus size={19}/></div>
+    <div className={`profile-photo-frame ${photo ? "has-photo" : ""}`}>
+      {photo ? <img src={photo} alt={t("profile.photoAlt")} /> : <div className="profile-photo-placeholder"><span>{initials}</span><UserRound size={34}/><small>{t("profile.photoPlaceholder")}</small></div>}
+    </div>
+    <div className="profile-photo-actions">
+      <label className="vendor-primary profile-upload-button" htmlFor={inputId}><Upload size={16}/>{t("profile.uploadPhoto")}</label>
+      <input id={inputId} className="profile-photo-input" type="file" accept="image/*" onChange={event => onPhotoChange(event.target.files?.[0])}/>
+      <button className="vendor-secondary" type="button" onClick={onRemove} disabled={!photo}><Trash2 size={15}/>{t("profile.removePhoto")}</button>
+    </div>
+    <p className="profile-photo-note">{t("profile.photoHelp")}</p>
+    <div className="profile-photo-identity"><span className="vendor-eyebrow">{t(profile.vendor_type === "NEW" ? "profile.applicationId" : "profile.historical")}</span><h3>{displayName}</h3>{profile.business_name && <p>{profile.business_name}</p>}<small>{publicVendorId(profile)}</small></div>
+    <span className="vendor-type">{vendorTypeLabel(language, profile.vendor_type, pretty(profile.vendor_type))}</span>
+    <dl><div><dt>{t("common.business")}</dt><dd>{categoryLabel(language, profile.business_category)}</dd></div><div><dt>{t("common.division")}</dt><dd>{profile.preferred_division || t("common.anyDivision")}</dd></div><div><dt>{t("allocation.active")}</dt><dd>{profile.active_zone_id || t("common.none")}</dd></div></dl>
+  </>;
+}
+
 function ZoneDetails({zone, metadata, onClose, onSelect}) {
   const {language, t} = useI18n();
   const [expanded, setExpanded] = useState(false);
@@ -210,6 +232,7 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
   const {language, t, selectLanguage} = useI18n();
   const [options, setOptions] = useState({categories: [], divisions: []});
   const [profile, setProfile] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
   const [draft, setDraft] = useState(draftFromProfile());
   const [activeAllocation, setActiveAllocation] = useState(null);
   const [recommendationData, setRecommendationData] = useState(null);
@@ -235,6 +258,7 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
   useEffect(() => {
     if (!sessionProfile) return;
     setProfile(sessionProfile); setDraft(draftFromProfile(sessionProfile));
+    setProfilePhoto(sessionProfile.profile_photo_url || sessionProfile.photo_url || sessionProfile.avatar_url || null);
   }, [sessionProfile?.vendor_id]);
   const run = async action => {
     setBusy(true); setError(""); setSuccess("");
@@ -260,6 +284,12 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
     setProfile(vendor); setDraft(draftFromProfile(vendor)); selectLanguage(vendor.preferred_language, {deliberate: false});
     const active = await getActiveAllocation(vendor.vendor_id);
     setActiveAllocation(active.allocation);
+  };
+  const handlePhotoChange = file => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = event => setProfilePhoto(event.target?.result || null);
+    reader.readAsDataURL(file);
   };
   const register = event => { event.preventDefault(); run(async () => {
     const vendor = await registerVendor({...draft, preferred_division: draft.preferred_division || null, preferred_locality: draft.preferred_locality || null});
@@ -359,8 +389,8 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
     {stage === "register" && <section className="vendor-panel narrow"><span className="vendor-eyebrow">{t("onboarding.verified")}</span><h2>{t("onboarding.setupTitle")}</h2><p className="panel-copy">{t("onboarding.setupHelp")}</p><form onSubmit={register}><PreferenceFields draft={draft} setDraft={setDraft} options={options} onLanguageChange={changeLanguage} requireIdentity/><button className="vendor-primary" disabled={busy}>{t(busy ? "onboarding.creating" : "onboarding.create")}<ArrowRight size={17}/></button></form></section>}
 
     {stage === "profile" && profile && <section className="vendor-profile-layout">
-      <aside className="vendor-profile-card"><span className="vendor-eyebrow">{t(profile.vendor_type === "NEW" ? "profile.applicationId" : "profile.historical")}</span><div className="profile-avatar"><UserRound size={24}/></div><h2>{profile.full_name || t(profile.vendor_type === "NEW" ? "identity.applicationVendor" : "identity.registeredVendor")}</h2>{profile.business_name && <p>{profile.business_name}</p>}<small>{publicVendorId(profile)}</small><span className="vendor-type">{vendorTypeLabel(language, profile.vendor_type, pretty(profile.vendor_type))}</span><dl><div><dt>{t("common.business")}</dt><dd>{categoryLabel(language, profile.business_category)}</dd></div><div><dt>{t("common.division")}</dt><dd>{profile.preferred_division || t("common.anyDivision")}</dd></div><div><dt>{t("allocation.active")}</dt><dd>{activeAllocation?.zone_id || t("common.none")}</dd></div></dl></aside>
-      <section className="vendor-panel"><span className="vendor-eyebrow">{t("profile.heading")}</span><h2>{t("profile.title")}</h2><p className="panel-copy">{t("profile.help")}</p><form onSubmit={saveProfile}><PreferenceFields draft={draft} setDraft={setDraft} options={options} onLanguageChange={changeLanguage}/><div className="profile-actions"><button className="vendor-secondary" disabled={busy}>{t("profile.save")}</button><button className="vendor-primary" type="button" onClick={findZones} disabled={busy}>{t(busy ? "common.loading" : "profile.getTop3")}<ArrowRight size={17}/></button></div></form></section>
+      <section className="vendor-panel profile-editor-panel"><div className="profile-editor-heading"><div><span className="vendor-eyebrow">{t("profile.heading")}</span><h2>{t("profile.title")}</h2><p className="panel-copy">{t("profile.help")}</p></div><span className="profile-editor-status"><Check size={14}/>{t("profile.savedState")}</span></div><form onSubmit={saveProfile}><PreferenceFields draft={draft} setDraft={setDraft} options={options} onLanguageChange={changeLanguage}/><div className="profile-actions"><button className="vendor-secondary" disabled={busy}>{t("profile.save")}</button><button className="vendor-primary" type="button" onClick={findZones} disabled={busy}>{t(busy ? "common.loading" : "profile.getTop3")}<ArrowRight size={17}/></button></div></form></section>
+      <aside className="vendor-profile-card profile-photo-card"><ProfilePhotoPanel profile={{...profile, active_zone_id: activeAllocation?.zone_id}} photo={profilePhoto} onPhotoChange={handlePhotoChange} onRemove={() => setProfilePhoto(null)}/></aside>
     </section>}
 
     {stage === "recommendations" && profile && <section className="recommendation-workspace">

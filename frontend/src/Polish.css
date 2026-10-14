@@ -67,11 +67,11 @@ html[lang="mr"] body,html[lang="hi"] body{font-family:Inter,"Noto Sans Devanagar
 .vendor-preference-toggles label{min-height:55px;border-radius:10px;background:#fff;transition:.16s}.vendor-preference-toggles label:has(input:checked){border-color:#5f8a71;background:#edf5f0;color:#174b38;box-shadow:inset 0 0 0 1px #5f8a71}.vendor-preference-toggles input{width:17px;height:17px}
 
 .recommendation-toolbar{align-items:center}.personalization-strip{border-left:4px solid var(--ui-green-700);padding:18px 21px}
-.zone-card-list{gap:14px;height:690px;min-height:0;overflow-y:auto;scroll-behavior:smooth;scrollbar-gutter:stable;-webkit-overflow-scrolling:touch}.zone-card{border-color:var(--ui-line);border-radius:13px;padding:21px;box-shadow:var(--ui-shadow-sm);overflow:hidden}
+.zone-card-list{gap:14px;height:auto;max-height:none;min-height:0;overflow:visible;scroll-behavior:auto;scrollbar-gutter:auto}.zone-card{height:auto;min-height:0;border-color:var(--ui-line);border-radius:13px;padding:21px;box-shadow:var(--ui-shadow-sm);overflow:visible;display:flex;flex-direction:column}
 .zone-card:hover{border-color:#8aa594;box-shadow:var(--ui-shadow-md);transform:translateY(-1px)}.zone-card.selected{border-color:#3f7658;box-shadow:0 0 0 2px #3f765826,var(--ui-shadow-md)}
 .zone-card.selected:after{content:"Selected on map";position:absolute;right:15px;top:58px;color:#356849;background:#e9f4ed;border-radius:999px;padding:4px 8px;font-size:8px;font-weight:800;letter-spacing:.03em}
 .zone-rank{top:16px;left:15px;border-radius:999px;width:31px;height:31px;padding:0;display:grid;place-items:center;box-shadow:0 2px 8px #0002}.zone-card-heading{padding-left:40px}.zone-card-heading>strong{font-size:28px}
-.zone-live-grid{gap:7px}.zone-live-grid span{border:1px solid #e5ece8;border-radius:8px;padding:10px}.zone-live-grid b{font-size:11px}.zone-card-actions{border-top:1px solid #e8eeea;padding-top:13px;align-items:center;flex-wrap:wrap}
+.zone-card>p{display:block;overflow:visible;line-clamp:unset;-webkit-line-clamp:unset;-webkit-box-orient:initial}.zone-live-grid{gap:7px}.zone-live-grid span{border:1px solid #e5ece8;border-radius:8px;padding:10px}.zone-live-grid b{font-size:11px}.zone-card-actions{border-top:1px solid #e8eeea;padding-top:13px;align-items:center;flex-wrap:wrap}
 .zone-card-actions button{display:inline-flex;align-items:center;gap:5px;min-height:34px;border-radius:7px;padding:7px 9px}.zone-card-actions button:hover{background:#f0f5f2}.zone-card-actions .select-zone{padding:8px 13px}
 .vendor-map-wrap{height:690px;border-radius:14px;border-color:var(--ui-line-strong);box-shadow:var(--ui-shadow-sm)}.vendor-map-note{border:1px solid #dfe7e2;border-radius:7px;padding:9px 11px}
 .leaflet-popup-content-wrapper{border-radius:10px;box-shadow:0 10px 30px #183b2a2b}.shared-zone-list,.admin-shared-list{border-radius:8px}.shared-zone-list button,.admin-shared-list button{min-height:39px}.shared-zone-list button:focus-visible,.admin-shared-list button:focus-visible{outline:2px solid #4f8565;outline-offset:-2px}
@@ -88,7 +88,47 @@ html[lang="mr"] body,html[lang="hi"] body{font-family:Inter,"Noto Sans Devanagar
 .admin-map-shell{height:690px;border-radius:13px;border-color:var(--ui-line-strong);box-shadow:var(--ui-shadow-sm)}.admin-map-legend{max-width:calc(100% - 24px);flex-wrap:wrap;border-radius:8px}.admin-map-disclaimer{font-size:9px;border:1px solid #e2e8e4}
 .admin-drawer{width:min(510px,100%);padding:34px}.admin-modal{border-radius:13px;padding:30px}.drawer-grid{border-radius:10px}.drawer-grid>div{padding:15px}.drawer-grid span{font-size:9px}.drawer-grid strong{font-size:11px}
 
-@media(max-width:1180px){.implementation-sidebar{width:225px;flex-basis:225px}.vendor-portal,.admin-dashboard{padding:28px 24px 42px}.vendor-dashboard-stack>.vendor-account-card,.vendor-dashboard-stack>.allocation-card{grid-column:1/-1}.admin-summary-grid{grid-template-columns:repeat(3,minmax(135px,1fr))}.vendor-map-wrap,.admin-map-shell{height:600px}.zone-card-list{height:600px}.vendor-priority-options>div{grid-template-columns:1fr 1fr}}
+@media(max-width:1180px){.implementation-sidebar{width:225px;flex-basis:225px}.vendor-portal,.admin-dashboard{padding:28px 24px 42px}.vendor-dashboard-stack>.vendor-account-card,.vendor-dashboard-stack>.allocation-card{grid-column:1/-1}.admin-summary-grid{grid-template-columns:repeat(3,minmax(135px,1fr))}.vendor-map-wrap,.admin-map-shell{height:600px}.vendor-priority-options>div{grid-template-columns:1fr 1fr}}
 @media(max-width:1100px){.zone-card-list{height:auto;overflow:visible;scroll-behavior:auto;scrollbar-gutter:auto}}
 @media(max-width:760px){.vendor-portal,.admin-dashboard{padding:22px 13px 34px}.implementation-topbar{height:60px}.vendor-hero h1,.admin-header h1{font-size:25px}.vendor-dashboard-stack{display:flex;gap:16px}.vendor-account-card,.vendor-dashboard-card,.vendor-panel{padding:21px 17px}.request-summary-grid{grid-template-columns:1fr 1fr}.request-summary-card{min-height:88px}.vendor-profile-layout{grid-template-columns:1fr}.vendor-profile-card,.vendor-profile-layout>.vendor-panel{height:auto;max-height:none;overflow:visible}.vendor-profile-card{position:static}.vendor-priority-options>div{grid-template-columns:1fr 1fr}.zone-card.selected:after{position:static;display:inline-block;margin:8px 0 0}.zone-card-actions{justify-content:flex-start}.zone-card-actions .select-zone{margin-left:auto}.vendor-map-wrap{height:460px}.admin-tabs{margin-left:0;margin-right:0;padding:4px}.admin-summary-grid{grid-template-columns:1fr 1fr}.admin-table-wrap{max-height:62vh}.admin-map-shell{height:500px}.admin-map-legend{gap:7px}.admin-map-legend span{font-size:7px}}
 @media(max-width:430px){.vendor-account-grid,.allocation-facts,.request-meta{grid-template-columns:1fr}.vendor-priority-options>div{grid-template-columns:1fr}.zone-card-actions button{flex:1}.zone-card-actions .select-zone{width:100%;margin-left:0}.admin-summary-grid{grid-template-columns:1fr 1fr}.admin-summary-card{min-width:0;padding:15px 12px}.admin-summary-card span{white-space:normal}.admin-map-shell{height:440px}}
+
+/* Profile editor: keep the identity photo as the visual anchor. */
+.vendor-profile-layout{grid-template-columns:minmax(0,1.35fr) minmax(340px,.75fr);gap:24px;align-items:start}
+.vendor-profile-layout>.vendor-panel,.vendor-profile-card.profile-photo-card{height:auto;min-height:0;overflow:visible}
+.profile-editor-panel{padding:32px 34px 30px}
+.profile-editor-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid var(--ui-line)}
+.profile-editor-heading h2{margin:8px 0 7px;font-size:25px}
+.profile-editor-status{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:#3f7658;background:#edf6f0;border:1px solid #d4e8da;border-radius:999px;padding:7px 10px;font-size:9px;font-weight:800}
+.profile-editor-panel .vendor-form-grid{margin:26px 0 28px}
+.profile-editor-panel .vendor-form-grid>label{min-width:0}
+.profile-editor-panel .vendor-form-grid label>span,.profile-editor-panel .vendor-priority-options legend{font-size:10px;letter-spacing:.02em;text-transform:uppercase;color:#52665b}
+.profile-editor-panel .vendor-form-grid input,.profile-editor-panel .vendor-form-grid select{height:48px;background:#fbfcfb;border-radius:8px}
+.profile-editor-panel .vendor-form-grid input:hover,.profile-editor-panel .vendor-form-grid select:hover{border-color:#a8bcae;background:#fff}
+.profile-editor-panel .vendor-preference-toggles{gap:12px}
+.profile-editor-panel .vendor-preference-toggles label{min-height:60px;padding:14px 13px}
+.profile-photo-card{padding:26px;background:#fff}
+.profile-photo-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;color:var(--ui-green-800);margin-bottom:17px}
+.profile-photo-heading h2{font-size:19px;margin:8px 0 0;color:var(--ui-ink)}
+.profile-photo-frame{width:100%;height:clamp(240px,25vw,320px);display:grid;place-items:center;overflow:hidden;border:1px solid #dbe7df;border-radius:12px;background:linear-gradient(145deg,#f1f7f3,#e3eee8)}
+.profile-photo-frame.has-photo{background:#eef3ef}
+.profile-photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#719080}
+.profile-photo-placeholder>span{display:grid;place-items:center;width:82px;height:82px;border-radius:50%;background:#fff;color:var(--ui-green-800);font-size:25px;font-weight:800;box-shadow:0 8px 24px #234c3614}
+.profile-photo-placeholder small{font-size:10px;color:#779084}
+.profile-photo-actions{display:flex;gap:9px;margin-top:16px}
+.profile-photo-actions>*{flex:1;min-width:0;white-space:nowrap}
+.profile-upload-button{cursor:pointer}
+.profile-photo-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.profile-photo-input:focus-visible+.profile-upload-button{outline:3px solid #77a98c;outline-offset:2px}
+.profile-photo-note{margin:11px 0 21px;color:#84958b;font-size:9px;line-height:1.55}
+.profile-photo-identity{border-top:1px solid var(--ui-line);padding-top:20px;margin-bottom:12px}
+.profile-photo-identity h3{font-size:18px;overflow-wrap:anywhere;margin:8px 0 4px}
+.profile-photo-identity p{color:var(--ui-muted);font-size:11px;margin:0 0 5px}
+.profile-photo-identity small{color:#829188;font-size:10px}
+.profile-photo-card .vendor-type{display:inline-block}
+.profile-photo-card dl{margin:18px 0 0}
+.profile-photo-card dl div{padding:11px 0;font-size:10px}
+@media(max-width:900px){.vendor-profile-layout{grid-template-columns:minmax(0,1fr) minmax(290px,.72fr)}.profile-editor-panel{padding:27px 24px}}
+@media(max-width:760px){.vendor-profile-layout{grid-template-columns:1fr;gap:16px}.profile-photo-card{order:-1}.profile-photo-frame{height:clamp(220px,52vw,300px)}.profile-editor-heading{flex-direction:column;gap:12px}.profile-photo-actions{flex-direction:row}.profile-photo-actions>*{width:auto}}
+@media(max-width:380px){.profile-photo-actions{flex-direction:column}.profile-photo-actions>*{width:100%}}
