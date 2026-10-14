@@ -19,7 +19,7 @@ const ll = p => [p[1], p[0]];
 
 import MapLifecycle from "./MapLifecycle.jsx";
 
-export default function PilotSlotMap({admin = false, visible = true, onBack, allocations = [], ownBusinessCategory, onViewVendor, session, dispatch: externalDispatch, zoneId = "NN_F_013", onZoneChange}) {
+export default function PilotSlotMap({admin = false, visible = true, onBack, allocations = [], ownBusinessCategory, onViewVendor, focusSlotId = null, session, dispatch: externalDispatch, zoneId = "NN_F_013", onZoneChange}) {
   const {language,t} = useI18n();
   const [activeZone,setActiveZone] = useState(zoneId);
   const loadVersion = useRef(0);
@@ -43,6 +43,11 @@ export default function PilotSlotMap({admin = false, visible = true, onBack, all
   }, [visible,layout,draft]);
   const NAMES = Object.fromEntries((layout?.boundaries?.features || []).map(f => [f.properties.boundary_id,f.properties.name || f.properties.boundary_id]));
   const legacy = activeZone === "NN_F_013";
+  useEffect(() => {
+    if (!admin || !visible || !focusSlotId || layout?.zone_id !== activeZone) return;
+    const slot = layout.slots.find(item => item.slot_id === focusSlotId);
+    if (slot) {dispatch({type: "select", slotId: slot.slot_id}); setBoundaryId(slot.parent_boundary_id); setCommand({kind: "slot", id: Date.now()});}
+  }, [admin, visible, activeZone, focusSlotId, layout?.zone_id]);
   const shown = draft || layout, selected = shown?.slots.find(s => s.slot_id === selectedId), assigned = layout?.slots.find(s => s.slot_id === layout.my_slot_id);
   const slots = shown?.georeferenced ? shown.slots : [], protectedSlot = selected?.assigned_vendor_id || selected?.status === "OCCUPIED";
   const select = slot => {dispatch({type: "select", slotId: slot.slot_id}); if (slot.parent_boundary_id) setBoundaryId(slot.parent_boundary_id);};

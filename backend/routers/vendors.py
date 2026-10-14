@@ -28,7 +28,7 @@ from backend.services.vendors import register_vendor
 from backend.core.security import request_session
 from backend.core.security import require_vendor_owner
 from backend.services.vendors import update_vendor_profile
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 router = APIRouter()
 
 @router.post(
@@ -933,3 +933,46 @@ def vendor(
                 ),
         }
     )
+
+
+@router.get("/api/admin/vendors", tags=["Vendors"])
+def admin_vendor_directory(request: FastAPIRequest, q: str = "", business_category: str = "", division: str = "",
+                           page: int = Query(1, ge=1),
+                           page_size: int = Query(25, ge=1, le=100)):
+    request_session(request, "ADMIN")
+    from backend.services.vendors import list_admin_vendors
+    try:
+        return list_admin_vendors(q=q, business_category=business_category, division=division,
+                                  page=page, page_size=page_size, database_path=dependencies.DATABASE_PATH)
+    except OperationalValidationError as exc:
+        operational_error(exc)
+
+
+@router.get("/api/admin/vendors/{vendor_id}/details", tags=["Vendors"])
+def admin_vendor_management_details(vendor_id: str, request: FastAPIRequest):
+    request_session(request, "ADMIN")
+    from backend.services.vendors import admin_vendor_details
+    try:
+        return admin_vendor_details(vendor_id, dependencies.DATABASE_PATH)
+    except (OperationalNotFoundError, OperationalValidationError) as exc:
+        operational_error(exc)
+
+
+@router.get("/api/vendors/me/account-settings", tags=["Vendors"])
+def vendor_account_settings(request: FastAPIRequest):
+    session = request_session(request, "VENDOR")
+    from backend.services.vendors import vendor_account_information
+    try:
+        return vendor_account_information(session["vendor_id"], dependencies.DATABASE_PATH)
+    except (OperationalNotFoundError, OperationalValidationError) as exc:
+        operational_error(exc)
+
+
+@router.get("/api/vendors/me/activity", tags=["Vendors"])
+def vendor_notifications_activity(request: FastAPIRequest):
+    session = request_session(request, "VENDOR")
+    from backend.services.vendors import vendor_activity
+    try:
+        return vendor_activity(session["vendor_id"], dependencies.DATABASE_PATH)
+    except (OperationalNotFoundError, OperationalValidationError) as exc:
+        operational_error(exc)

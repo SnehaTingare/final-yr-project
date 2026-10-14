@@ -1,0 +1,377 @@
+{
+  "type": "FeatureCollection",
+  "name": "Nashik NMC six divisions — illustrative display-only geometry",
+  "metadata": {
+    "description": "Six visually distinct nonoverlapping approximate regions, NOT official municipal boundaries.",
+    "coordinate_reference_system": "EPSG:4326",
+    "geometry_quality": "ILLUSTRATIVE_UNVERIFIED",
+    "not_for": [
+      "legal boundary validation",
+      "permit allocation",
+      "eligibility",
+      "geofencing",
+      "zone-to-division assignment"
+    ],
+    "division_membership_authority": "official_zones.csv division column, NOT polygon containment",
+    "citywide_no_vending": "83 Citywide NO_VENDING records remain separate; not a seventh division",
+    "approximate_city_display_envelope": true
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "DIV_SAT",
+      "properties": {
+        "division_id": "DIV_SAT",
+        "division": "Satpur",
+        "name": "Satpur",
+        "official_zone_record_count": 28,
+        "display_color": "#2A9D8F",
+        "geometry_role": "DIVISION_OVERVIEW_VISUAL_ONLY",
+        "verification_status": "ILLUSTRATIVE_UNVERIFIED",
+        "official_boundary": false,
+        "use_for_point_in_polygon_assignment": false,
+        "method": "Illustrative Voronoi partition of broad Nashik display envelope from approximate named-area anchors",
+        "source_note": "Division names/counts: official_zones.csv; broad geographic context: named areas and references; this geometry is NOT a surveyed or municipal boundary.",
+        "intended_use": "Admin division-map UI navigation only. Use official_zones.division to group zones.",
+        "legal_authority": "NONE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.76228017661974,
+              20.065008009824115
+            ],
+            [
+              73.75572505381406,
+              19.98888205908874
+            ],
+            [
+              73.70443248520219,
+              19.9654852562487
+            ],
+            [
+              73.687,
+              19.982
+            ],
+            [
+              73.676,
+              20.002000000000002
+            ],
+            [
+              73.684,
+              20.021
+            ],
+            [
+              73.694,
+              20.042999999999992
+            ],
+            [
+              73.72,
+              20.06
+            ],
+            [
+              73.751,
+              20.063999999999997
+            ],
+            [
+              73.76180116413566,
+              20.06643965252123
+            ],
+            [
+              73.76228017661974,
+              20.065008009824115
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DIV_NW",
+      "properties": {
+        "division_id": "DIV_NW",
+        "division": "Nashik West",
+        "name": "Nashik West",
+        "official_zone_record_count": 46,
+        "display_color": "#457B9D",
+        "geometry_role": "DIVISION_OVERVIEW_VISUAL_ONLY",
+        "verification_status": "ILLUSTRATIVE_UNVERIFIED",
+        "official_boundary": false,
+        "use_for_point_in_polygon_assignment": false,
+        "method": "Illustrative Voronoi partition of broad Nashik display envelope from approximate named-area anchors",
+        "source_note": "Division names/counts: official_zones.csv; broad geographic context: named areas and references; this geometry is NOT a surveyed or municipal boundary.",
+        "intended_use": "Admin division-map UI navigation only. Use official_zones.division to group zones.",
+        "legal_authority": "NONE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.80059484028821,
+              20.014999433870592
+            ],
+            [
+              73.78823948944637,
+              19.98003749095364
+            ],
+            [
+              73.75572505381406,
+              19.988882059088745
+            ],
+            [
+              73.76228017661974,
+              20.06500800982411
+            ],
+            [
+              73.80059484028821,
+              20.014999433870592
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DIV_PAN",
+      "properties": {
+        "division_id": "DIV_PAN",
+        "division": "Panchavati",
+        "name": "Panchavati",
+        "official_zone_record_count": 50,
+        "display_color": "#F4A261",
+        "geometry_role": "DIVISION_OVERVIEW_VISUAL_ONLY",
+        "verification_status": "ILLUSTRATIVE_UNVERIFIED",
+        "official_boundary": false,
+        "use_for_point_in_polygon_assignment": false,
+        "method": "Illustrative Voronoi partition of broad Nashik display envelope from approximate named-area anchors",
+        "source_note": "Division names/counts: official_zones.csv; broad geographic context: named areas and references; this geometry is NOT a surveyed or municipal boundary.",
+        "intended_use": "Admin division-map UI navigation only. Use official_zones.division to group zones.",
+        "legal_authority": "NONE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.86818862798756,
+              20.014992030163697
+            ],
+            [
+              73.80059484028821,
+              20.01499943387059
+            ],
+            [
+              73.76228017661975,
+              20.065008009824105
+            ],
+            [
+              73.76180116413566,
+              20.066439652521233
+            ],
+            [
+              73.782,
+              20.071000000000005
+            ],
+            [
+              73.814,
+              20.062
+            ],
+            [
+              73.844,
+              20.048999999999992
+            ],
+            [
+              73.863,
+              20.028999999999993
+            ],
+            [
+              73.86818862798756,
+              20.014992030163697
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DIV_NE",
+      "properties": {
+        "division_id": "DIV_NE",
+        "division": "Nashik East",
+        "name": "Nashik East",
+        "official_zone_record_count": 18,
+        "display_color": "#E76F51",
+        "geometry_role": "DIVISION_OVERVIEW_VISUAL_ONLY",
+        "verification_status": "ILLUSTRATIVE_UNVERIFIED",
+        "official_boundary": false,
+        "use_for_point_in_polygon_assignment": false,
+        "method": "Illustrative Voronoi partition of broad Nashik display envelope from approximate named-area anchors",
+        "source_note": "Division names/counts: official_zones.csv; broad geographic context: named areas and references; this geometry is NOT a surveyed or municipal boundary.",
+        "intended_use": "Admin division-map UI navigation only. Use official_zones.division to group zones.",
+        "legal_authority": "NONE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.78823948944637,
+              19.980037490953638
+            ],
+            [
+              73.80059484028821,
+              20.01499943387059
+            ],
+            [
+              73.86818862798756,
+              20.014992030163697
+            ],
+            [
+              73.873,
+              20.002
+            ],
+            [
+              73.87250726063716,
+              19.99584125005209
+            ],
+            [
+              73.80220953319176,
+              19.960937830710513
+            ],
+            [
+              73.78823948944637,
+              19.980037490953638
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DIV_NN",
+      "properties": {
+        "division_id": "DIV_NN",
+        "division": "New Nashik",
+        "name": "New Nashik",
+        "official_zone_record_count": 31,
+        "display_color": "#8E7DBE",
+        "geometry_role": "DIVISION_OVERVIEW_VISUAL_ONLY",
+        "verification_status": "ILLUSTRATIVE_UNVERIFIED",
+        "official_boundary": false,
+        "use_for_point_in_polygon_assignment": false,
+        "method": "Illustrative Voronoi partition of broad Nashik display envelope from approximate named-area anchors",
+        "source_note": "Division names/counts: official_zones.csv; broad geographic context: named areas and references; this geometry is NOT a surveyed or municipal boundary.",
+        "intended_use": "Admin division-map UI navigation only. Use official_zones.division to group zones.",
+        "legal_authority": "NONE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.778,
+              19.929
+            ],
+            [
+              73.75700000000002,
+              19.937
+            ],
+            [
+              73.731,
+              19.948
+            ],
+            [
+              73.706,
+              19.963999999999995
+            ],
+            [
+              73.70443248520219,
+              19.9654852562487
+            ],
+            [
+              73.75572505381406,
+              19.988882059088745
+            ],
+            [
+              73.78823948944635,
+              19.98003749095364
+            ],
+            [
+              73.80220953319176,
+              19.960937830710513
+            ],
+            [
+              73.79634269838962,
+              19.924215229444435
+            ],
+            [
+              73.778,
+              19.929
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "DIV_NR",
+      "properties": {
+        "division_id": "DIV_NR",
+        "division": "Nashik Road",
+        "name": "Nashik Road",
+        "official_zone_record_count": 52,
+        "display_color": "#69A34F",
+        "geometry_role": "DIVISION_OVERVIEW_VISUAL_ONLY",
+        "verification_status": "ILLUSTRATIVE_UNVERIFIED",
+        "official_boundary": false,
+        "use_for_point_in_polygon_assignment": false,
+        "method": "Illustrative Voronoi partition of broad Nashik display envelope from approximate named-area anchors",
+        "source_note": "Division names/counts: official_zones.csv; broad geographic context: named areas and references; this geometry is NOT a surveyed or municipal boundary.",
+        "intended_use": "Admin division-map UI navigation only. Use official_zones.division to group zones.",
+        "legal_authority": "NONE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              73.869,
+              19.953999999999997
+            ],
+            [
+              73.851,
+              19.933
+            ],
+            [
+              73.827,
+              19.924
+            ],
+            [
+              73.801,
+              19.923
+            ],
+            [
+              73.79634269838962,
+              19.924215229444435
+            ],
+            [
+              73.80220953319176,
+              19.960937830710513
+            ],
+            [
+              73.87250726063716,
+              19.99584125005209
+            ],
+            [
+              73.869,
+              19.953999999999997
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

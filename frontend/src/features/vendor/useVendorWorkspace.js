@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useReducer, useRef, useState} from "react";
 
-import {cancelAllocationRequest, createAllocationRequest, getActiveAllocation, getOptions, getRecommendations, getVendorDashboard, getVendorEligibleZones, registerVendor, updateVendorProfile, getPilotLayout} from "../../services/api.js";
+import {cancelAllocationRequest, createAllocationRequest, getActiveAllocation, getOptions, getRecommendations, getVendorDashboard, getVendorProfile, getVendorEligibleZones, registerVendor, updateVendorProfile, getPilotLayout} from "../../services/api.js";
 
 import {profileDisplayName} from "../../shared/utils/profileIdentity.js";
 import {useDialogFocus} from "../../shared/utils/dialogFocus.js";
@@ -55,6 +55,12 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     if (!sessionProfile) return;
     setProfile(sessionProfile); setDraft(draftFromProfile(sessionProfile));
   }, [sessionProfile?.vendor_id]);
+  useEffect(() => {
+    if (!sessionProfile?.vendor_id) return;
+    let active = true;
+    getVendorProfile(sessionProfile.vendor_id).then(vendor => {if (active) {setProfile(vendor); setDraft(draftFromProfile(vendor));}}).catch(err => {if (active) {setError(err.message);}});
+    return () => {active = false;};
+  }, [sessionProfile?.vendor_id]);
   const run = async action => {
     setBusy(true); setError(""); setSuccess("");
     try { return await action(); } catch (err) { setError(err.message); return null; } finally { setBusy(false); }
@@ -88,9 +94,20 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     await hydrateVendor(vendor); await onRegistered?.(); setSuccess(t("onboarding.created"));
   }); };
   const persistProfile = () => run(async () => {
-    const vendor = await updateVendorProfile(profile.vendor_id, {...draft, preferred_division: draft.preferred_division || null, preferred_locality: draft.preferred_locality || null});
+    const vendor = await updateVendorProfile(profile.vendor_id, {full_name: draft.full_name, business_name: draft.business_name, business_category: draft.business_category, preferred_division: draft.preferred_division || null, preferred_locality: draft.preferred_locality || null});
     setProfile(vendor); setDraft(draftFromProfile(vendor)); selectLanguage(vendor.preferred_language); setRecommendationData(null); await refreshDashboard(true); setSuccess(t("profile.saved"));
   });
+  const saveAccountLanguage = next => run(async () => {
+    const vendor = await updateVendorProfile(profile.vendor_id, {preferred_language: next});
+    setProfile(vendor); setDraft(current => ({...current, preferred_language: vendor.preferred_language}));
+    selectLanguage(vendor.preferred_language); await refreshDashboard(true); setSuccess(t("profile.saved"));
+    return vendor;
+  });
+  const saveRankingPreferences = event => {event.preventDefault(); run(async () => {
+    const vendor = await updateVendorProfile(profile.vendor_id, {priority_profile: draft.priority_profile,
+      market_preference: draft.market_preference, transport_preference: draft.transport_preference, parking_preference: draft.parking_preference});
+    setProfile(vendor); await refreshDashboard(true); await findZones({navigate: false}); setSuccess(t("profile.saved"));
+  });};
   const saveProfile = event => {
     event.preventDefault();
     if (recommendationData) setPreferenceConfirm(true);
@@ -159,5 +176,5 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   const hour = new Date().getHours();
   const greetingPeriod = t(hour < 12 ? "vendor.morning" : hour < 17 ? "vendor.afternoon" : "vendor.evening");
 
-  return {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod};
+  return {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, saveRankingPreferences, saveAccountLanguage, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod};
 }

@@ -1,10 +1,54 @@
-import {zoneName} from "../../shared/utils/displayLabels.js";
+import {zoneName, officialZoneDivision, zoneMapLocation, zoneDisplayGeometry} from "../../shared/utils/displayLabels.js";
 import React, {useEffect, useMemo, useState} from "react";
-import {CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap} from "react-leaflet";
+import {CircleMarker, Polygon, LayersControl, LayerGroup, MapContainer, Popup, TileLayer, Tooltip, useMap} from "react-leaflet";
 import L from "leaflet";
+import divisionSource from "../../../../data/pilot/nmc_six_divisions_ILLUSTRATIVE.geojson?raw";
+export const divisionFeatures = JSON.parse(divisionSource).features;
+
+// Inclusive boundary check for display browsing only; never administrative membership.
+function inRing([x, y], ring) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [ax, ay] = ring[j], [bx, by] = ring[i];
+    const cross = (x - ax) * (by - ay) - (y - ay) * (bx - ax);
+    if (Math.abs(cross) < 1e-12 && x >= Math.min(ax, bx) && x <= Math.max(ax, bx) && y >= Math.min(ay, by) && y <= Math.max(ay, by)) return true;
+    if ((ay > y) !== (by > y) && x < (bx - ax) * (y - ay) / (by - ay) + ax) inside = !inside;
+  }
+  return inside;
+}
+export function insideDivision(coordinates, division) {
+  const shape = divisionFeatures.find(feature => feature.properties.division === division)?.geometry;
+  if (!coordinates || !shape) return false;
+  const polygons = shape.type === "MultiPolygon" ? shape.coordinates : [shape.coordinates];
+  return polygons.some(rings => inRing(coordinates, rings[0]) && !rings.slice(1).some(ring => inRing(coordinates, ring)));
+}
+export function analyticalDisplayGeometry(zones, geometry) {
+  const csv = zoneDisplayGeometry(zones, true);
+  const ids = new Set(csv.features.map(feature => feature.properties.zone_id));
+  return {type: "FeatureCollection", features: [...csv.features, ...(geometry?.features || []).filter(feature => !ids.has(feature.properties?.zone_id))]};
+}
+export function spatialDivisionZones(zones, division, geometry, includeReferences = false) {
+  const references = new Map(analyticalDisplayGeometry(zones, geometry).features.filter(feature => feature.geometry?.type === "Point").map(feature => [feature.properties.zone_id, feature.geometry.coordinates]));
+  return zones.filter(zone => {
+    const preferred = zoneMapLocation(zone).coordinates;
+    return insideDivision(preferred, division) || (includeReferences && !preferred && insideDivision(references.get(zone.zone_id), division));
+  });
+}
+
+function DivisionFocus({division, resetVersion, groups}) {
+  const map = useMap();
+  useEffect(() => {
+    const features = division ? divisionFeatures.filter(feature => feature.properties.division === division) : divisionFeatures;
+    const bounds = division && groups.length ? L.latLngBounds(groups.map(group => group.position)) : L.geoJSON({type: "FeatureCollection", features}).getBounds();
+    map.invalidateSize({pan: false});
+    if (bounds.isValid()) map.flyToBounds(bounds, {padding: [28, 28], maxZoom: 14, duration: .65});
+  }, [map, division, resetVersion, groups]);
+  return null;
+}
 
 import {buildAdminMapModel, uniqueMapPositions} from "../../shared/utils/mapGrouping.js";
 
+import {PILOT_ZONE_IDS} from "../pilot-slots/pilotState.js";
 import {STATUS_COLORS, pretty} from "./viewModel.js";
 
 export function AdminMapFocus({groups, resetVersion}) {
@@ -24,28 +68,36 @@ export function AdminMapFocus({groups, resetVersion}) {
   return null;
 }
 
-export function AdminZoneMap({zones, geometry, onZone}) {
+export function AdminZoneMap({zones, geometry, onZone, division = "", onDivision, selectedZoneId, referenceEnabled, onReferenceChange}) {
   const [resetVersion, setResetVersion] = useState(0);
-  const model = useMemo(() => geometry
-    ? buildAdminMapModel(zones, geometry)
-    : {groups: [], unavailableZoneIds: [], representedZoneCount: 0}, [zones, geometry]);
+  const displayGeometry = useMemo(() => ({type: "FeatureCollection", features: zoneDisplayGeometry(zones).features.filter(feature => insideDivision(feature.geometry.coordinates, division))}), [zones, division]);
+  const model = useMemo(() => buildAdminMapModel(zones, displayGeometry), [zones, displayGeometry]);
+  const referenceModel = useMemo(() => {
+    const reference = analyticalDisplayGeometry(zones, geometry);
+    reference.features = reference.features.filter(feature => !zoneMapLocation(feature.properties.zone_id).coordinates && insideDivision(feature.geometry?.type === "Point" ? feature.geometry.coordinates : null, division));
+    return buildAdminMapModel(zones, reference);
+  }, [zones, geometry, division]);
+  const focusGroups = useMemo(() => referenceEnabled ? [...model.groups, ...referenceModel.groups] : model.groups, [model.groups, referenceModel.groups, referenceEnabled]);
   return <div className="admin-map-shell">
-    <button className="admin-map-reset" onClick={() => setResetVersion(value => value + 1)}>View all zones</button>
+    <button className="admin-map-reset" onClick={() => setResetVersion(value => value + 1)}>{division ? "Recenter division" : "View city"}</button>
     <MapContainer center={[19.9975, 73.7898]} zoom={12} scrollWheelZoom className="admin-map-canvas">
       <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-      <AdminMapFocus groups={model.groups} resetVersion={resetVersion}/>
-      {model.groups.map(group => {const primary = group.zones[0]; return <CircleMarker key={group.key} center={group.position} radius={group.shared ? 7 : 5}
-        pathOptions={{color: group.shared ? "#3f586c" : "#fff", weight: group.shared ? 2 : 1.5, fillOpacity: group.shared ? .78 : .82, fillColor: group.shared ? "#718596" : STATUS_COLORS[primary.live_status] || "#64748b"}}>
-        <Tooltip direction="top">{group.shared ? `${group.zones.length} zones share this analytical reference` : zoneName(primary)}</Tooltip>
+      <DivisionFocus division={division} resetVersion={resetVersion} groups={focusGroups}/>
+      {divisionFeatures.filter(feature => !division || feature.properties.division === division).map(feature => <Polygon key={feature.properties.division_id} positions={feature.geometry.coordinates.map(ring => ring.map(([lng, lat]) => [lat, lng]))} pathOptions={{color: feature.properties.display_color, weight: 2, fillOpacity: division ? .08 : .3}} eventHandlers={{click: () => onDivision?.(feature.properties.division)}}><Tooltip sticky>{feature.properties.name} - Illustrative boundary</Tooltip></Polygon>)}
+      {division && model.groups.map(group => {const primary = group.zones[0]; const location = zoneMapLocation(primary); const selected = group.zones.some(zone => zone.zone_id === selectedZoneId); const pilot = group.zones.some(zone => PILOT_ZONE_IDS.includes(zone.zone_id)); return <CircleMarker key={group.key} center={group.position} radius={selected ? 13 : pilot ? 10 : group.shared ? 7 : 5}
+        eventHandlers={{click: () => {if (!group.shared) onZone(primary);}}}
+        pathOptions={{color: selected ? "#0f172a" : pilot ? "#075985" : group.shared ? "#3f586c" : "#fff", weight: selected ? 4 : pilot ? 3 : group.shared ? 2 : 1.5, dashArray: location.kind === "approximate" ? "3 3" : undefined, fillOpacity: location.kind === "approximate" ? .35 : .85, fillColor: location.kind === "pilot" ? "#075985" : location.kind === "landmark" ? "#b45309" : "#718596"}}>
+        <Tooltip direction="top">{group.shared ? `${group.zones.length} zones share this display location` : `${zoneName(primary)} - ${location.label}`}</Tooltip>
         <Popup className="admin-shared-popup" minWidth={group.shared ? 310 : 235}>
-          <strong>{group.shared ? "Shared analytical reference" : zoneName(primary)}</strong>
-          <div className="admin-shared-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}><span><i style={{background: STATUS_COLORS[zone.live_status] || "#64748b"}}/><b>{zoneName(zone)}</b></span><em>{pretty(zone.live_status)}</em><small>{zone.available_capacity == null ? "Capacity unknown" : `${zone.available_capacity} available`}</small></button>)}</div>
-          {group.shared && <p>These official zones share the same analytical GIS reference. They remain separate NMC zone records.</p>}
+          <strong>{group.shared ? "Shared display location" : zoneName(primary)}</strong>
+          <div className="admin-shared-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}><span><i style={{background: STATUS_COLORS[zone.live_status] || "#64748b"}}/><b>{zoneName(zone)}{PILOT_ZONE_IDS.includes(zone.zone_id) ? " - Geographic pilot" : ""}</b></span><em>{pretty(zone.live_status)}</em><small>Official division: {officialZoneDivision(zone)}</small>{officialZoneDivision(zone) !== division && <small>Shown inside {division} illustrative polygon; official division differs.</small>}<small>{zoneMapLocation(zone).label}</small><small>Confidence: {pretty(zoneMapLocation(zone).record?.confidence)}</small><small>{pretty(zone.zone_type)} | Capacity: {zone.official_capacity ?? "Not recorded"}</small><small>{zone.available_capacity == null ? "Capacity unknown" : `${zone.available_capacity} available`}</small></button>)}</div>
+          {group.shared && <p>These official zones share the same unverified display location. They remain separate NMC zone records.</p>}
         </Popup>
       </CircleMarker>;})}
+      {division && <LayersControl position="topright"><LayersControl.Overlay name="Unverified reference locations" checked={referenceEnabled}><LayerGroup eventHandlers={{add: () => onReferenceChange?.(true), remove: () => onReferenceChange?.(false)}}>{referenceModel.groups.map(group => <CircleMarker key={`reference-${group.key}`} center={group.position} radius={6} pathOptions={{color: "#64748b", fillOpacity: .12, dashArray: "2 4"}}><Tooltip>Unverified analytical reference - not an exact vending site</Tooltip><Popup><strong>Unverified reference locations</strong><p>Analytical points only. These do not establish actual vending locations.</p>{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}>{zoneName(zone)} - Official division: {officialZoneDivision(zone)} - Capacity: {zone.official_capacity ?? "Not recorded"} - {pretty(zone.live_status)}{officialZoneDivision(zone) !== division ? ` (inside ${division} illustrative polygon)` : ""}</button>)}</Popup></CircleMarker>)}</LayerGroup></LayersControl.Overlay></LayersControl>}
     </MapContainer>
-    <div className="admin-map-legend">{Object.keys(STATUS_COLORS).map(status => <span key={status}><i style={{background: STATUS_COLORS[status]}}/>{pretty(status)}</span>)}<span><i className="shared-reference-key"/>Shared reference</span></div>
-    <div className="admin-map-disclaimer">Analytical reference points only — not legal zone boundaries · {model.groups.length} locations · {model.representedZoneCount} zones · {model.unavailableZoneIds.length} map references unavailable</div>
+    {division && <div className="admin-map-legend">{Object.keys(STATUS_COLORS).map(status => <span key={status}><i style={{background: STATUS_COLORS[status]}}/>{pretty(status)}</span>)}<span><i style={{background: "#b45309"}}/>Landmark candidate</span><span><i style={{background: "#718596"}}/>Approximate reference</span><span><i style={{background: "#075985"}}/>Provisional pilot</span></div>}
+    <div className="admin-map-disclaimer">Illustrative divisions - not verified NMC boundaries. Spatial inclusion is display-only and does not establish official administrative membership.{division && ` Display locations are unverified candidates; ${model.unavailableZoneIds.length} locations unavailable.`}</div>
   </div>;
 }
 

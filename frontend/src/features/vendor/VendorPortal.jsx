@@ -1,11 +1,14 @@
+import VendorActivity from "./VendorActivity.jsx";
+import HelpSupport from "./HelpSupport.jsx";
 import {PILOT_ZONE_IDS} from "../pilot-slots/pilotState.js";
 import {zoneName} from "../../shared/utils/displayLabels.js";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import AccountSettings from "./AccountSettings.jsx";
 import "leaflet/dist/leaflet.css";
-import {ArrowLeft, ArrowRight, Building2, Clock3, Languages, MapPin, RefreshCw, X} from "lucide-react";
+import {ArrowLeft, ArrowRight, Building2, Clock3, Languages, MapPin, RefreshCw, UserRound, Store, Save, ShieldCheck, X} from "lucide-react";
 import ToastRegion from "../../shared/ui/ToastRegion.jsx";
 const PilotSlotMap = React.lazy(() => import("../pilot-slots/PilotSlotMap.jsx"));
-import {factorLabel, priorityLabel, requestTypeLabel, statusLabel} from "../../i18n/index.js";
+import {categoryLabel, factorLabel, priorityLabel, requestTypeLabel, statusLabel} from "../../i18n/index.js";
 import "./VendorPortal.css";
 import "../../shared/maps/MapGrouping.css";
 import "./VendorDashboard.css";
@@ -15,13 +18,22 @@ import {PreferenceFields} from "./PreferenceFields.jsx";
 import RecommendationDetailPage from "./RecommendationDetailPage.jsx";
 import {ProfileSummary, AllocationCard, RequestSummary, RequestHistory, DashboardSkeleton} from "./DashboardSections.jsx";
 import useVendorWorkspace from "./useVendorWorkspace.js";
-export default function VendorPortal({sessionProfile = null, onboarding = false, view = "vendor-dashboard", detailZoneId = "", onNavigate = () => {}, onOpenRecommendation = () => {}, onBackRecommendations = () => {}, onRegistered}) {
-  const {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod} = useVendorWorkspace({sessionProfile,onboarding,view,onNavigate,onRegistered});
+export default function VendorPortal({sessionProfile = null, onboarding = false, view = "vendor-dashboard", detailZoneId = "", onNavigate = () => {}, onOpenRecommendation = () => {}, onBackRecommendations = () => {}, onRegistered, onProfileUpdated, focusRequestId = null, openOwnSlot = 0}) {
+  const {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, saveRankingPreferences, saveAccountLanguage, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod} = useVendorWorkspace({sessionProfile,onboarding,view,onNavigate,onRegistered});
+  useEffect(() => {if (profile) onProfileUpdated?.(profile);}, [profile, onProfileUpdated]);
+  const [activityRequest, setActivityRequest] = useState(null);
+  useEffect(() => {
+    if (view !== "vendor-requests" || !activityRequest || !dashboard) return;
+    const element = document.getElementById(`vendor-request-${activityRequest}`);
+    element?.scrollIntoView({block: "center", behavior: "smooth"}); element?.focus({preventScroll: true});
+  }, [view, activityRequest, dashboard]);
+  useEffect(() => {setActivityRequest(focusRequestId);}, [focusRequestId]);
+  useEffect(() => {if (openOwnSlot && PILOT_ZONE_IDS.includes(dashboard?.active_allocation?.zone_id)) dispatchPilot({type: "open"});}, [openOwnSlot, dashboard?.active_allocation?.zone_id]);
   const detailRecommendation = recommendations.find(zone => zone.zone_id === detailZoneId);
   return <main className={`vendor-portal ${onboarding ? "" : "service-vendor"}`}>
-    <header className="vendor-hero" hidden={view === "vendor-recommendation-detail" || (!onboarding && pilot.open && view === "vendor-dashboard")}>
+    <header className="vendor-hero" hidden={view === "vendor-notifications" || view === "vendor-help" || view === "vendor-profile" || view === "vendor-settings" || view === "vendor-recommendation-detail" || (!onboarding && pilot.open && view === "vendor-dashboard")}>
       <div><span className="vendor-eyebrow">{t("vendor.kicker")}</span><h1>{onboarding ? t("vendor.onboardingTitle") : t("vendor.greeting", {period: greetingPeriod, name: displayName})}</h1><p>{onboarding ? t("vendor.onboardingIntro") : t("vendor.greetingHelp")}</p></div>
-      <label className="language-control"><Languages size={17}/><span>{t("language.label")}</span><select value={language} onChange={event => changeLanguage(event.target.value)}>{LANGUAGES.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}</select></label>
+      {onboarding && <label className="language-control"><Languages size={17}/><span>{t("language.label")}</span><select value={language} onChange={event => changeLanguage(event.target.value)}>{LANGUAGES.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}</select></label>}
     </header>
     {onboarding && <nav className="vendor-progress" aria-label={t("nav.newOnboarding")}><div className="active"><span>1</span>{t("onboarding.account")}</div><div className="active"><span>2</span>{t("onboarding.business")}</div><div className="active"><span>3</span>{t("onboarding.preferences")}</div><div><span>4</span>{t("onboarding.recommendations")}</div></nav>}
     <ToastRegion success={success} error={error} onDismissSuccess={() => setSuccess("")} onDismissError={() => setError("")}/>
@@ -37,15 +49,20 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
 
     {pilot.visited && PILOT_ZONE_IDS.includes(dashboard?.active_allocation?.zone_id) && <React.Suspense fallback={<p role="status">{t("display.slotLoading")}</p>}><PilotSlotMap zoneId={dashboard.active_allocation.zone_id} ownBusinessCategory={profile?.business_category} key={sessionProfile?.vendor_id} session={pilot} dispatch={dispatchPilot} visible={pilot.open && view === "vendor-dashboard"} onBack={() => dispatchPilot({type: "close"})}/></React.Suspense>}
 
+    {!onboarding && view === "vendor-notifications" && <VendorActivity onApplication={id => {setActivityRequest(id); onNavigate("vendor-requests");}} onSlot={() => {onNavigate("vendor-dashboard"); dispatchPilot({type: "open"});}}/>}
+    {!onboarding && view === "vendor-help" && <HelpSupport/>}
+
     {!onboarding && view === "vendor-requests" && dashboardLoading && !dashboard && <DashboardSkeleton label={t("requests.loadingHistory")}/>}
     {!onboarding && view === "vendor-requests" && dashboard && <div className="vendor-dashboard-stack"><section className="requests-overview-strip"><span className="vendor-eyebrow">{t("requests.overview")}</span><RequestSummary summary={dashboard.request_summary}/></section><RequestHistory requests={dashboard.requests} actionState={dashboard.action_state} busy={busy} onCancel={setCancelTarget} onRefresh={() => refreshDashboard()} onNavigate={onNavigate}/></div>}
 
     {!onboarding && view === "vendor-recommendations" && dashboard?.action_state?.has_pending_request && <div className="vendor-empty"><Clock3 size={30}/><h3>{t("requests.pendingExists")}</h3><p>{t("requests.pendingHelp")}</p><button className="vendor-primary" onClick={() => onNavigate("vendor-requests")}>{t("requests.open")}</button></div>}
 
-    {stage === "register" && <section className="vendor-panel narrow"><span className="vendor-eyebrow">{t("onboarding.verified")}</span><h2>{t("onboarding.setupTitle")}</h2><p className="panel-copy">{t("onboarding.setupHelp")}</p><form onSubmit={register}><PreferenceFields draft={draft} setDraft={setDraft} options={options} onLanguageChange={changeLanguage} requireIdentity/><button className="vendor-primary" disabled={busy}>{t(busy ? "onboarding.creating" : "onboarding.create")}<ArrowRight size={17}/></button></form></section>}
+    {stage === "register" && <section className="vendor-panel narrow"><span className="vendor-eyebrow">{t("onboarding.verified")}</span><h2>{t("onboarding.setupTitle")}</h2><p className="panel-copy">{t("onboarding.setupHelp")}</p><form onSubmit={register}><PreferenceFields draft={draft} setDraft={setDraft} options={options} requireIdentity mode="profile"/><button className="vendor-primary" disabled={busy}>{t(busy ? "onboarding.creating" : "onboarding.create")}<ArrowRight size={17}/></button></form></section>}
 
-    {stage === "profile" && profile && <section className="vendor-profile-layout vendor-profile-editor">
-      <section className="vendor-panel"><span className="vendor-eyebrow">{t("profile.heading")}</span><h2>{t("profile.title")}</h2><p className="panel-copy">{t("profile.help")}</p><form onSubmit={saveProfile}><PreferenceFields draft={draft} setDraft={setDraft} options={options} onLanguageChange={changeLanguage}/><div className="profile-actions"><button className="vendor-secondary" disabled={busy}>{t("profile.save")}</button><button className="vendor-primary" type="button" onClick={findZones} disabled={busy}>{t(busy ? "common.loading" : "profile.getTop3")}<ArrowRight size={17}/></button></div></form></section>
+    {!onboarding && ["vendor-profile", "vendor-settings"].includes(view) && profile && <section className="vendor-profile-workspace">
+      <header className="vendor-profile-heading"><div className="vendor-profile-avatar" aria-hidden="true">{profile.full_name?.trim() ? profile.full_name.trim().split(/\s+/u).slice(0,2).map(part => Array.from(part)[0]).join("").toLocaleUpperCase() : <UserRound size={28}/>}</div><div className="vendor-profile-heading-copy"><span className="vendor-eyebrow">{t("nav.profile")}</span><h1>{profile.full_name || t("common.notRecorded")}</h1><p><Store size={15}/>{profile.business_name || categoryLabel(language,profile.business_category)}</p></div><span className={`vendor-profile-status status-${profile.status?.toLowerCase()}`}>{statusLabel(language,profile.status)}</span></header>
+      <div className="vendor-profile-tabs" role="tablist" aria-label={t("nav.profile")}><button id="vendor-personal-tab" role="tab" aria-selected={view === "vendor-profile"} aria-controls="vendor-personal-panel" onClick={() => onNavigate("vendor-profile")}><UserRound size={17}/>{t("account.personalBusiness")}</button><button id="vendor-settings-tab" role="tab" aria-selected={view === "vendor-settings"} aria-controls="vendor-settings-panel" onClick={() => onNavigate("vendor-settings")}><ShieldCheck size={17}/>{t("account.settings")}</button></div>
+      {view === "vendor-profile" ? <div id="vendor-personal-panel" role="tabpanel" aria-labelledby="vendor-personal-tab" className="vendor-profile-body"><section className="vendor-panel vendor-profile-form-panel"><h2>{t("account.personalBusiness")}</h2><p className="vendor-profile-intro">{t("account.profileIntro")}</p><form id="vendor-profile-edit" onSubmit={saveProfile}><PreferenceFields draft={draft} setDraft={setDraft} options={options} disabled={busy} mode="profile"/><div className="vendor-profile-savebar"><button className="vendor-primary" disabled={busy}><Save size={16}/>{t(busy ? "account.savingProfile" : "account.saveProfile")}</button></div></form></section><aside className="vendor-panel vendor-profile-note"><UserRound size={22}/><h2>{t("account.profileRecords")}</h2><p>{t("account.overlayNotice")}</p><hr/><ShieldCheck size={20}/><p>{t("account.profileSecurityHint")}</p></aside></div> : <div id="vendor-settings-panel" role="tabpanel" aria-labelledby="vendor-settings-tab"><AccountSettings profile={profile} busy={busy} onSaveLanguage={saveAccountLanguage}/></div>}
     </section>}
 
     {stage === "recommendation-detail" && profile && !recommendationData && <DashboardSkeleton label={t("recommend.detailLoading")}/>}
@@ -53,7 +70,8 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
     {stage === "recommendation-detail" && profile && detailRecommendation && <RecommendationDetailPage zone={detailRecommendation} recommendations={recommendations} mapContext={mapContext} profile={profile} activeAllocation={activeAllocation} dashboard={dashboard} busy={busy} onBack={onBackRecommendations} onSelect={setConfirmZone} onOpenRequests={() => onNavigate("vendor-requests")}/>}
 
     {stage === "recommendations" && profile && <section className="recommendation-workspace">
-      <div className="recommendation-toolbar"><div><button className="vendor-back" onClick={() => setStage("profile")}><ArrowLeft size={15}/> {t("onboarding.preferences")}</button><span className="vendor-eyebrow">{t("recommend.heading")}</span><h2>{t("recommend.title")}</h2><p>{t("recommend.eligible", {count: recommendationData?.candidate_count_after_live_filter ?? 0})}</p></div><button className="vendor-secondary" onClick={findZones} disabled={busy}><RefreshCw size={15}/> {t("common.refresh")}</button></div>
+      <div className="recommendation-toolbar"><div><button className="vendor-back" onClick={() => setStage("profile")}><ArrowLeft size={15}/> {t("nav.profile")}</button><span className="vendor-eyebrow">{t("recommend.heading")}</span><h2>{t("recommend.title")}</h2><p>{t("recommend.eligible", {count: recommendationData?.candidate_count_after_live_filter ?? 0})}</p></div><button className="vendor-secondary" onClick={findZones} disabled={busy}><RefreshCw size={15}/> {t("common.refresh")}</button></div>
+      <details className="vendor-panel"><summary>{t("recommend.preferences")}</summary><p className="field-note">{t("account.rankingEvidence")}</p><form onSubmit={saveRankingPreferences}><PreferenceFields mode="recommendations" draft={draft} setDraft={setDraft} options={options} disabled={busy}/><button className="vendor-primary" disabled={busy}>{t("profile.save")}</button></form></details>
       <div className="personalization-strip"><div><span>{t("recommend.preferences")}</span><strong>{t("common.priority")}: {priorityLabel(language, recommendationData?.priority_profile)}</strong></div><p>{t("profile.transport")}: <b>{t(recommendationData?.preference_flags?.transport ? "common.yes" : "common.no")}</b> · {t("profile.market")}: <b>{t(recommendationData?.preference_flags?.market ? "common.yes" : "common.no")}</b> · {t("profile.parking")}: <b>{t(recommendationData?.preference_flags?.parking ? "common.yes" : "common.no")}</b></p><details><summary>{t("recommend.whyRanking")}</summary><div>{Object.entries(recommendationData?.effective_factor_weights || {}).map(([key, value]) => <span key={key}>{factorLabel(language, key, pretty(key))} <b>{(value * 100).toFixed(1)}%</b></span>)}</div></details></div>
       {recommendations.length === 0 ? <div className="vendor-empty"><MapPin size={30}/><h3>{t("recommend.noZones")}</h3><p>{t("recommend.noZonesHelp")}</p></div> : <div className="recommendation-grid">
         <div className="zone-card-list">{recommendations.map(zone => <article key={zone.zone_id} className={`zone-card ${selectedId === zone.zone_id ? "selected" : ""}`} aria-selected={selectedId === zone.zone_id} onClick={() => {setSelectedId(zone.zone_id); onOpenRecommendation(zone.zone_id);}}>
