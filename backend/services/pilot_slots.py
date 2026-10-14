@@ -1,5 +1,6 @@
 """Isolated research schematic; coordinates are local metres, never WGS84 slots."""
 from __future__ import annotations
+from backend.core.data_paths import dataset_path
 
 import csv
 import json
@@ -30,7 +31,7 @@ def pilot_evidence(zone_id=PILOT_ZONE_ID):
     with OFFICIAL_ZONES_PATH.open(encoding="utf-8-sig", newline="") as source:
         records = [row for row in csv.DictReader(source)
                    if row["zone_id"] in ((zone_id, "NV_064", "NV_069") if zone_id == PILOT_ZONE_ID else (zone_id,))]
-    path = ROOT / "data/raw/nmc/official_zones_geometries.geojson"
+    path = dataset_path("analytical_geometry")
     features = []
     if path.exists():
         features = [f for f in json.loads(path.read_text(encoding="utf-8"))["features"]

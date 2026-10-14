@@ -1,0 +1,3 @@
+cluster,zone_count,distance_to_major_road_m,road_density_250m_per_km2,pedestrian_road_density_250m_per_km2,commercial_poi_count_250m,market_poi_count_500m,food_poi_count_250m,bus_count_500m,distance_to_bus_access_m,healthcare_count_500m,education_count_500m,toilet_count_500m,parking_count_500m
+0,84,73.8240331362909,20029.805619062477,266.23437382910464,2.0,0.0,0.0,1.0,279.8751422991562,4.5,0.0,0.0,0.0
+1,174,221.6743852586966,17996.580213461355,0.0,0.0,0.0,0.0,0.0,1266.9410721891363,0.0,0.0,0.0,0.0

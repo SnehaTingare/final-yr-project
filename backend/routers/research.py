@@ -1,5 +1,6 @@
 """Research HTTP endpoints; existing contracts retained."""
 from __future__ import annotations
+from backend.core.data_paths import dataset_path
 from backend.core import context as dependencies
 from backend.mcda_engine import DATA
 from backend.decision_policy import DEFAULT_POLICY_PATH
@@ -381,11 +382,7 @@ def implementation_summary():
 
 
     geom = _read_json(
-        ROOT
-        / "reports"
-        / "data_quality"
-        / "geometry_duplicates"
-        / "audit_summary.json"
+        dataset_path("reference_audit_summary")
     )
 
 
@@ -398,18 +395,12 @@ def implementation_summary():
 
 
     kmeans_meta = _read_json(
-        ROOT
-        / "reports"
-        / "metrics"
-        / "kmeans_run.json"
+        dataset_path("kmeans_metadata")
     )
 
 
     eval_path = (
-        ROOT
-        / "data"
-        / "model_outputs"
-        / "kmeans"
+        dataset_path("kmeans_output")
         / "k_evaluation.csv"
     )
 
@@ -819,8 +810,7 @@ def overview():
 
 
     features = pd.read_csv(
-        DATA
-        / "zone_features.csv"
+        dataset_path("zone_features")
     )
 
 
@@ -833,11 +823,7 @@ def overview():
 
 
     audit_path = (
-        ROOT
-        / "reports"
-        / "data_quality"
-        / "geometry_duplicates"
-        / "audit_summary.json"
+        dataset_path("reference_audit_summary")
     )
 
 

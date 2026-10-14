@@ -14,8 +14,11 @@ import geopandas as gpd
 from shapely.geometry import box
 
 ROOT = Path(__file__).resolve().parents[1]
-NMC = ROOT / "data/raw/nmc"
-OSM = ROOT / "data/raw/osm"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path, RAW_NMC_DIR, RAW_OSM_DIR
+NMC = RAW_NMC_DIR
+OSM = RAW_OSM_DIR
 OUT = ROOT / "reports/data_quality"
 CATEGORIES = ["vegetable_fruit", "food", "clothing", "flower",
               "general_goods", "other", "unknown"]
@@ -266,7 +269,7 @@ def main():
               "ERROR","DUPLICATE_TRANSLATION_LABEL","Translation audit contains duplicate original labels")
 
     # Geometry is audited separately from legal-zone attributes.
-    geo_path=NMC/"official_zones_geometries.geojson"
+    geo_path=dataset_path("analytical_geometry")
     if not geo_path.exists():
         issue("ERROR","MISSING_GEOMETRY_FILE","Missing reference geometry GeoJSON")
     else:

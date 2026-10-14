@@ -1,5 +1,20 @@
 import {REVIEWED_ZONE_NAMES, conciseZoneName} from "./zoneDisplayNames.js";
-import officialZones from "../../../../data/raw/nmc/official_zones.csv?raw";
+import catalog from "../../../../data/catalog.json";
+// Exact public allowlist: never glob raw vendor records or archive contents.
+const publicSources = import.meta.glob([
+  "../../../../data/raw/nmc/official_zones.csv",
+  "../../../../data/gis/display/zone_map_display_coordinates.csv",
+  "../../../../data/gis/manual/manual_free_zone_points_by_zone_id_142.csv",
+  "../../../../data/gis/manual/all_146_free_zones_mapping_status.csv",
+  "../../../../data/gis/illustrative/nmc_six_divisions_ILLUSTRATIVE.geojson",
+], {query: "?raw", import: "default", eager: true});
+function datasetText(name) {
+  const text = publicSources["../../../../" + catalog.datasets[name]];
+  if (text == null) throw new Error(`Required public dataset unavailable: ${name}`);
+  return text;
+}
+const officialZones = datasetText("official_zones");
+export const illustrativeDivisions = JSON.parse(datasetText("illustrative_divisions"));
 
 // Source descriptions only; quoted commas/newlines remain part of their CSV field.
 function csvRows(text) {
@@ -38,24 +53,35 @@ export function officialZoneDivision(zone) {
 }
 
 // Display-only locations never participate in recommendation or allocation rules.
-const locationSources = import.meta.glob("../../../../data/processed/zone_map_display_coordinates*.csv", {query: "?raw", import: "default", eager: true});
-const locationCsv = locationSources["../../../../data/processed/zone_map_display_coordinates.csv"] || locationSources["../../../../data/processed/zone_map_display_coordinates_v3_CANDIDATES.csv"] || "";
+const locationCsv = datasetText("display_candidates");
 const locationRows = csvRows(locationCsv.replace(/^\uFEFF/, ""));
 const locationHeader = (locationRows.shift() || []).map(value => value.trim());
 const displayLocations = new Map(locationRows.map(row => {
   const record = Object.fromEntries(locationHeader.map((key, index) => [key, row[index] || ""]));
   return [record.zone_id?.trim(), record];
 }));
+function recordIndex(text) {
+  const parsed = csvRows((text || "").replace(/^\uFEFF/, "")), columns = parsed.shift() || [];
+  return new Map(parsed.map(row => {const record = Object.fromEntries(columns.map((key, i) => [key, row[i] || ""])); return [record.zone_id, record];}));
+}
+const manualPoints = recordIndex(datasetText("manual_points"));
+const manualStatuses = recordIndex(datasetText("manual_status"));
 function locationPair(lat, lng) {
   if (!String(lat ?? "").trim() || !String(lng ?? "").trim()) return null;
   const latitude = Number(lat), longitude = Number(lng);
   return Number.isFinite(latitude) && Number.isFinite(longitude) && Math.abs(latitude) <= 90 && Math.abs(longitude) <= 180 ? [longitude, latitude] : null;
 }
 export function zoneMapLocation(zone) {
-  const record = displayLocations.get(typeof zone === "string" ? zone : zone?.zone_id);
+  const id = typeof zone === "string" ? zone : zone?.zone_id;
+  const previous = displayLocations.get(id), manual = manualPoints.get(id), status = manualStatuses.get(id);
+  const accepted = manual && manual.coordinate_status === "USER_PINNED_UNVERIFIED" && status?.manual_coordinate_status === "USER_PINNED_UNVERIFIED" && manual.pin_number === status.pin_number;
+  const record = accepted ? {...previous, display_latitude: manual.latitude, display_longitude: manual.longitude,
+    display_status: manual.coordinate_status, position_class: "MANUAL_ZONE_REFERENCE", confidence: manual.coordinate_status,
+    map_visibility: "SHOW_CANDIDATE", source_label: manual.coordinate_source, location_note: manual.notes}
+    : status ? {...previous, display_latitude: "", display_longitude: "", map_visibility: "HIDE", display_status: status.manual_coordinate_status, location_note: status.review_note} : previous;
   const coordinates = record && record.map_visibility !== "HIDE" ? locationPair(record.display_latitude, record.display_longitude) : null;
-  const kind = record?.position_class === "PROVISIONAL_PILOT_FOOTPRINT" ? "pilot" : record?.position_class === "LANDMARK_REFERENCE" ? "landmark" : "approximate";
-  const label = !coordinates ? "Location not verified" : kind === "pilot" ? "Provisional pilot location" : kind === "landmark" ? "Landmark candidate - site unverified" : "Approximate analytical reference - not a vending site";
+  const kind = accepted ? "manual" : record?.position_class === "PROVISIONAL_PILOT_FOOTPRINT" ? "pilot" : record?.position_class === "LANDMARK_REFERENCE" ? "landmark" : "approximate";
+  const label = !coordinates ? "Location not verified" : kind === "manual" ? "Manually mapped reference - not independently verified" : kind === "pilot" ? "Provisional pilot location" : kind === "landmark" ? "Landmark candidate - site unverified" : "Approximate analytical reference - not a vending site";
   return {record, coordinates, kind, label};
 }
 export function zoneDisplayGeometry(zones, references = false) {

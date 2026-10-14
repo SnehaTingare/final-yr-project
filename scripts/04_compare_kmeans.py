@@ -21,10 +21,13 @@ from sklearn.metrics import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "data/processed/zone_features.csv"
-BASELINE = ROOT / "models/kmeans/zone_kmeans.joblib"
-OUT = ROOT / "data/model_outputs/kmeans/comparison"
-MODEL_OUT = ROOT / "models/kmeans/comparison"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path
+INPUT = dataset_path("zone_features")
+BASELINE = dataset_path("kmeans_artifacts") / "zone_kmeans.joblib"
+OUT = dataset_path("kmeans_output") / "comparison"
+MODEL_OUT = dataset_path("kmeans_artifacts") / "comparison"
 REPORT = ROOT / "reports/metrics"
 SEEDS = [11, 23, 37, 53, 71]
 K_VALUES = [2, 4]

@@ -23,8 +23,11 @@ import pandas as pd
 from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "data/raw/nmc/official_zones_geometries.geojson"
-MASTER = ROOT / "data/raw/nmc/official_zones.csv"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path
+SOURCE = dataset_path("analytical_geometry")
+MASTER = dataset_path("official_zones")
 OUT = ROOT / "reports/data_quality/geometry_duplicates"
 METRIC_CRS = "EPSG:32643"
 LOG = logging.getLogger("geometry_duplicate_audit")

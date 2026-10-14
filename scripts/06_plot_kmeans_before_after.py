@@ -12,12 +12,16 @@ from sklearn.decomposition import PCA
 # ---------------------------------------------------------
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path
 
-FEATURES_FILE = ROOT / "data" / "processed" / "zone_features.csv"
+FEATURES_FILE = dataset_path("zone_features")
 ASSIGNMENTS_FILE = (
-    ROOT / "data" / "model_outputs" / "kmeans" / "training_assignments.csv"
+    dataset_path("kmeans_output") / "training_assignments.csv"
 )
-MODEL_FILE = ROOT / "models" / "kmeans" / "zone_kmeans.joblib"
+MODEL_FILE = dataset_path("kmeans_artifacts") / "zone_kmeans.joblib"
 
 OUTPUT_DIR = ROOT / "reports" / "figures"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

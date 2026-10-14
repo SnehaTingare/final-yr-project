@@ -1,0 +1,185 @@
+{
+  "version": "manual-142-v1",
+  "official_zones": 308,
+  "manual_reference_count": 142,
+  "free_candidates": 146,
+  "unresolved_original_fallback_ids": [
+    "NE_F_001",
+    "NE_F_003",
+    "NR_F_002",
+    "NR_F_025"
+  ],
+  "unscorable_nonfree_zone_ids": [
+    "NE_F_006",
+    "NE_F_009",
+    "NE_F_013",
+    "NW_F_015",
+    "NW_F_023",
+    "NW_R_004",
+    "NW_R_005",
+    "NW_R_006",
+    "NW_R_008",
+    "NW_R_009",
+    "NW_R_010",
+    "NW_R_012",
+    "NW_R_013",
+    "NW_R_014",
+    "NW_R_016",
+    "NW_R_019",
+    "PAN_F_003",
+    "PAN_F_021",
+    "PAN_F_025",
+    "PAN_F_037",
+    "NR_F_001",
+    "NR_F_004",
+    "NR_F_012",
+    "NR_F_030",
+    "NR_F_031",
+    "NR_F_044",
+    "NR_R_005",
+    "NN_F_010",
+    "NN_F_014",
+    "NN_F_015",
+    "NN_F_016",
+    "NN_R_010",
+    "NN_R_011",
+    "SAT_F_018",
+    "SAT_R_003",
+    "NV_001",
+    "NV_005",
+    "NV_007",
+    "NV_011",
+    "NV_023",
+    "NV_036",
+    "NV_042",
+    "NV_045",
+    "NV_048",
+    "NV_052",
+    "NV_058",
+    "NV_059",
+    "NV_060",
+    "NV_076",
+    "NV_082"
+  ],
+  "nonmanual_numeric_features_unchanged": true,
+  "historical_model_inputs_unchanged": true,
+  "cluster_changes_after_label_alignment": 43,
+  "old_new_cluster_ari": 0.4339981690650236,
+  "manual_point_displacement_m": {
+    "median": 3635.6636481675187,
+    "max": 14133.527479219432,
+    "over_5000m": 56,
+    "largest_five": {
+      "SAT_F_024": 14133.527479219432,
+      "NR_F_008": 14085.161718999465,
+      "NR_F_003": 13519.998360731759,
+      "NR_F_011": 13073.77906305267,
+      "NR_F_024": 12663.862135676396
+    }
+  },
+  "recommendation_comparison": {
+    "vegetable_fruit": {
+      "old_top3": [
+        "PAN_F_031",
+        "SAT_F_006",
+        "NW_F_025"
+      ],
+      "new_top3": [
+        "NW_F_025",
+        "PAN_F_031",
+        "NR_F_034"
+      ],
+      "median_absolute_score_change": 5.749530055089322,
+      "maximum_absolute_score_change": 30.42582376470329,
+      "score_spearman": 0.6385330461904711
+    },
+    "food": {
+      "old_top3": [
+        "NW_F_025",
+        "NW_F_005",
+        "PAN_F_031"
+      ],
+      "new_top3": [
+        "NW_F_025",
+        "NR_F_034",
+        "NW_F_007"
+      ],
+      "median_absolute_score_change": 5.749530055089322,
+      "maximum_absolute_score_change": 30.42582376470329,
+      "score_spearman": 0.6630498558484514
+    },
+    "clothing": {
+      "old_top3": [
+        "NW_F_005",
+        "NW_F_025",
+        "PAN_F_031"
+      ],
+      "new_top3": [
+        "NW_F_025",
+        "NR_F_020",
+        "PAN_F_031"
+      ],
+      "median_absolute_score_change": 5.749530055089325,
+      "maximum_absolute_score_change": 30.425823764703278,
+      "score_spearman": 0.6108724378978524
+    },
+    "flower": {
+      "old_top3": [
+        "NW_F_005",
+        "NW_F_025",
+        "PAN_F_031"
+      ],
+      "new_top3": [
+        "NW_F_025",
+        "NR_F_020",
+        "NW_F_007"
+      ],
+      "median_absolute_score_change": 5.749530055089322,
+      "maximum_absolute_score_change": 30.425823764703278,
+      "score_spearman": 0.6216091193402166
+    },
+    "general_goods": {
+      "old_top3": [
+        "NW_F_005",
+        "NW_F_025",
+        "PAN_F_031"
+      ],
+      "new_top3": [
+        "NW_F_025",
+        "NR_F_020",
+        "PAN_F_031"
+      ],
+      "median_absolute_score_change": 5.749530055089318,
+      "maximum_absolute_score_change": 30.425823764703296,
+      "score_spearman": 0.6492851435313562
+    },
+    "other": {
+      "old_top3": [
+        "NW_F_005",
+        "NW_F_025",
+        "PAN_F_031"
+      ],
+      "new_top3": [
+        "NR_F_020",
+        "NW_F_025",
+        "PAN_F_031"
+      ],
+      "median_absolute_score_change": 5.749530055089325,
+      "maximum_absolute_score_change": 30.42582376470329,
+      "score_spearman": 0.6248885266811269
+    }
+  },
+  "recommendation_contexts_checked": 42,
+  "review_flags": [
+    "56 manual points moved over 5 km from old references; review pin-to-zone associations and local evidence before operational site confirmation.",
+    "Four unresolved manual points use labelled original analytical fallbacks; no surveyed boundary claim.",
+    "Fifty non-FREE records still lack usable references and remain outside the existing model population.",
+    "Manual references for SAT_F_014 (~5.1 km) and NR_F_003 (~1.1 km) differ substantially from existing provisional pilot slots; coordinate handoff and pilot sources require reconciliation. Slots and assignments were not moved."
+  ],
+  "manual_reference_distance_to_nearest_existing_pilot_slot_vertex_m": {
+    "NN_F_013": 98.4,
+    "PAN_F_019": 108.4,
+    "SAT_F_014": 5056.8,
+    "NR_F_003": 1052.8
+  }
+}

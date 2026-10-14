@@ -4,6 +4,7 @@ This module is deliberately independent of the research CSV/ML pipeline.  The
 official zone master is used only to seed missing operational status rows.
 """
 from __future__ import annotations
+from backend.core.data_paths import dataset_path
 
 import csv
 import json
@@ -18,8 +19,8 @@ from typing import Any, Iterator
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DATABASE_PATH = ROOT / "data" / "operational" / "vendor_management.db"
-OFFICIAL_ZONES_PATH = ROOT / "data" / "raw" / "nmc" / "official_zones.csv"
+DATABASE_PATH = dataset_path("database")
+OFFICIAL_ZONES_PATH = dataset_path("official_zones")
 
 ZONE_STATUSES = ("OPEN", "FULL", "CLOSED", "SUSPENDED", "RESTRICTED", "NO_VENDING")
 REQUEST_TYPES = ("NEW_ALLOCATION", "RELOCATION")

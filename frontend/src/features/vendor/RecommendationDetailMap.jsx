@@ -1,8 +1,8 @@
-import {zoneName} from "../../shared/utils/displayLabels.js";
+import {zoneName, officialZoneDivision} from "../../shared/utils/displayLabels.js";
 import React, {useEffect, useMemo, useState} from "react";
 import {CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap} from "react-leaflet";
 import {MapPin} from "lucide-react";
-import {getZoneGeometry} from "../../services/api.js";
+import {getZoneDisplayGeometry} from "../../services/api.js";
 import {buildVendorExplorerMapModel} from "../../shared/utils/mapGrouping.js";
 import {useI18n} from "../../i18n/react.jsx";
 import {statusLabel} from "../../i18n/index.js";
@@ -25,12 +25,12 @@ export default function RecommendationDetailMap({zone, recommendations, context}
   const [geometry, setGeometry] = useState(null);
   const [error, setError] = useState("");
   useEffect(() => {
-    getZoneGeometry().then(setGeometry).catch(err => setError(err.message));
+    getZoneDisplayGeometry().then(setGeometry).catch(err => setError(err.message));
   }, []);
   const model = useMemo(() => geometry ? buildVendorExplorerMapModel(recommendations, context?.zones || [], geometry) : null, [geometry, recommendations, context]);
   const group = model?.groups.find(item => item.zones.some(member => member.zone_id === zone.zone_id));
 
-  if (error || (geometry && !group)) return <div className="recommendation-detail-map-unavailable"><MapPin size={24}/><strong>{t("recommend.mapUnavailable")}</strong><span>{error ? t("recommend.mapCouldNotLoad") : t("recommend.noAnalyticalReference")}</span></div>;
+  if (error || (geometry && !group)) return <div className="recommendation-detail-map-unavailable"><MapPin size={24}/><strong>{t("recommend.mapUnavailable")}</strong><span>{error ? t("recommend.mapCouldNotLoad") : t("map.displayUnavailable")}</span></div>;
   if (!geometry || !group) return <div className="recommendation-detail-map-unavailable" role="status"><span>{t("common.loading")}</span></div>;
 
   return <MapContainer center={group.position} zoom={15} scrollWheelZoom={false} className="recommendation-detail-map">
@@ -40,7 +40,8 @@ export default function RecommendationDetailMap({zone, recommendations, context}
       <Tooltip permanent direction="center" className="rank-tooltip">{group.zones.length > 1 ? group.zones.length : zone.rank}</Tooltip>
       <Popup className="shared-reference-popup" minWidth={240}>
         <strong>{group.shared ? t("recommend.shared") : t("recommend.rankReference", {rank: zone.rank})}</strong>
-        <div className="shared-zone-list">{group.zones.map(member => <div className="detail-map-member" key={member.zone_id}><b>{member.is_recommendation ? `#${member.rank}` : "•"}</b><span>{member.zone_id}</span><em>{member.is_recommendation ? score(member.score) : statusLabel(language, member.live_status)}</em></div>)}</div>
+        <div className="shared-zone-list">{group.zones.map(member => <div className="detail-map-member" key={member.zone_id}><b>{member.is_recommendation ? `#${member.rank}` : "•"}</b><span>{zoneName(member)} - {officialZoneDivision(member)}</span><em>{member.is_recommendation ? score(member.score) : statusLabel(language, member.live_status)}</em></div>)}</div>
+        <p>{t("map.manualNotice")}</p>
         {group.shared && <p>{t("recommend.sharedNotice")}</p>}
       </Popup>
     </CircleMarker>

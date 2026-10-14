@@ -4,6 +4,7 @@ Phone numbers, OTPs, passwords, and session tokens are never persisted in
 plaintext. This module intentionally does not depend on recommendation logic.
 """
 from __future__ import annotations
+from backend.core.data_paths import dataset_path
 
 import csv
 import hashlib
@@ -20,7 +21,7 @@ from backend.repositories.database import DATABASE_PATH, connect, transaction, u
 
 
 ROOT = Path(__file__).resolve().parents[2]
-HISTORICAL_VENDOR_SOURCE = ROOT / "data" / "raw" / "nmc" / "vendors.csv"
+HISTORICAL_VENDOR_SOURCE = dataset_path("historical_vendors")
 SESSION_COOKIE_NAME = "nmc_session"
 OTP_EXPIRY_MINUTES = 5
 OTP_MAX_ATTEMPTS = 5

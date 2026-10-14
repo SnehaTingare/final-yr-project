@@ -21,6 +21,7 @@ recommend(...)
 """
 
 from __future__ import annotations
+from backend.core.data_paths import dataset_path, PROCESSED_DIR, RAW_NMC_DIR
 
 import argparse
 from pathlib import Path
@@ -40,9 +41,9 @@ from backend.decision_policy import FACTOR_ORDER, RESEARCH_BASELINE_WEIGHTS, der
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "processed"
-RAW = ROOT / "data" / "raw" / "nmc"
-OUT = ROOT / "data" / "outputs"
+DATA = dataset_path("mcda_inputs")
+RAW = RAW_NMC_DIR
+OUT = dataset_path("recommendation_output")
 
 
 CATEGORIES = [
@@ -513,11 +514,7 @@ def load(
     # -----------------------------------------------------------------------
 
     audit = (
-        ROOT
-        / "reports"
-        / "data_quality"
-        / "geometry_duplicates"
-        / "zone_reference_audit.csv"
+        dataset_path("reference_audit")
     )
 
 

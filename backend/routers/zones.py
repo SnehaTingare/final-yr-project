@@ -1,5 +1,6 @@
 """Zones HTTP endpoints; existing contracts retained."""
 from __future__ import annotations
+from backend.core.data_paths import dataset_path, CATALOG
 from backend.core import context as dependencies
 from backend.schemas.api import AdminZoneStatusBody
 from backend.mcda_engine import CATEGORIES
@@ -19,6 +20,8 @@ from backend.repositories.database import get_live_zone_status_map
 from backend.repositories.database import get_zone_live_status
 from fastapi import status as http_status
 import json
+import csv
+import math
 from backend.decision_policy import load_base_weight_policy
 from backend.core.security import operational_error
 import pandas as pd
@@ -339,11 +342,7 @@ def admin_zones(
 
 
     audit_path = (
-        ROOT
-        / "reports"
-        / "data_quality"
-        / "geometry_duplicates"
-        / "zone_reference_audit.csv"
+        dataset_path("reference_audit")
     )
 
 
@@ -535,11 +534,7 @@ def official_zones(
 
 
     audit_path = (
-        ROOT
-        / "reports"
-        / "data_quality"
-        / "geometry_duplicates"
-        / "zone_reference_audit.csv"
+        dataset_path("reference_audit")
     )
 
 
@@ -582,10 +577,7 @@ def official_zones(
 
 
     cluster_path = (
-        ROOT
-        / "data"
-        / "model_outputs"
-        / "kmeans"
+        dataset_path("kmeans_output")
         / "zones_with_clusters.csv"
     )
 
@@ -797,3 +789,69 @@ def catalog(
                 )
             ),
     }
+
+
+def display_zone_geometry():
+    """Display-only projection keyed by official IDs; never a model input."""
+    def read(path):
+        with path.open(encoding="utf-8-sig", newline="") as source:
+            return list(csv.DictReader(source))
+    def indexed(rows, label):
+        result = {}
+        for row in rows:
+            zone_id = row["zone_id"].strip()
+            if zone_id in result:
+                raise ValueError(f"Duplicate zone_id in {label}")
+            result[zone_id] = row
+        return result
+    def pair(lat, lon):
+        if not str(lat or "").strip() or not str(lon or "").strip():
+            return None
+        latitude, longitude = float(lat), float(lon)
+        if not math.isfinite(latitude) or not math.isfinite(longitude) or not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+            raise ValueError("Invalid display coordinate range")
+        return [longitude, latitude]
+    official = indexed(read(dataset_path("official_zones")), "official registry")
+    points = indexed(read(dataset_path("manual_points")), "manual points")
+    statuses = indexed(read(dataset_path("manual_status")), "mapping status")
+    previous = indexed(read(dataset_path("display_candidates")), "display candidates")
+    if not (points.keys() | statuses.keys()) <= official.keys():
+        raise ValueError("Manual mapping contains unknown official zone IDs")
+    accepted_ids = {zone_id for zone_id, row in statuses.items() if row["manual_coordinate_status"] == "USER_PINNED_UNVERIFIED"}
+    if accepted_ids != points.keys() or len(points) != 142 or len(statuses) != 146:
+        raise ValueError("Manual mapping counts/statuses do not match the handoff")
+    if any(official[zone_id]["zone_type"] != "FREE" for zone_id in statuses):
+        raise ValueError("Manual checklist contains a non-FREE zone")
+    for zone_id, row in points.items():
+        status = statuses.get(zone_id, {})
+        if official[zone_id]["zone_type"] != "FREE" or status.get("manual_coordinate_status") != "USER_PINNED_UNVERIFIED" or row.get("coordinate_status") != "USER_PINNED_UNVERIFIED" or row.get("pin_number") != status.get("pin_number"):
+            raise ValueError("Manual point conflicts with mapping status")
+        if pair(row["latitude"], row["longitude"]) != pair(status.get("manual_latitude"), status.get("manual_longitude")):
+            raise ValueError("Manual point differs from status coordinates")
+    features = []
+    for zone_id, zone in official.items():
+        manual, status, old = points.get(zone_id), statuses.get(zone_id), previous.get(zone_id, {})
+        if manual:
+            coordinates = pair(manual["latitude"], manual["longitude"])
+            label, source = "USER_PINNED_UNVERIFIED", manual["coordinate_source"]
+        elif status:
+            coordinates = None
+            label, source = status["manual_coordinate_status"], "Manual mapping status"
+        else:
+            coordinates = pair(old.get("display_latitude"), old.get("display_longitude")) if old.get("map_visibility") != "HIDE" else None
+            label, source = old.get("display_status", "LOCATION_NOT_VERIFIED"), old.get("source_type", "")
+        features.append({"type": "Feature", "properties": {"zone_id": zone_id, "division": zone["division"],
+            "zone_type": zone["zone_type"], "location_status": label, "coordinate_source": source,
+            "manual_pin_number": manual.get("pin_number") if manual else status.get("pin_number") if status else None,
+            "official_boundary_verified": False, "model_features_recalculated": bool(CATALOG.get("active_model_version")), "model_version": CATALOG.get("active_model_version", "baseline"), "model_reference_source": ("MANUAL_PROVISIONAL" if manual else "ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED" if status else "ORIGINAL_ANALYTICAL") if CATALOG.get("active_model_version") else "BASELINE_ANALYTICAL"},
+            "geometry": {"type": "Point", "coordinates": coordinates} if coordinates else None})
+    return {"type": "FeatureCollection", "features": features,
+            "notice": "User-plotted points remain unverified. Scores use the manual-142-v1 recalculated GIS features; four unresolved manual zones retain explicitly labelled original analytical fallbacks."}
+
+
+@router.get("/api/zones/display-geometry")
+def zone_display_locations():
+    try:
+        return JSONResponse(display_zone_geometry())
+    except (OSError, ValueError, KeyError) as exc:
+        raise HTTPException(503, "Display coordinate data is missing or invalid; check the manual mapping handoff.") from exc

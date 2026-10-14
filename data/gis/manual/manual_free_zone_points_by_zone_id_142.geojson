@@ -1,0 +1,2987 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 2,
+        "zone_id": "NE_F_002",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Shivneri Chowk, Kathada Road.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.80032760000002,
+          19.9960883
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 4,
+        "zone_id": "NE_F_004",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Along the western compound wall of Trikoni Garden, on an 80-foot-long roadside stretch near Aathvan Hotel, Gajar Park, Tapovan Road and Saubhagya Society.",
+        "listed_capacity": "155",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.804508,
+          19.9899477
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 5,
+        "zone_id": "NE_F_005",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Gumshah Baba Chowk, Nanavali Road, along the NMC school wall, leaving the prescribed distance from the dargah.",
+        "listed_capacity": "33",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.797009,
+          19.99863
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 6,
+        "zone_id": "NE_F_007",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Open space opposite Survey No. 262, Rukmini Nagar, near Pakhal Road and Ashoka Marg, leaving the corner of the 150-foot road on the western side.",
+        "listed_capacity": "99",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7967004,
+          19.9810035
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 7,
+        "zone_id": "NE_F_008",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Inside Indiranagar Jogging Track, along the existing wall behind the NMC attendance shed near Sainath Nagar Chowfuli.",
+        "listed_capacity": "93",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7846849,
+          19.9779852
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 8,
+        "zone_id": "NE_F_010",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Open space within Krushnakant Vegetable Market.",
+        "listed_capacity": "191",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8290983,
+          20.01054
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 9,
+        "zone_id": "NE_F_011",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Space at the corner of Bharat Nagar.",
+        "listed_capacity": "81",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7920405,
+          19.9837377
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 10,
+        "zone_id": "NE_F_012",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Shivaji Nagar, beside Reliance Mall near Datta Mandir, Datta Mandir Road.",
+        "listed_capacity": "66",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8110514,
+          19.9787511
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 11,
+        "zone_id": "NE_F_014",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Platforms constructed by NMC in the vegetable market at Old Sindhi Colony.",
+        "listed_capacity": "146",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8274341,
+          19.9738837
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 12,
+        "zone_id": "NE_F_015",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Along one side of the road from Gosavi Nagar to the Takli boundary.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8335272,
+          19.975048
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 13,
+        "zone_id": "NE_F_016",
+        "official_division": "Nashik East",
+        "zone_type": "FREE",
+        "official_description": "Along the drain on Amardham Road.",
+        "listed_capacity": "31",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8259717,
+          20.008608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 14,
+        "zone_id": "NW_F_001",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space behind Sharanpur Vegetable Market, adjacent to the gymnasium, on both sides.",
+        "listed_capacity": "115",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7685431,
+          19.9983927
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 15,
+        "zone_id": "NW_F_002",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space beside the MSEB compound at Sharanpur Mini Market.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7703126,
+          20.0030894
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 16,
+        "zone_id": "NW_F_003",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space behind Hotel Green View, along Canal Road, on both sides.",
+        "listed_capacity": "150",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.770739,
+          19.995685
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 17,
+        "zone_id": "NW_F_004",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Gangawadi grass-market ground, on both sides.",
+        "listed_capacity": "130",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.750216,
+          20.0043909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 18,
+        "zone_id": "NW_F_005",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Stretch from Phanibaba Dargah to Gangawadi Garden.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7502387,
+          20.0072311
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 19,
+        "zone_id": "NW_F_006",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Near Hanuman Ghat.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7834123,
+          20.008928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 20,
+        "zone_id": "NW_F_007",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space beside the tennis court in D'Souza Colony, along the canal-side strip.",
+        "listed_capacity": "16",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7567421,
+          20.0098514
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 21,
+        "zone_id": "NW_F_008",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space behind the Senior Citizens Association, on the canal-side land.",
+        "listed_capacity": "40",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7580872,
+          20.0105239
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 22,
+        "zone_id": "NW_F_009",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Roadside behind City Centre Mall.",
+        "listed_capacity": "80",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7615367,
+          19.9902567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 23,
+        "zone_id": "NW_F_010",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Roadside space along the open space opposite Sandeep Hotel.",
+        "listed_capacity": "46",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7828056,
+          19.9902211
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 24,
+        "zone_id": "NW_F_011",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space beside the old NMC school building at Mumbai Naka.",
+        "listed_capacity": "60",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7802347,
+          19.988561
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 25,
+        "zone_id": "NW_F_012",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Open space opposite Hindu Samaj Seva Sangh, near Jhankar Hotel.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7866498,
+          19.9949386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 26,
+        "zone_id": "NW_F_013",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Pumping Station Road, space adjacent to Ram Mandir Garden.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7685895,
+          20.0155197
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 27,
+        "zone_id": "NW_F_014",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Madhav Ashram / Sai Prerna Apartment area, Vanvihar Colony, Parijat Nagar.",
+        "listed_capacity": "80",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.751307,
+          20.0032049
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 28,
+        "zone_id": "NW_F_016",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Bhadrakali Taxi Stand / Matangwada area, along the stretch from Bhadrakali towards Main Road.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7866398,
+          19.9989837
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 29,
+        "zone_id": "NW_F_017",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Bhadrakali vegetable-market ground, near Kondaji Chivda.",
+        "listed_capacity": "48",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7896813,
+          20.0014029
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 30,
+        "zone_id": "NW_F_018",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Open space near Boys Town, opposite Siddharth Nagar slum area.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7631157,
+          19.9989455
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 31,
+        "zone_id": "NW_F_019",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Near the ST Workshop on N. D. Patel Road.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7851805,
+          19.9939749
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 32,
+        "zone_id": "NW_F_020",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Lane beside Hotel Priya, opposite CBS, on one side of the road.",
+        "listed_capacity": "75",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7832461,
+          20.0014428
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 33,
+        "zone_id": "NW_F_021",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Milk Market.",
+        "listed_capacity": "5",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7911625,
+          19.9985817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 34,
+        "zone_id": "NW_F_022",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Space opposite Prabhat Theatre, Bhadrakali.",
+        "listed_capacity": "18",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7899228,
+          20.002538
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 35,
+        "zone_id": "NW_F_024",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Chitramandir, Vishrambaug area.",
+        "listed_capacity": "46",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.788442,
+          20.0033842
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 36,
+        "zone_id": "NW_F_025",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Balaji Temple, Tilbhandeshwar Lane.",
+        "listed_capacity": "48",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7918233,
+          20.0055374
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 37,
+        "zone_id": "NW_F_026",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Open plot near Akashvani Kendra.",
+        "listed_capacity": "300",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7580395,
+          20.0152178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 38,
+        "zone_id": "NW_F_027",
+        "official_division": "Nashik West",
+        "zone_type": "FREE",
+        "official_description": "Behind the Divisional Referral Hospital at Navapura, along the road from Shivaji Road to Pimpalpar.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7869432,
+          20.0007593
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 39,
+        "zone_id": "PAN_F_001",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Adgaon Holi Chowk.",
+        "listed_capacity": "40",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8631983,
+          20.034738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 40,
+        "zone_id": "PAN_F_002",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Adgaon Bus Stop, near Samaj Mandir.",
+        "listed_capacity": "15",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8654329,
+          20.0351369
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 41,
+        "zone_id": "PAN_F_004",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "From Mhasrul Vegetable Market up to Samaj Mandir.",
+        "listed_capacity": "80",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.806581,
+          20.047373
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 42,
+        "zone_id": "PAN_F_005",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Prabhat Nagar, along the Samaj Mandir compound wall on Makhmalabad Link Road.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.79192119999999,
+          20.0217743
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 43,
+        "zone_id": "PAN_F_006",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "NMC open space in Nandurgaon between Samaj Mandir and the Sulabh public toilet.",
+        "listed_capacity": "15",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8445824,
+          19.9920656
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 44,
+        "zone_id": "PAN_F_007",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Area near the water channel between Dindori Road and Peth Road, subject to final approval of the Irrigation Department.",
+        "listed_capacity": "250",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7966217,
+          20.0220519
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 45,
+        "zone_id": "PAN_F_008",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Tarwala Nagar, Dindori Road-Hirawadi Link Road, near Raje Sambhaji Chowk, along the reserved-garden wall at Survey No. 159.",
+        "listed_capacity": "250",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8015188,
+          20.0209105
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 46,
+        "zone_id": "PAN_F_009",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Canal-side footpath space on Peth Road, subject to final approval of the Irrigation Department.",
+        "listed_capacity": "350",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7920391,
+          20.0226783
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 47,
+        "zone_id": "PAN_F_010",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Along the MERI Office compound wall on Dindori Road, from Goraksh Nagar to the RTO Corner.",
+        "listed_capacity": "300",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7996675,
+          20.0331538
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 48,
+        "zone_id": "PAN_F_011",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Beside Mahalaxmi Temple near Makhmalabad Bus Stop.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.780522,
+          20.0409742
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 49,
+        "zone_id": "PAN_F_012",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Makhmalabad-Mhasrul Link Road, Irrigation Colony, along the reserved-garden compound wall opposite Hotel Manas.",
+        "listed_capacity": "40",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7820266,
+          20.0459475
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 50,
+        "zone_id": "PAN_F_013",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Near Nilgiri Baug and the NMC housing scheme, Survey No. 270.",
+        "listed_capacity": "150",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8291517,
+          20.0071523
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 51,
+        "zone_id": "PAN_F_014",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Near the Adivasi Ashram School, Borgad Colony, Dindori Road.",
+        "listed_capacity": "7",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7990181,
+          20.0570004
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 52,
+        "zone_id": "PAN_F_015",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Near K. K. Wagh Engineering College, along Irrigation Department land, on the road towards the bidi workers' colony.",
+        "listed_capacity": "400",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8257059,
+          20.0143116
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 53,
+        "zone_id": "PAN_F_016",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Shri Dattanagar Garden, Konark Nagar.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7936654,
+          20.0213131
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 54,
+        "zone_id": "PAN_F_017",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Near Shri Swami Samarth Kendra, opposite the NMC school, at Bidi Kamgar Garden.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8289645,
+          20.0111811
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 55,
+        "zone_id": "PAN_F_018",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Road from Chamunda Chowk on Hirawadi Road towards Prashant Dada Chowk.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8101042,
+          20.0174688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 56,
+        "zone_id": "PAN_F_019",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Adjacent to Shri Dattanagar Garden, Peth Road.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.792677,
+          20.016939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 57,
+        "zone_id": "PAN_F_020",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Savarkar Nagar, opposite Akash Petrol Pump, Dindori Road.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8046857,
+          20.0389542
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 58,
+        "zone_id": "PAN_F_022",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Near Shri Siddhivinayak Temple, along the open-space compound wall at Hirawadi.",
+        "listed_capacity": "5",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8149921,
+          20.0182588
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 59,
+        "zone_id": "PAN_F_023",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Near Shri Mahadev Temple, along the NMC open-space compound wall at Gunjal Baba Nagar, Hirawadi.",
+        "listed_capacity": "7",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8108414,
+          20.0208703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 60,
+        "zone_id": "PAN_F_024",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Opposite Bhikusa Paper Mill, near the water channel on Hirawadi Road.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8084184,
+          20.0167322
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 61,
+        "zone_id": "PAN_F_026",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Opposite Aathvan Lawns, Chavan Nagar, Tapovan Shed.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.80844,
+          20.0047254
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 62,
+        "zone_id": "PAN_F_027",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "NMC land beside the public toilet opposite the east gate of Shri Kalaram Temple.",
+        "listed_capacity": "19",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7960234,
+          20.0070026
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 63,
+        "zone_id": "PAN_F_028",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Sita Gufa area.",
+        "listed_capacity": "15",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7962147,
+          20.0077867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 64,
+        "zone_id": "PAN_F_029",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Adjacent to Ganeshwadi Vegetable Market, towards Waghadi Bridge.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7987881,
+          20.0021301
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 65,
+        "zone_id": "PAN_F_030",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Road towards Varvandi, for a stretch of 125 metres from Mhasrul Vegetable Market.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8088814,
+          20.0479384
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 66,
+        "zone_id": "PAN_F_031",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Pedestrian road in front of the Panchavati public library, opposite Indrakund, excluding the western and northern sides of the library.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7935839,
+          20.010061
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 67,
+        "zone_id": "PAN_F_032",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "NMC open space beside Dr. Bachhav Hospital, Peth Road.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.788402,
+          20.0115925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 68,
+        "zone_id": "PAN_F_033",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Along Kannamwar Bridge service road, near Takle Nagar Bypass.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7995072,
+          20.0051537
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 69,
+        "zone_id": "PAN_F_034",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "NMC open space at Survey No. 295, opposite Shri Vishnudev Apartment, Takle Nagar.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8005365,
+          20.0074632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 70,
+        "zone_id": "PAN_F_035",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "NMC open space at the Kshirsagar Colony corner, opposite Janakalyan Bank, Hirawadi Road.",
+        "listed_capacity": "15",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8039031,
+          20.0111222
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 71,
+        "zone_id": "PAN_F_036",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Along the northern compound wall of Maasaheb Thackeray Stadium, Hirawadi Road.",
+        "listed_capacity": "385",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8145101,
+          20.0148096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 72,
+        "zone_id": "PAN_F_038",
+        "official_division": "Panchavati",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall of Amrutdham Sanatorium, Bidi Kamgar Nagar Road.",
+        "listed_capacity": "40",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8261441,
+          20.0111481
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 73,
+        "zone_id": "NN_F_001",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Space near Sumit Company and opposite Nashik Castek, Ambad.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7370552,
+          19.9630448
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 74,
+        "zone_id": "NN_F_002",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Ambad Gaon Vegetable Market.",
+        "listed_capacity": "90",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7219106,
+          19.9502424
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 75,
+        "zone_id": "NN_F_003",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Pavan Nagar, adjacent to Ganesh Temple.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7555105,
+          19.9729435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 76,
+        "zone_id": "NN_F_004",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Near the water tank, on the northern side of Ambad property-tax office.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7402988,
+          19.9631462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 77,
+        "zone_id": "NN_F_005",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Phalke Memorial Gate.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7476598,
+          19.9448938
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 78,
+        "zone_id": "NN_F_006",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Campus Company, MIDC Ambad.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7423678,
+          19.960948
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 79,
+        "zone_id": "NN_F_007",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Coca-Cola Company, MIDC Ambad.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7528469,
+          19.9569782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 80,
+        "zone_id": "NN_F_008",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall opposite Gabriel Company, MIDC Ambad.",
+        "listed_capacity": "12",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.750719,
+          19.9520418
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 81,
+        "zone_id": "NN_F_009",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Behind Glasgow Company, MIDC Ambad.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7408518,
+          19.9508629
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 82,
+        "zone_id": "NN_F_011",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Power House, MSEB, Garware Gate, MIDC Ambad.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.742417,
+          19.9454034
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 83,
+        "zone_id": "NN_F_012",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Near Mungi Brothers Company, MIDC Ambad.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7431485,
+          19.9641816
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 84,
+        "zone_id": "NN_F_013",
+        "official_division": "New Nashik",
+        "zone_type": "FREE",
+        "official_description": "Lekha Nagar, Balbharati Office.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7726696,
+          19.9738279
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 86,
+        "zone_id": "NR_F_003",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Rukmini Nagar, opposite Datta Mandir, along the 12-metre DP Road.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8267472,
+          19.962595
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 87,
+        "zone_id": "NR_F_005",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Along the 15-metre DP Road at Gosavi Nagar, in the open space beside Canal Road.",
+        "listed_capacity": "80",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8290612,
+          19.9740412
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 88,
+        "zone_id": "NR_F_006",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Space along Canal Road at Janpath Society.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8334418,
+          19.9698741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 89,
+        "zone_id": "NR_F_007",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Along Canal Road, on the southern side, from the raddi store to the Anganwadi.",
+        "listed_capacity": "250",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8373686,
+          19.9727177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 90,
+        "zone_id": "NR_F_008",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Open space near Samaj Mandir at Shivaji Nagar, part of Survey No. 26.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8418071,
+          19.9739422
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 91,
+        "zone_id": "NR_F_009",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Open space beside Gangasagar Building, along Canal Road on the eastern side of Jail Road.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8410603,
+          19.9708078
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 92,
+        "zone_id": "NR_F_010",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Reserved land beside K. N. Kela High School.",
+        "listed_capacity": "250",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8400847,
+          19.966597
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 93,
+        "zone_id": "NR_F_011",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Pawarwadi, near the water tank, along the 12-metre DP Road.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8536167,
+          19.9753234
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 94,
+        "zone_id": "NR_F_013",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall of the NMC naturopathy centre, Jetvan Nagar, Jai Bhavani Road.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8580254,
+          19.9777372
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 95,
+        "zone_id": "NR_F_014",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Open space near Mhasoba Temple and behind Big Bazaar.",
+        "listed_capacity": "35",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8247064,
+          19.958197
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 96,
+        "zone_id": "NR_F_015",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Bhalerao Mala, Jai Bhavani Road, beside Tulja Temple.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8258779,
+          19.9498876
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 97,
+        "zone_id": "NR_F_016",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "K. J. Mehta High School Road, land reserved for Children's Park.",
+        "listed_capacity": "200",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8258442,
+          19.9580843
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 98,
+        "zone_id": "NR_F_017",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Somani Garden, from M. G. Road to Datta Mandir Road on the southern side.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8371898,
+          19.9497223
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 99,
+        "zone_id": "NR_F_018",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Existing authorised vegetable market adjacent to Durga Garden.",
+        "listed_capacity": "300",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8375435,
+          19.9481542
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 100,
+        "zone_id": "NR_F_019",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Kranti Chowk, near Genuji Bhavan.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8403292,
+          19.950972
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 101,
+        "zone_id": "NR_F_020",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Along the service road on Dr. Babasaheb Ambedkar Road.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8408817,
+          19.9494441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 102,
+        "zone_id": "NR_F_021",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Existing authorised vegetable market at Sinnar Phata.",
+        "listed_capacity": "106",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8487063,
+          19.9505229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 103,
+        "zone_id": "NR_F_022",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Ashwini Colony, near the water tank, along the traction-wall compound, Samangaon Road.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8605986,
+          19.9527171
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 104,
+        "zone_id": "NR_F_023",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Samangaon, opposite the Polytechnic College, along the 30-metre DP Road and the college compound.",
+        "listed_capacity": "300",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8624762,
+          19.9513657
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 105,
+        "zone_id": "NR_F_024",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Opposite Maruti Temple, Chadegaon Gaothan.",
+        "listed_capacity": "60",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8809576,
+          19.9496022
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 107,
+        "zone_id": "NR_F_026",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Vadner-Dumala Gaothan, along the road near Sulabh toilet, Pathardi and the gaothan.",
+        "listed_capacity": "60",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.808839,
+          19.9415081
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 108,
+        "zone_id": "NR_F_027",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Space opposite the NMC study centre in Vadner-Dumala Gaothan.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8105986,
+          19.9378369
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 109,
+        "zone_id": "NR_F_028",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Mathura Chowk, part of Survey Nos. 25 and 26, Reservation No. 247 for a high school, along the 18-metre DP Road.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8298961,
+          19.9324714
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 110,
+        "zone_id": "NR_F_029",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Deolali village weekly market, along the compound on all three sides.",
+        "listed_capacity": "300",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.83528989999999,
+          19.9411479
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 111,
+        "zone_id": "NR_F_032",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall of B. G. Public School Garden, Survey No. 18.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8350019,
+          19.9442134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 112,
+        "zone_id": "NR_F_033",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Along the Nana-Nani Park compound wall beside Saubhagya Nagar Garden, part of Survey Nos. 19, 20 and 21.",
+        "listed_capacity": "15",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8334346,
+          19.9301046
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 113,
+        "zone_id": "NR_F_034",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "On the eastern side of the railway station, Survey No. 246, Reservation No. 222 for Railway Terminus and Allied Activities, along the 18-metre DP Road.",
+        "listed_capacity": "200",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8416233,
+          19.9484575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 114,
+        "zone_id": "NR_F_035",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Gajanan Park, Nashik Road.",
+        "listed_capacity": "100",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8484594,
+          19.9383539
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 115,
+        "zone_id": "NR_F_036",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Survey No. 120, Mahamarg, Nashik Road.",
+        "listed_capacity": "300",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7751206,
+          19.9504028
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 116,
+        "zone_id": "NR_F_037",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Survey No. 126, along the 30-metre DP Road, Nashik Road.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.774155,
+          19.9451585
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 117,
+        "zone_id": "NR_F_038",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Pumping Station Road, Chehdi, Nashik Road.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8557207,
+          19.9358011
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 118,
+        "zone_id": "NR_F_039",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Survey No. 120, playground, Nashik Road.",
+        "listed_capacity": "80",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7761349,
+          19.948305
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 119,
+        "zone_id": "NR_F_040",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Old Octroi Naka, Pune Road, Nashik Road.",
+        "listed_capacity": "50",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8460505,
+          19.9827142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 120,
+        "zone_id": "NR_F_041",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Chehdi Bhagwa Chowk, Nashik Road.",
+        "listed_capacity": "10",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8534565,
+          19.9385204
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 121,
+        "zone_id": "NR_F_042",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Chehdi Gaothan, Maruti Temple, Nashik Road.",
+        "listed_capacity": "30",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8577481,
+          19.937411
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 122,
+        "zone_id": "NR_F_043",
+        "official_division": "Nashik Road",
+        "zone_type": "FREE",
+        "official_description": "Divisional Commissioner Office, leaving a 50-metre area, Nashik Road.",
+        "listed_capacity": "17",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.8414346,
+          19.957504
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 123,
+        "zone_id": "SAT_F_001",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Area behind ITI, Londhe Marg, Satpur.",
+        "listed_capacity": "200",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7481317,
+          19.991076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 124,
+        "zone_id": "SAT_F_002",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the fire-station wall, Satpur.",
+        "listed_capacity": "17",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7403489,
+          19.9928938
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 125,
+        "zone_id": "SAT_F_003",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall of Victor Gasket Company.",
+        "listed_capacity": "20",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7409794,
+          19.9978193
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 126,
+        "zone_id": "SAT_F_004",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Chhatrapati Shivaji Vegetable Market, Satpur Gaon.",
+        "listed_capacity": "190",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7331316,
+          19.989733
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 127,
+        "zone_id": "SAT_F_005",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the Satpur Mutton Market compound wall, Satpur Gaon.",
+        "listed_capacity": "248",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7339523,
+          19.9888054
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 128,
+        "zone_id": "SAT_F_006",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall of Taparia Tools / ST Bus Stand, Satpur.",
+        "listed_capacity": "68",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7303464,
+          19.991881
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 129,
+        "zone_id": "SAT_F_007",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "MHADA Colony, Housing and Area Development Board, Survey No. 105/2, Chunchale.",
+        "listed_capacity": "60",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7193768,
+          19.969807
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 130,
+        "zone_id": "SAT_F_008",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Open space opposite Saubhagya Lawns, Papaya Nursery, Trimbak Road.",
+        "listed_capacity": "36",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7229046,
+          19.9857229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 131,
+        "zone_id": "SAT_F_009",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Indira Gandhi Vegetable Market, Satpur Colony.",
+        "listed_capacity": "180",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7338966,
+          20.0006987
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 132,
+        "zone_id": "SAT_F_010",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Sai Baba Temple, Anand Chhaya, Ashok Nagar, for sale of flowers and puja materials only.",
+        "listed_capacity": "40",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7217201,
+          19.9895092
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 133,
+        "zone_id": "SAT_F_011",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Ashok Nagar Vegetable Market.",
+        "listed_capacity": "204",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7184283,
+          19.9885562
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 134,
+        "zone_id": "SAT_F_012",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Shramik Nagar Vegetable Market, Kedar Nagar, Shramik Nagar.",
+        "listed_capacity": "261",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7111917,
+          19.9907783
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 135,
+        "zone_id": "SAT_F_013",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Chhatrapati Shivaji Vegetable Market, Shivaji Nagar (36 inside and 19 outside, as stated in the description).",
+        "listed_capacity": "306",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7113261,
+          20.0081638
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 136,
+        "zone_id": "SAT_F_014",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Gangapur Gaon Vegetable Market.",
+        "listed_capacity": "35",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7331107,
+          19.9887309
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 137,
+        "zone_id": "SAT_F_015",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Someshwar Waterfall, Someshwar.",
+        "listed_capacity": "15",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7247188,
+          20.0225651
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 138,
+        "zone_id": "SAT_F_016",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Open space at Anandvalli, Pipeline Road, opposite Reliance Petrol Pump, Satpur.",
+        "listed_capacity": "90",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.740741,
+          20.0045412
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 139,
+        "zone_id": "SAT_F_017",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the compound wall of Late G. Deshpande Garden, Mahatma Nagar.",
+        "listed_capacity": "41",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7499487,
+          19.9973519
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 140,
+        "zone_id": "SAT_F_019",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the MICO Hospital compound wall.",
+        "listed_capacity": "22",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7341375,
+          19.9919521
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 141,
+        "zone_id": "SAT_F_020",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the outer compound wall of Chhatrapati Shivaji Mandai, Shivaji Nagar.",
+        "listed_capacity": "41",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7109676,
+          20.007881
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 142,
+        "zone_id": "SAT_F_021",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Beside Maruti Temple, Satpur Gaon.",
+        "listed_capacity": "6",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7339428,
+          19.9897805
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 143,
+        "zone_id": "SAT_F_022",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Gat No. 19, Sanjiv Nagar, Chunchale.",
+        "listed_capacity": "91",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7310701,
+          19.9670728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 144,
+        "zone_id": "SAT_F_023",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Dhruv Nagar, near the water tank, Shivaji Nagar.",
+        "listed_capacity": "18",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7164273,
+          20.0118718
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 145,
+        "zone_id": "SAT_F_024",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Along the garden compound wall opposite Omkar Palace, Dhruv Nagar.",
+        "listed_capacity": "12",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7171247,
+          20.0137015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "pin_number": 146,
+        "zone_id": "SAT_F_025",
+        "official_division": "Satpur",
+        "zone_type": "FREE",
+        "official_description": "Mahatma Nagar, near Ganesh Temple, leaving the prescribed distance from the school.",
+        "listed_capacity": "12",
+        "coordinate_status": "USER_PINNED_UNVERIFIED",
+        "coordinate_source": "Google My Maps manual pin export",
+        "notes": "User-selected landmark reference; official vending boundary and model feature validity unverified"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          73.7439347,
+          19.9952088
+        ]
+      }
+    }
+  ]
+}
