@@ -110,3 +110,5 @@ export const getAdminVendorDetails = (vendorId, signal) => apiRequest(`/api/admi
 export const getVendorAccountSettings = signal => apiRequest("/api/vendors/me/account-settings", {signal});
 
 export const getVendorActivity = signal => apiRequest("/api/vendors/me/activity", {signal});
+
+export const getZoneDisplayGeometry = () => apiRequest("/api/zones/display-geometry");

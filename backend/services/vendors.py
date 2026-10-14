@@ -11,6 +11,7 @@ this module.
 """
 
 from __future__ import annotations
+from backend.core.data_paths import dataset_path
 
 import csv
 import json
@@ -34,12 +35,7 @@ HISTORICAL_VENDOR_PATH = (
 # Optional privacy-restricted source.
 #
 # This file is intentionally allowed to be absent in Git/deployment builds.
-HISTORICAL_IDENTITY_PATH = (
-    DATA.parent
-    / "raw"
-    / "nmc"
-    / "vendors.csv"
-)
+HISTORICAL_IDENTITY_PATH = dataset_path("historical_vendors")
 
 CANDIDATE_ZONE_PATH = (
     DATA

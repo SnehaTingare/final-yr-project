@@ -15,10 +15,13 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-NMC = ROOT / "data/raw/nmc"
-FEATURES = ROOT / "data/processed/zone_features.csv"
-CLUSTERS = ROOT / "data/model_outputs/kmeans/zones_with_clusters.csv"
-OUT = ROOT / "data/processed"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path, PROCESSED_DIR, RAW_NMC_DIR, model_version_path
+NMC = RAW_NMC_DIR
+FEATURES = dataset_path("zone_features")
+CLUSTERS = dataset_path("kmeans_output") / "zones_with_clusters.csv"
+OUT = PROCESSED_DIR
 REPORT = ROOT / "reports/data_quality"
 CATEGORIES = ["vegetable_fruit", "food", "clothing", "flower",
               "general_goods", "other", "unknown"]
@@ -61,11 +64,19 @@ def sha256(path):
     return h.hexdigest()
 
 def main():
+    global FEATURES, CLUSTERS, OUT, REPORT
     parser = argparse.ArgumentParser()
     parser.add_argument("--materialize-pairs", action="store_true",
                         help="Explicitly generate the large unlabeled Cartesian pair table.")
     parser.add_argument("--max-pairs", type=int, default=2_000_000)
+    parser.add_argument("--version")
     args = parser.parse_args()
+    if args.version:
+        version_root = model_version_path(args.version)
+        FEATURES = version_root / "features/zone_features.csv"
+        CLUSTERS = version_root / "kmeans/zones_with_clusters.csv"
+        OUT = version_root / "inputs"
+        REPORT = version_root / "metadata/inputs"
     OUT.mkdir(parents=True, exist_ok=True)
     REPORT.mkdir(parents=True, exist_ok=True)
     inputs = {}

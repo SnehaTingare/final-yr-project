@@ -6,9 +6,13 @@ import numpy as np
 import pandas as pd
 
 ROOT=Path(__file__).resolve().parents[1]
-DATA=ROOT/"data/processed"
-RAW=ROOT/"data/raw/nmc"
-OUT=ROOT/"data/outputs"
+import sys
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path, PROCESSED_DIR, RAW_NMC_DIR
+DATA=dataset_path("mcda_inputs")
+RAW=RAW_NMC_DIR
+OUT=dataset_path("recommendation_output")
 CATEGORIES=["vegetable_fruit","food","clothing","flower","general_goods","other"]
 WEIGHTS={"business":.25,"commercial":.20,"access":.20,"facilities":.15,"preference":.10,"historical":.10}
 # Policy-configurable, illustrative baseline parameters, not learned coefficients.

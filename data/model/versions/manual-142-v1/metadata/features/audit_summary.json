@@ -1,0 +1,10 @@
+{
+  "zone_count": 308,
+  "usable_reference_count": 258,
+  "unusable_reference_count": 50,
+  "unique_reference_groups": 228,
+  "shared_reference_groups": 20,
+  "zones_in_shared_reference_groups": 50,
+  "version": "manual-142-v1",
+  "semantics": "Shared fixed-buffer reference points, not original polygon topology or administrative membership."
+}

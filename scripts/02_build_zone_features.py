@@ -18,13 +18,16 @@ from pathlib import Path
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-from shapely.geometry import box
+from shapely.geometry import box, Point
 from shapely.ops import unary_union
 
 ROOT = Path(__file__).resolve().parents[1]
-NMC = ROOT / "data" / "raw" / "nmc"
-OSM = ROOT / "data" / "raw" / "osm"
-OUT = ROOT / "data" / "processed"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path, RAW_NMC_DIR, RAW_OSM_DIR, model_version_path, CATALOG
+NMC = RAW_NMC_DIR
+OSM = RAW_OSM_DIR
+OUT = dataset_path("zone_features").parent
 REPORT = ROOT / "reports" / "data_quality"
 METRIC_CRS = "EPSG:32643"
 RADII = (250, 500)
@@ -197,10 +200,17 @@ def put_count(row, name, frame, buffer):
 
 
 def main():
+    global OUT, REPORT
     parser = argparse.ArgumentParser()
     parser.add_argument("--high-only", action="store_true",
                         help="Use only HIGH source-confidence geometries.")
+    parser.add_argument("--version", default="manual-142-v1")
+    parser.add_argument("--reference-source", choices=["manual", "original"], default="manual")
+    parser.add_argument("--compact-metadata", action="store_true")
     args = parser.parse_args()
+    version_root = model_version_path(args.version)
+    OUT = version_root / "features"
+    REPORT = version_root / "metadata/features"
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     OUT.mkdir(parents=True, exist_ok=True)
     REPORT.mkdir(parents=True, exist_ok=True)
@@ -211,7 +221,7 @@ def main():
                          "sha256": checksum(path), "records": int(count)})
 
     master_path = NMC / "official_zones.csv"
-    geo_path = NMC / "official_zones_geometries.geojson"
+    geo_path = dataset_path("analytical_geometry")
     master = read_csv(master_path)
     require_columns(master, ["zone_id", "division", "zone_type", "capacity"], master_path.name)
     unique_ids(master, "zone_id", "official zones")
@@ -240,10 +250,49 @@ def main():
     zones = gpd.GeoDataFrame(
         zones, geometry=gpd.GeoSeries([geo.loc[zid].geometry for zid in zones.zone_id],
                                       index=zones.index, crs=METRIC_CRS), crs=METRIC_CRS)
+    zones["reference_location_source"] = "ORIGINAL_ANALYTICAL"
+    zones["manual_reference_status"] = "NOT_IN_MANUAL_CHECKLIST"
+    if args.reference_source == "manual":
+        manual_path, status_path = dataset_path("manual_points"), dataset_path("manual_status")
+        manual, status = read_csv(manual_path), read_csv(status_path)
+        unique_ids(manual, "zone_id", "manual reference points")
+        unique_ids(status, "zone_id", "manual reference status")
+        known = set(zones.zone_id)
+        if len(manual) != 142 or len(status) != 146 or not set(manual.zone_id).issubset(known) or not set(status.zone_id).issubset(known):
+            raise ValueError("Manual handoff coverage is invalid")
+        accepted = set(status.loc[status.manual_coordinate_status.eq("USER_PINNED_UNVERIFIED"), "zone_id"])
+        if accepted != set(manual.zone_id):
+            raise ValueError("Manual points and accepted status IDs differ")
+        manual = manual.set_index("zone_id")
+        status = status.set_index("zone_id")
+        for i, row in zones.iterrows():
+            zid = row.zone_id
+            if zid not in status.index:
+                continue
+            zones.loc[i, "manual_reference_status"] = status.loc[zid, "manual_coordinate_status"]
+            if zid not in manual.index:
+                zones.loc[i, "reference_location_source"] = "ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED"
+                continue
+            pin = manual.loc[zid]
+            lat, lon = float(pin.latitude), float(pin.longitude)
+            if not np.isfinite([lat, lon]).all() or not -90 <= lat <= 90 or not -180 <= lon <= 180:
+                raise ValueError("Manual point outside coordinate ranges")
+            if str(pin.pin_number) != str(status.loc[zid, "pin_number"]) or row.zone_type != "FREE":
+                raise ValueError("Manual pin ID/type mismatch")
+            point = gpd.GeoSeries([Point(lon, lat)], crs="EPSG:4326").to_crs(METRIC_CRS).iloc[0]
+            zones.loc[i, "geometry"] = point
+            zones.loc[i, "geometry_usable_for_reference_model"] = True
+            zones.loc[i, "geometry_status"] = "MANUAL_PROVISIONAL_REFERENCE"
+            zones.loc[i, "geometry_method"] = "USER_MANUAL_POINT"
+            zones.loc[i, "geometry_source_evidence"] = pin.coordinate_source
+            zones.loc[i, "source_confidence"] = "USER_PINNED_UNVERIFIED"
+            zones.loc[i, "geometry_review_status"] = "NOT_INDEPENDENTLY_VERIFIED"
+            zones.loc[i, "reference_location_source"] = "MANUAL_PROVISIONAL"
+        record(manual_path, len(manual)); record(status_path, len(status))
     flag = normalized(zones["geometry_usable_for_reference_model"]).isin(["true", "1", "yes"])
     source_conf = normalized(zones["source_confidence"])
     valid = zones.geometry.notna() & ~zones.geometry.is_empty & zones.geometry.is_valid
-    valid &= zones.geom_type.isin(["Polygon", "MultiPolygon"])
+    valid &= zones.geom_type.isin(["Polygon", "MultiPolygon", "Point"])
     if args.high_only:
         valid &= source_conf.eq("high")
     usable = flag & valid
@@ -301,7 +350,13 @@ def main():
     fac_sub = {k:facilities.loc[v].copy() for k,v in fg.items()}
     lu_sub = {k:landuse.loc[v].copy() for k,v in lg.items()}
 
-    # Environmental context uses the representative point, not polygon-size buffers.
+    # Keep the original saved point for nonmanual references: GEOS versions can
+    # choose slightly different representative points for the same polygon.
+    baseline_path = ROOT / CATALOG.get("baseline_datasets", CATALOG["datasets"])["zone_features"]
+    original_points = pd.read_csv(baseline_path).set_index("zone_id") if baseline_path.exists() else None
+    if original_points is not None:
+        record(baseline_path, len(original_points))
+    # Environmental context uses a reference point, never polygon-size buffers.
     rows = []
     spatial = {}
     for i, zone in zones.iterrows():
@@ -314,6 +369,8 @@ def main():
                "geometry_source_evidence":zone.geometry_source_evidence,
                "source_confidence":zone.source_confidence,
                "official_boundary_verified":False,
+               "reference_location_source":zone.reference_location_source,
+               "manual_reference_status":zone.manual_reference_status,
                "feature_reference_crs":METRIC_CRS,
                "feature_status":"REFERENCE_READY" if usable.loc[i] else "NO_USABLE_REFERENCE"}
         if "geometry_review_status" in zones:
@@ -323,10 +380,14 @@ def main():
             continue
         geom = zone.geometry
         centre = geom.representative_point()
+        if zone.reference_location_source != "MANUAL_PROVISIONAL" and original_points is not None and zid in original_points.index:
+            easting, northing = original_points.loc[zid, ["reference_point_easting", "reference_point_northing"]]
+            if np.isfinite([easting, northing]).all():
+                centre = Point(float(easting), float(northing))
         spatial[zid] = centre
         buffers = {r:centre.buffer(r) for r in RADII}
-        row["reference_geometry_area_sqm"] = float(geom.area)
-        row["reference_geometry_perimeter_m"] = float(geom.length)
+        row["reference_geometry_area_sqm"] = np.nan if geom.geom_type == "Point" else float(geom.area)
+        row["reference_geometry_perimeter_m"] = np.nan if geom.geom_type == "Point" else float(geom.length)
         row["reference_point_easting"] = float(centre.x)
         row["reference_point_northing"] = float(centre.y)
         row["context_method"] = "REPRESENTATIVE_POINT_FIXED_BUFFER"
@@ -394,7 +455,7 @@ def main():
         "geometry_usable_for_reference_model", "geometry_status", "geometry_method",
         "geometry_source_evidence", "source_confidence", "official_boundary_verified",
         "feature_reference_crs", "feature_status", "geometry_review_status",
-        "context_method", "landuse_composition_reliable",
+        "context_method", "landuse_composition_reliable", "reference_location_source", "manual_reference_status",
         "reference_point_easting", "reference_point_northing"
     }
     feature_columns = [c for c in features.columns if c not in metadata_columns]
@@ -419,14 +480,36 @@ def main():
         gpkg_path.unlink()
     geo_out.to_file(gpkg_path,layer="zone_features",driver="GPKG",index=False)
 
-    pd.DataFrame(audit).to_csv(REPORT/"osm_feature_taxonomy.csv",index=False,encoding="utf-8-sig")
-    pd.DataFrame(manifest).to_csv(REPORT/"feature_input_manifest.csv",index=False)
-    feature_dictionary=[
-        {"feature":c,"unit":("metres per square kilometre" if "density" in c else "metres" if c.endswith("_m") else "square metres" if c.endswith("_sqm")
-          else "ratio" if "ratio" in c else "count" if "_count_" in c else "source attribute"),
-         "definition":"OSM-derived reference-area environmental feature; see source code for spatial operator."}
-        for c in feature_columns]
-    pd.DataFrame(feature_dictionary).to_csv(REPORT/"feature_dictionary.csv",index=False,encoding="utf-8-sig")
+    # Shared-reference metadata must follow this version's actual point positions,
+    # rather than importing the original polygon-duplicate audit into new scores.
+    group_ids = {zid: "RG_" + hashlib.sha256(point.wkb).hexdigest()[:16] for zid, point in spatial.items()}
+    sizes = pd.Series(list(group_ids.values())).value_counts()
+    reference_audit = pd.DataFrame({"zone_id":features.zone_id})
+    reference_audit["reference_group_id"] = reference_audit.zone_id.map(group_ids)
+    reference_audit["shared_reference_group_size"] = reference_audit.reference_group_id.map(sizes)
+    reference_audit["shared_reference"] = reference_audit.shared_reference_group_size.gt(1)
+    source_by_id = features.set_index("zone_id").reference_location_source
+    reference_audit["reference_audit_status"] = reference_audit.zone_id.map(source_by_id)
+    reference_audit["reference_warning"] = reference_audit.reference_audit_status.map(lambda source:
+        "Manual point unresolved; original analytical fallback, not a verified site." if source == "ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED" else
+        "Provisional manual analytical point; not independently verified or surveyed." if source == "MANUAL_PROVISIONAL" else
+        "Original analytical reference; not a verified vending boundary.")
+    reference_audit.to_csv(REPORT/"zone_reference_audit.csv", index=False, encoding="utf-8-sig")
+    audit_summary = {"zone_count":len(features), "usable_reference_count":len(spatial),
+                     "unusable_reference_count":len(features)-len(spatial), "unique_reference_groups":len(sizes),
+                     "shared_reference_groups":int(sizes.gt(1).sum()), "zones_in_shared_reference_groups":int(sizes[sizes.gt(1)].sum()),
+                     "version":args.version, "semantics":"Shared fixed-buffer reference points, not original polygon topology or administrative membership."}
+    (REPORT/"audit_summary.json").write_text(json.dumps(audit_summary,indent=2),encoding="utf-8")
+
+    if not args.compact_metadata:
+        pd.DataFrame(audit).to_csv(REPORT/"osm_feature_taxonomy.csv",index=False,encoding="utf-8-sig")
+        pd.DataFrame(manifest).to_csv(REPORT/"feature_input_manifest.csv",index=False)
+        feature_dictionary=[
+            {"feature":c,"unit":("metres per square kilometre" if "density" in c else "metres" if c.endswith("_m") else "square metres" if c.endswith("_sqm")
+              else "ratio" if "ratio" in c else "count" if "_count_" in c else "source attribute"),
+             "definition":"OSM-derived reference-area environmental feature; see source code for spatial operator."}
+            for c in feature_columns]
+        pd.DataFrame(feature_dictionary).to_csv(REPORT/"feature_dictionary.csv",index=False,encoding="utf-8-sig")
 
     # A conservative starting shortlist, NOT automatically accepted for training.
     # Strongly correlated radius variants and draft geometry area are not included.
@@ -457,10 +540,13 @@ def main():
                         "nunique":int(values.nunique(dropna=True)),
                         "median":float(values.median()) if values.notna().any() else None,
                         "max":float(values.max()) if values.notna().any() else None})
-    pd.DataFrame(quality).to_csv(REPORT/"feature_quality_v2.csv",index=False,encoding="utf-8-sig")
+    if not args.compact_metadata:
+        pd.DataFrame(quality).to_csv(REPORT/"feature_quality_v2.csv",index=False,encoding="utf-8-sig")
     metadata={
         "generated_utc":datetime.now(timezone.utc).isoformat(),
-        "stage":"02_build_zone_features","version":"2.1.0",
+        "stage":"02_build_zone_features","version":args.version, "reference_source":args.reference_source,
+        "manual_points":int(zones.reference_location_source.eq("MANUAL_PROVISIONAL").sum()),
+        "unresolved_fallback_ids":zones.loc[zones.reference_location_source.eq("ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED"),"zone_id"].tolist(),
         "metric_crs":METRIC_CRS,"buffer_radii_m":list(RADII),
         "geometry_semantics":"Analytical references, not official legal vending boundaries",
          "distance_semantics":"Minimum distance from representative point to source object",

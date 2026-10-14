@@ -22,9 +22,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, RobustScaler, StandardScaler
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT = ROOT / "data/processed/zone_features.csv"
-OUT = ROOT / "data/model_outputs/kmeans"
-MODELS = ROOT / "models/kmeans"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from backend.core.data_paths import dataset_path, model_version_path
+INPUT = dataset_path("zone_features")
+OUT = dataset_path("kmeans_output")
+MODELS = dataset_path("kmeans_artifacts")
 REPORT = ROOT / "reports/metrics"
 SEEDS = [11, 23, 37, 53, 71]
 GROUPS = {
@@ -103,11 +106,19 @@ def experiment(x,k):
     return result,best
 
 def main():
+    global INPUT, OUT, MODELS, REPORT
     parser=argparse.ArgumentParser()
     parser.add_argument("--k-min",type=int,default=2)
     parser.add_argument("--k-max",type=int,default=8)
     parser.add_argument("--variant",choices=["balanced","unweighted","robust"],default="balanced")
-    args=parser.parse_args()
+    parser.add_argument("--version")
+    args = parser.parse_args()
+    if args.version:
+        version_root = model_version_path(args.version)
+        INPUT = version_root / "features/zone_features.csv"
+        OUT = version_root / "kmeans"
+        MODELS = version_root / "artifacts/kmeans"
+        REPORT = version_root / "metadata/kmeans"
     if args.k_min<2 or args.k_max<args.k_min:
         raise ValueError("Invalid K range")
     for p in (OUT,MODELS,REPORT):p.mkdir(parents=True,exist_ok=True)

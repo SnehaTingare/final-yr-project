@@ -8,7 +8,7 @@ import {fileURLToPath} from "node:url";
 import {createServer} from "vite";
 
 const frontend = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const source = JSON.parse(await readFile(path.join(frontend, "../data/raw/nmc/official_zones_geometries.geojson"), "utf8"));
+const source = JSON.parse(await readFile(path.join(frontend, "../data/gis/analytical/official_zones_geometries.geojson"), "utf8"));
 const references = source.features.filter(f => ["NN_F_013", "NV_064", "NV_069"].includes(f.properties.zone_id));
 const zone = {...references[0].properties, official_capacity: 10, available_capacity: 10, current_vendor_count: 0, live_status: "OPEN"};
 const generated = spawnSync(path.join(frontend, "../.venv/Scripts/python.exe"), ["-X", "utf8", "-c", "import json; from backend.pilot_geometry import generate_geographic; print(json.dumps(generate_geographic()))"], {cwd: path.join(frontend, ".."), encoding: "utf8", windowsHide: true});

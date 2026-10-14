@@ -1,5 +1,6 @@
 """Provisional map geometry. Original boundaries are never repaired or replaced."""
 from __future__ import annotations
+from backend.core.data_paths import dataset_path
 
 import hashlib
 import json
@@ -15,8 +16,8 @@ from shapely.errors import ShapelyError
 
 from backend.repositories.database import ROOT, OperationalValidationError
 
-BOUNDARY_PATH = ROOT / "data/pilot/lekha_nagar_boundaries.geojson"
-THREE_ZONE_PATH = ROOT / "data/pilot/nashik_three_zones.geojson"
+BOUNDARY_PATH = dataset_path("lekha_boundary")
+THREE_ZONE_PATH = dataset_path("three_zone_layout")
 IMPORTED_ZONE_CAPACITIES = {"PAN_F_019": 10, "SAT_F_014": 35, "NR_F_003": 30}
 IDS = {"2974": "Boundary A", "3577": "Boundary B"}
 TO_METRIC = Transformer.from_crs(4326, 32643, always_xy=True)

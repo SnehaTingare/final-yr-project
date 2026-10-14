@@ -1,4 +1,4 @@
-import {zoneName} from "../../shared/utils/displayLabels.js";
+import {zoneName, officialZoneDivision} from "../../shared/utils/displayLabels.js";
 import React, {useEffect, useMemo, useState} from "react";
 import {MapContainer, TileLayer, CircleMarker, Popup, useMap} from "react-leaflet";
 import L from "leaflet";
@@ -14,7 +14,7 @@ export function Fit({points,selected}){
 }
 export function MapView({results,selectedId,onSelect}){
   const [geo,setGeo]=useState(null),[error,setError]=useState("");
-  useEffect(()=>{request("/api/zones/geometry").then(setGeo).catch(e=>setError(e.message));},[]);
+  useEffect(()=>{request("/api/zones/display-geometry").then(setGeo).catch(e=>setError(e.message));},[]);
   const points=useMemo(()=>{
     if(!geo)return [];
     const byId=new Map(geo.features.map(f=>[f.properties.zone_id,f]));
@@ -34,9 +34,9 @@ export function MapView({results,selectedId,onSelect}){
       {points.map(p=><CircleMarker key={p.zone_id} center={p.position} radius={p.zone_id===selectedId?11:8}
         pathOptions={{color:"#fff",weight:2.5,fillColor:p.zone_id===selectedId?"#174b38":"#64748b",fillOpacity:1}}
         eventHandlers={{click:()=>onSelect(p.zone_id)}}>
-        <Popup><strong>{zoneName(p)}</strong><br/>{p.zone_id}<br/><small>Analytical reference point</small></Popup>
+        <Popup><strong>{zoneName(p)}</strong><br/>{p.zone_id}<br/><small>{officialZoneDivision(p)} - Unverified display reference; scores use refreshed GIS features.</small></Popup>
       </CircleMarker>)}
     </MapContainer>
-    <div className="map-overlay"><MapPin size={13}/> Approximate reference points</div>
+    <div className="map-overlay"><MapPin size={13}/> Manual/display reference points - not surveyed</div>
   </div>;
 }

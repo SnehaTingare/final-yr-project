@@ -1,4 +1,5 @@
 """Contract and scientific guardrails for the structural refactor."""
+from backend.core.data_paths import resolve_dataset_path
 import hashlib
 import ast
 import json
@@ -31,7 +32,7 @@ def test_database_and_boundary_paths_remain_stable():
 def test_original_runtime_and_research_assets_are_unchanged():
     baseline = json.loads((ROOT / "docs/refactor-baseline.json").read_text(encoding="utf-8"))
     for name, digest in baseline.get("tracked_assets_sha256", baseline["assets_sha256"]).items():
-        path = ROOT / name
+        path = resolve_dataset_path(name)
         assert path.is_file(), name
         raw = path.read_bytes()
         if path.suffix.lower() in {".csv", ".json", ".geojson", ".md", ".txt"}:
