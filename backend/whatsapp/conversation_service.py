@@ -3,12 +3,13 @@ from __future__ import annotations
 
 import json
 import logging
-import sqlite3
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
+
+from sqlalchemy.exc import IntegrityError
 
 try:
     from ..auth_service import (
@@ -122,7 +123,7 @@ def _claim_message(message_id: str, hashed_phone: str, database_path: str | Path
                 (message_id, hashed_phone, utc_now()),
             )
         return True
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         return False
 
 

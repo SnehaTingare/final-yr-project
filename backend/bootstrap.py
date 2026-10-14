@@ -9,7 +9,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from backend.app_config import get_auth_settings
+from backend.app_config import allow_destructive_db_reset, get_auth_settings, get_database_backend
 from backend.auth_service import HISTORICAL_VENDOR_SOURCE, seed_historical_vendor_identities
 from backend.database import DATABASE_PATH, OFFICIAL_ZONES_PATH, initialize_database
 
@@ -21,6 +21,8 @@ def initialize_application(
 ) -> dict[str, dict]:
     """Load/validate config, upgrade schema, seed zones, then seed auth identities."""
     get_auth_settings()
+    get_database_backend()
+    allow_destructive_db_reset()
     database_summary = initialize_database(database_path, zones_path)
     authentication_summary = seed_historical_vendor_identities(
         database_path, historical_vendor_source

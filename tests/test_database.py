@@ -1,12 +1,18 @@
 import csv
 import importlib
-import sqlite3
+from sqlalchemy.exc import IntegrityError
 import tempfile
 import unittest
 from contextlib import closing
 from pathlib import Path
 
-from backend.database import OFFICIAL_ZONES_PATH, connect, initialize_database
+from backend.database import (
+    OFFICIAL_ZONES_PATH,
+    connect,
+    database_backend,
+    get_engine,
+    initialize_database,
+)
 
 
 class OperationalDatabaseTests(unittest.TestCase):
@@ -17,6 +23,13 @@ class OperationalDatabaseTests(unittest.TestCase):
 
     def tearDown(self):
         self.temp_directory.cleanup()
+
+    def test_engine_selection_supports_sqlite_and_postgresql_urls(self):
+        self.assertEqual(database_backend(self.database_path), "sqlite")
+        self.assertEqual(get_engine(self.database_path).dialect.name, "sqlite")
+        postgres_url = "postgresql+psycopg://user:password@example.invalid/database"
+        self.assertEqual(database_backend(postgres_url), "postgresql")
+        self.assertEqual(get_engine(postgres_url).dialect.name, "postgresql")
 
     def test_all_official_zones_are_seeded_once(self):
         with OFFICIAL_ZONES_PATH.open(newline="", encoding="utf-8-sig") as source:
@@ -55,7 +68,7 @@ class OperationalDatabaseTests(unittest.TestCase):
     def test_constraints_and_partial_unique_index(self):
         with closing(connect(self.database_path)) as connection:
             zone_id = connection.execute("SELECT zone_id FROM zone_live_status LIMIT 1").fetchone()[0]
-            with self.assertRaises(sqlite3.IntegrityError):
+            with self.assertRaises(IntegrityError):
                 connection.execute(
                     "UPDATE zone_live_status SET current_vendor_count = -1 WHERE zone_id = ?", (zone_id,)
                 )
@@ -66,7 +79,7 @@ class OperationalDatabaseTests(unittest.TestCase):
                    VALUES ('a1', 'v1', ?, 'ACTIVE', ?, ?, ?)""",
                 (zone_id, now, now, now),
             )
-            with self.assertRaises(sqlite3.IntegrityError):
+            with self.assertRaises(IntegrityError):
                 connection.execute(
                     """INSERT INTO allocations
                        (allocation_id, vendor_id, zone_id, status, allocated_at, created_at, updated_at)

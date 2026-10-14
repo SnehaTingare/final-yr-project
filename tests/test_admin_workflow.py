@@ -1,4 +1,4 @@
-import sqlite3
+from sqlalchemy.exc import IntegrityError
 import tempfile
 import unittest
 from concurrent.futures import ThreadPoolExecutor
@@ -306,13 +306,13 @@ class AdminAllocationWorkflowTests(unittest.TestCase):
     def test_capacity_and_count_constraints_prevent_negative_values(self):
         zone_id = self.open_zones[6]
         with closing(connect(self.database_path)) as connection:
-            with self.assertRaises(sqlite3.IntegrityError):
+            with self.assertRaises(IntegrityError):
                 connection.execute(
                     "UPDATE zone_live_status SET current_vendor_count = -1 WHERE zone_id = ?",
                     (zone_id,),
                 )
             connection.rollback()
-            with self.assertRaises(sqlite3.IntegrityError):
+            with self.assertRaises(IntegrityError):
                 connection.execute(
                     "UPDATE zone_live_status SET available_capacity = -1 WHERE zone_id = ?",
                     (zone_id,),

@@ -5,17 +5,17 @@ from backend.core.data_paths import dataset_path
 import csv
 import json
 import math
-import sqlite3
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
 from pyproj import Geod
 from shapely.geometry import Point, box, mapping, shape
+from sqlalchemy.exc import IntegrityError
 
 import backend.geo.pilot_geometry as gis
 
-from backend.repositories.database import ROOT, DATABASE_PATH, OFFICIAL_ZONES_PATH, connect, transaction, utc_now, OperationalConflictError, OperationalNotFoundError, OperationalValidationError
+from backend.repositories.database import ROOT, DATABASE_PATH, OFFICIAL_ZONES_PATH, connect, for_update, transaction, utc_now, OperationalConflictError, OperationalNotFoundError, OperationalValidationError
 
 PILOT_ZONE_ID = "NN_F_013"
 PILOT_ZONES = {PILOT_ZONE_ID: 10, **gis.IMPORTED_ZONE_CAPACITIES}
@@ -85,14 +85,14 @@ def initialize_demo(database_path=DATABASE_PATH, zone_id=PILOT_ZONE_ID):
     metadata = {k: v for k, v in layout.items() if k != "slots"}
     with transaction(database_path, immediate=True) as db:
         current = db.execute("SELECT metadata_json FROM pilot_slot_layouts WHERE zone_id = ?", (zone_id,)).fetchone()
-        if current and json.loads(current[0]).get("georeferenced"):
+        if current and json.loads(current["metadata_json"]).get("georeferenced"):
             return get_layout(database_path, zone_id)
-        db.execute("INSERT OR IGNORE INTO pilot_slot_layouts(zone_id, metadata_json, created_at) VALUES (?, ?, ?)",
+        db.execute("INSERT INTO pilot_slot_layouts(zone_id, metadata_json, created_at) VALUES (?, ?, ?) ON CONFLICT DO NOTHING",
                    (zone_id, json.dumps(metadata), utc_now()))
         for slot in layout["slots"]:
-            db.execute("""INSERT OR IGNORE INTO pilot_slots
+            db.execute("""INSERT INTO pilot_slots
                 (zone_id, slot_id, width_m, depth_m, x_m, y_m, geometry_json, status, validation_state, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, 'AVAILABLE', 'ILLUSTRATIVE_UNVERIFIED', ?)""",
+                VALUES (?, ?, ?, ?, ?, ?, ?, 'AVAILABLE', 'ILLUSTRATIVE_UNVERIFIED', ?) ON CONFLICT DO NOTHING""",
                 (zone_id, slot["slot_id"], slot["width_m"], slot["depth_m"], slot["x_m"],
                  slot["y_m"], json.dumps(slot["schematic_geometry"]), utc_now()))
     return get_layout(database_path, zone_id)
@@ -151,8 +151,10 @@ def update_slot(slot_id, status, vendor_id, *, actor, expected_updated_at, datab
         raise OperationalValidationError("Vendor assignment requires RESERVED or OCCUPIED status")
     try:
         with transaction(database_path, immediate=True) as db:
-            current = db.execute("SELECT * FROM pilot_slots WHERE zone_id = ? AND slot_id = ?",
-                                 (zone_id, slot_id)).fetchone()
+            current = db.execute(
+                "SELECT * FROM pilot_slots WHERE zone_id = ? AND slot_id = ?" + for_update(db),
+                (zone_id, slot_id),
+            ).fetchone()
             if not current or current["is_deleted"]:
                 raise OperationalNotFoundError("Unknown pilot slot")
             if current["updated_at"] != expected_updated_at:
@@ -175,7 +177,7 @@ def update_slot(slot_id, status, vendor_id, *, actor, expected_updated_at, datab
             db.execute("""INSERT INTO pilot_slot_events(zone_id, slot_id, actor, before_json, after_json, created_at)
                 VALUES (?, ?, ?, ?, ?, ?)""", (zone_id, slot_id, actor, json.dumps(dict(current)),
                 json.dumps({"status": status, "assigned_vendor_id": vendor_id}), timestamp))
-    except sqlite3.IntegrityError as exc:
+    except IntegrityError as exc:
         raise OperationalConflictError("Vendor already has an active demonstration slot") from exc
     return next(s for s in get_layout(database_path, zone_id)["slots"] if s["slot_id"] == slot_id)
 

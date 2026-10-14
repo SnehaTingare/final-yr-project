@@ -37,6 +37,8 @@ pillow==12.3.0
 pip==26.2.1
 pluggy==1.6.0
 protobuf==7.36.2
+psycopg==3.3.6
+psycopg-binary==3.3.6
 pyarrow==25.0.1
 pydantic==2.13.5
 pydantic_core==2.46.5
@@ -55,6 +57,7 @@ requests==2.34.2
 rpds-py==2026.6.3
 scikit-learn==1.9.1
 scipy==1.18.1
+SQLAlchemy==2.1.4
 shapely==2.1.2
 six==1.17.0
 starlette==1.7.0

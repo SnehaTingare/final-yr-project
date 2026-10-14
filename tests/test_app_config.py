@@ -4,7 +4,15 @@ from pathlib import Path
 from unittest.mock import patch
 
 import backend.bootstrap as bootstrap
-from backend.app_config import ConfigurationError, ENV_FILE, PROJECT_ROOT, get_auth_settings
+from backend.app_config import (
+    ConfigurationError,
+    ENV_FILE,
+    PROJECT_ROOT,
+    allow_destructive_db_reset,
+    get_auth_settings,
+    get_database_backend,
+    get_database_url,
+)
 
 
 class ApplicationConfigurationTests(unittest.TestCase):
@@ -36,6 +44,24 @@ class ApplicationConfigurationTests(unittest.TestCase):
                 ConfigurationError, "SESSION_COOKIE_SECURE must be true or false"
             ):
                 get_auth_settings()
+
+    def test_database_url_is_optional_and_backend_is_safe(self):
+        with patch.dict(os.environ, {"DATABASE_URL": ""}, clear=False):
+            self.assertIsNone(get_database_url())
+            self.assertEqual(get_database_backend(), "sqlite")
+        with patch.dict(
+            os.environ,
+            {"DATABASE_URL": "postgresql+psycopg://user:secret@example.invalid/app"},
+            clear=False,
+        ):
+            self.assertEqual(get_database_backend(), "postgresql")
+
+    def test_destructive_reset_defaults_off_and_is_strict(self):
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertFalse(allow_destructive_db_reset())
+        with patch.dict(os.environ, {"ALLOW_DESTRUCTIVE_DB_RESET": "invalid"}, clear=False):
+            with self.assertRaises(ConfigurationError):
+                allow_destructive_db_reset()
 
     def test_bootstrap_order_is_config_schema_then_historical_identities(self):
         calls = []

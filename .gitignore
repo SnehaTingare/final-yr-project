@@ -73,3 +73,4 @@ test-results/
 # Never newly track private vendor source/rollback copies. Existing upstream history is unaffected.
 data/**/vendors.csv
 data/archive/**/vendor*.csv
+reports/migrations/

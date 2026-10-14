@@ -16,6 +16,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Protocol
 
+from sqlalchemy import text
+
 from backend.core.config import get_auth_settings
 from backend.repositories.database import DATABASE_PATH, connect, transaction, utc_now
 
@@ -82,8 +84,8 @@ def seed_historical_vendor_identities(
         connection = connect(database_path)
         try:
             identity_rows = connection.execute(
-                "SELECT COUNT(*) FROM vendor_auth_identities"
-            ).fetchone()[0]
+                "SELECT COUNT(*) AS identity_count FROM vendor_auth_identities"
+            ).fetchone()["identity_count"]
         finally:
             connection.close()
         return {
@@ -131,24 +133,45 @@ def seed_historical_vendor_identities(
 
     ambiguous = {number for number, vendors in number_to_vendors.items() if len(vendors) > 1}
     now = utc_now()
-    inserted = 0
-    already_existing = 0
+    seedable_numbers = len(number_to_vendors) - len(ambiguous)
     with transaction(database_path, immediate=True) as connection:
+        existing_hashes = {
+            row["phone_hash"]
+            for row in connection.execute(
+                "SELECT phone_hash FROM vendor_auth_identities"
+            ).fetchall()
+        }
+        pending_rows = []
         for number, vendors in number_to_vendors.items():
             if number in ambiguous:
                 continue
             vendor_id = next(iter(vendors))
+            hashed_phone = phone_hmac(number)
+            if hashed_phone not in existing_hashes:
+                pending_rows.append({
+                    "identity_id": f"VID_{uuid.uuid4().hex}",
+                    "vendor_id": vendor_id,
+                    "phone_hash": hashed_phone,
+                    "created_at": now,
+                    "updated_at": now,
+                })
+        inserted = 0
+        if pending_rows:
             cursor = connection.execute(
-                """INSERT OR IGNORE INTO vendor_auth_identities
-                   (identity_id, vendor_id, phone_hash, vendor_source, is_verified, created_at, updated_at)
-                   VALUES (?, ?, ?, 'HISTORICAL', 0, ?, ?)""",
-                (f"VID_{uuid.uuid4().hex}", vendor_id, phone_hmac(number), now, now),
+                text(
+                    """INSERT INTO vendor_auth_identities
+                       (identity_id, vendor_id, phone_hash, vendor_source, is_verified, created_at, updated_at)
+                       VALUES (:identity_id, :vendor_id, :phone_hash, 'HISTORICAL', 0,
+                               :created_at, :updated_at)
+                       ON CONFLICT DO NOTHING"""
+                ),
+                pending_rows,
             )
-            inserted += cursor.rowcount
-            already_existing += int(cursor.rowcount == 0)
+            inserted = max(cursor.rowcount, 0)
+        already_existing = seedable_numbers - inserted
         identity_rows = connection.execute(
-            "SELECT COUNT(*) FROM vendor_auth_identities"
-        ).fetchone()[0]
+            "SELECT COUNT(*) AS identity_count FROM vendor_auth_identities"
+        ).fetchone()["identity_count"]
     return {
         "source": str(source_path),
         "source_available": True,
@@ -159,7 +182,7 @@ def seed_historical_vendor_identities(
         "distinct_valid_numbers": len(number_to_vendors),
         "ambiguous_numbers": len(ambiguous),
         "ambiguous_vendor_ids": sum(len(number_to_vendors[number]) for number in ambiguous),
-        "seedable_numbers": len(number_to_vendors) - len(ambiguous),
+        "seedable_numbers": seedable_numbers,
         "inserted": inserted,
         "already_existing": already_existing,
         "identity_rows": identity_rows,

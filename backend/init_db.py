@@ -6,14 +6,19 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from backend.bootstrap import initialize_application
-from backend.database import DATABASE_PATH
+from backend.database import DATABASE_PATH, database_backend
 
 
 def main() -> None:
     bootstrap_summary = initialize_application(DATABASE_PATH)
     summary = bootstrap_summary["database"]
+    backend = database_backend(DATABASE_PATH)
     print("Database initialized")
-    print(f"Database: {DATABASE_PATH}")
+    print(f"Database backend: {backend}")
+    if backend == "sqlite":
+        print(f"Database: {Path(DATABASE_PATH).resolve()}")
+    else:
+        print("Database: configured PostgreSQL database (URL hidden)")
     print(f"Official zones found: {summary['official_zones']}")
     print(f"Zone live-status rows: {summary['zone_live_status_rows']}")
     print(f"Inserted: {summary['inserted']}")

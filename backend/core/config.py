@@ -20,6 +20,34 @@ class ConfigurationError(RuntimeError):
     """Raised when required application configuration is absent or invalid."""
 
 
+def get_database_url() -> str | None:
+    """Return an optional operational database URL without logging it."""
+    value = os.environ.get("DATABASE_URL", "").strip()
+    return value or None
+
+
+def get_database_backend() -> str:
+    """Describe the configured backend using a non-sensitive value."""
+    url = get_database_url()
+    if not url:
+        return "sqlite"
+    if url.startswith("sqlite:"):
+        return "sqlite"
+    if url.startswith(("postgresql:", "postgresql+psycopg:")):
+        return "postgresql"
+    raise ConfigurationError("DATABASE_URL must use SQLite or PostgreSQL")
+
+
+def allow_destructive_db_reset() -> bool:
+    """Destructive database operations are denied unless explicitly enabled."""
+    value = os.environ.get("ALLOW_DESTRUCTIVE_DB_RESET", "false").strip().lower()
+    if value not in {"true", "false"}:
+        raise ConfigurationError(
+            "Configuration variable ALLOW_DESTRUCTIVE_DB_RESET must be true or false"
+        )
+    return value == "true"
+
+
 @dataclass(frozen=True)
 class AuthSettings:
     app_env: str

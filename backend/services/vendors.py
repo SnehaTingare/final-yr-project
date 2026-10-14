@@ -1106,10 +1106,16 @@ def vendor_activity(vendor_id, database_path=DATABASE_PATH):
         raise OperationalNotFoundError("Vendor profile not found")
     connection = connect(database_path)
     try:
-        connection.execute("BEGIN")
         requests = [dict(row) for row in connection.execute("SELECT request_id, zone_id, request_type, status, created_at, reviewed_at, updated_at, rejection_reason FROM allocation_requests WHERE vendor_id = ?", (vendor_id,))]
         allocations = [dict(row) for row in connection.execute("SELECT a.*, r.request_type FROM allocations a LEFT JOIN allocation_requests r ON r.request_id = a.request_id WHERE a.vendor_id = ?", (vendor_id,))]
-        slot_events = connection.execute("SELECT event_id, zone_id, slot_id, before_json, after_json, created_at FROM pilot_slot_events WHERE json_extract(after_json, '$.assigned_vendor_id') = ?", (vendor_id,)).fetchall()
+        # Event payloads remain JSON text for schema compatibility. Filtering
+        # in Python avoids SQLite json_extract/PostgreSQL JSON operator drift.
+        slot_events = [
+            row for row in connection.execute(
+                "SELECT event_id, zone_id, slot_id, before_json, after_json, created_at FROM pilot_slot_events"
+            ).fetchall()
+            if json.loads(row["after_json"]).get("assigned_vendor_id") == vendor_id
+        ]
         current_slot = connection.execute("""SELECT s.zone_id, s.slot_id FROM pilot_slots s JOIN allocations a ON a.vendor_id = s.assigned_vendor_id AND a.zone_id = s.zone_id AND a.status = 'ACTIVE' JOIN allocation_requests r ON r.request_id = a.request_id AND r.status = 'APPROVED' AND r.vendor_id = a.vendor_id AND r.zone_id = a.zone_id WHERE s.assigned_vendor_id = ? AND s.is_deleted = 0 AND s.geometry_crs = 'EPSG:4326'""", (vendor_id,)).fetchone()
     finally:
         connection.close()

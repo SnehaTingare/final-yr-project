@@ -1,7 +1,8 @@
-"""SQLite operational-state storage for the vendor management application.
+"""Portable SQLAlchemy Core operational storage for the vendor application.
 
 This module is deliberately independent of the research CSV/ML pipeline.  The
 official zone master is used only to seed missing operational status rows.
+SQLite-specific connection setup and locking are intentionally isolated here.
 """
 from __future__ import annotations
 from backend.core.data_paths import dataset_path
@@ -9,17 +10,32 @@ from backend.core.data_paths import dataset_path
 import csv
 import json
 import re
-import sqlite3
 import uuid
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any, Iterator, Mapping, Sequence
+
+from sqlalchemy import (
+    CheckConstraint, Column, ForeignKey, ForeignKeyConstraint, Index, Integer,
+    Float, MetaData, String, Table, Text, UniqueConstraint, create_engine, event,
+    inspect, text,
+)
+from sqlalchemy.engine import Connection, Engine, RowMapping
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.pool import NullPool
+
+from backend.core.config import get_database_backend, get_database_url
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DATABASE_PATH = dataset_path("database")
+LOCAL_DATABASE_PATH = dataset_path("database")
+# Compatibility name retained for callers/tests. With DATABASE_URL configured,
+# it carries the URL; otherwise it remains the historical Path object.
+DATABASE_PATH = get_database_url() or LOCAL_DATABASE_PATH
+DATABASE_URL = get_database_url()
+DATABASE_BACKEND = get_database_backend()
 OFFICIAL_ZONES_PATH = dataset_path("official_zones")
 
 ZONE_STATUSES = ("OPEN", "FULL", "CLOSED", "SUSPENDED", "RESTRICTED", "NO_VENDING")
@@ -32,7 +48,9 @@ PREFERRED_LANGUAGES = ("en", "mr", "hi")
 VENDOR_STATUSES = ("ACTIVE", "INACTIVE")
 
 
-SCHEMA = """
+# Retained only as a readable record of the pre-SQLAlchemy SQLite schema. It is
+# never executed; METADATA below is the authoritative portable definition.
+_LEGACY_SQLITE_SCHEMA = """
 CREATE TABLE IF NOT EXISTS operational_vendors (
     vendor_id TEXT PRIMARY KEY,
     application_vendor_id TEXT NULL,
@@ -207,7 +225,7 @@ CREATE INDEX IF NOT EXISTS idx_whatsapp_processed_phone_received
 """
 
 
-SCHEMA += """
+_LEGACY_SQLITE_SCHEMA += """
 CREATE TABLE IF NOT EXISTS pilot_slot_layouts (
     zone_id TEXT PRIMARY KEY,
     metadata_json TEXT NOT NULL,
@@ -261,14 +279,320 @@ class OperationalValidationError(ValueError):
     """Raised when an operational command contains an invalid value."""
 
 
-def connect(database_path: str | Path = DATABASE_PATH) -> sqlite3.Connection:
-    """Open the operational database with row mapping and FK enforcement."""
-    path = Path(database_path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    connection = sqlite3.connect(path, timeout=30)
-    connection.row_factory = sqlite3.Row
-    connection.execute("PRAGMA foreign_keys = ON")
-    return connection
+def _build_metadata() -> MetaData:
+    """Describe the operational schema without binding it to one SQL dialect."""
+    metadata = MetaData()
+    operational_vendors = Table(
+        "operational_vendors", metadata,
+        Column("vendor_id", Text, primary_key=True),
+        Column("application_vendor_id", Text),
+        Column("vendor_type", Text, nullable=False),
+        Column("full_name", Text), Column("business_name", Text),
+        Column("business_category", Text, nullable=False),
+        Column("preferred_division", Text), Column("preferred_locality", Text),
+        Column("priority_profile", Text, nullable=False, server_default="BALANCED"),
+        Column("parking_preference", Integer, nullable=False, server_default="0"),
+        Column("transport_preference", Integer, nullable=False, server_default="0"),
+        Column("market_preference", Integer, nullable=False, server_default="0"),
+        Column("preferred_language", Text, nullable=False, server_default="en"),
+        Column("status", Text, nullable=False, server_default="ACTIVE"),
+        Column("created_at", Text, nullable=False), Column("updated_at", Text, nullable=False),
+        CheckConstraint("vendor_type IN ('NEW', 'EXISTING_IMPORTED')"),
+        CheckConstraint("priority_profile IN ('BALANCED', 'COMMERCIAL', 'ACCESSIBILITY', 'FACILITIES')"),
+        CheckConstraint("parking_preference IN (0, 1)"),
+        CheckConstraint("transport_preference IN (0, 1)"),
+        CheckConstraint("market_preference IN (0, 1)"),
+        CheckConstraint("preferred_language IN ('en', 'mr', 'hi')"),
+        CheckConstraint("status IN ('ACTIVE', 'INACTIVE')"),
+    )
+    Index(
+        "idx_operational_vendors_application_vendor_id",
+        operational_vendors.c.application_vendor_id,
+        unique=True,
+        sqlite_where=text("application_vendor_id IS NOT NULL"),
+        postgresql_where=text("application_vendor_id IS NOT NULL"),
+    )
+    Table("application_vendor_id_counters", metadata,
+          Column("year", Integer, primary_key=True),
+          Column("last_sequence", Integer, nullable=False),
+          CheckConstraint("last_sequence >= 0"))
+    zones = Table(
+        "zone_live_status", metadata,
+        Column("zone_id", Text, primary_key=True),
+        Column("official_capacity", Integer),
+        Column("current_vendor_count", Integer, nullable=False, server_default="0"),
+        Column("available_capacity", Integer),
+        Column("status", Text, nullable=False, server_default="OPEN"),
+        Column("verified_at", Text), Column("verified_by", Text),
+        Column("updated_at", Text, nullable=False),
+        CheckConstraint("official_capacity IS NULL OR official_capacity >= 0"),
+        CheckConstraint("current_vendor_count >= 0"),
+        CheckConstraint("available_capacity IS NULL OR available_capacity >= 0"),
+        CheckConstraint("status IN ('OPEN','FULL','CLOSED','SUSPENDED','RESTRICTED','NO_VENDING')"),
+        CheckConstraint("(official_capacity IS NULL AND available_capacity IS NULL) OR "
+                        "(official_capacity IS NOT NULL AND current_vendor_count <= official_capacity "
+                        "AND available_capacity = official_capacity - current_vendor_count)"),
+        CheckConstraint("official_capacity IS NULL OR current_vendor_count != official_capacity OR status = 'FULL'"),
+    )
+    requests = Table(
+        "allocation_requests", metadata,
+        Column("request_id", Text, primary_key=True), Column("vendor_id", Text, nullable=False),
+        Column("zone_id", Text, ForeignKey(zones.c.zone_id), nullable=False),
+        Column("request_type", Text, nullable=False), Column("status", Text, nullable=False),
+        Column("business_category", Text), Column("preferred_division", Text),
+        Column("created_at", Text, nullable=False), Column("updated_at", Text, nullable=False),
+        Column("reviewed_at", Text), Column("reviewed_by", Text),
+        Column("rejection_reason", Text), Column("notes", Text),
+        CheckConstraint("request_type IN ('NEW_ALLOCATION', 'RELOCATION')"),
+        CheckConstraint("status IN ('PENDING', 'APPROVED', 'REJECTED', 'CANCELLED')"),
+    )
+    Index("one_pending_request_per_vendor_zone", requests.c.vendor_id, requests.c.zone_id,
+          unique=True, sqlite_where=text("status = 'PENDING'"),
+          postgresql_where=text("status = 'PENDING'"))
+    allocations = Table(
+        "allocations", metadata,
+        Column("allocation_id", Text, primary_key=True), Column("vendor_id", Text, nullable=False),
+        Column("zone_id", Text, ForeignKey(zones.c.zone_id), nullable=False),
+        Column("request_id", Text, ForeignKey(requests.c.request_id)),
+        Column("status", Text, nullable=False), Column("allocated_at", Text, nullable=False),
+        Column("released_at", Text), Column("approved_by", Text),
+        Column("created_at", Text, nullable=False), Column("updated_at", Text, nullable=False),
+        CheckConstraint("status IN ('ACTIVE', 'RELEASED')"),
+    )
+    Index("one_active_allocation_per_vendor", allocations.c.vendor_id, unique=True,
+          sqlite_where=text("status = 'ACTIVE'"), postgresql_where=text("status = 'ACTIVE'"))
+    Table("admin_audit_log", metadata,
+          Column("audit_id", Text, primary_key=True), Column("action", Text, nullable=False),
+          Column("entity_type", Text, nullable=False), Column("entity_id", Text, nullable=False),
+          Column("performed_by", Text), Column("details_json", Text),
+          Column("created_at", Text, nullable=False))
+    identities = Table(
+        "vendor_auth_identities", metadata,
+        Column("identity_id", Text, primary_key=True), Column("vendor_id", Text, nullable=False),
+        Column("phone_hash", Text, nullable=False, unique=True),
+        Column("vendor_source", Text, nullable=False),
+        Column("is_verified", Integer, nullable=False, server_default="0"),
+        Column("created_at", Text, nullable=False), Column("updated_at", Text, nullable=False),
+        CheckConstraint("vendor_source IN ('HISTORICAL', 'OPERATIONAL')"),
+        CheckConstraint("is_verified IN (0, 1)"),
+    )
+    Index("idx_vendor_auth_identities_vendor_id", identities.c.vendor_id)
+    otp = Table(
+        "auth_otp_challenges", metadata,
+        Column("challenge_id", Text, primary_key=True), Column("phone_hash", Text, nullable=False),
+        Column("purpose", Text, nullable=False), Column("otp_hash", Text, nullable=False),
+        Column("expires_at", Text, nullable=False),
+        Column("attempt_count", Integer, nullable=False, server_default="0"),
+        Column("max_attempts", Integer, nullable=False), Column("consumed_at", Text),
+        Column("created_at", Text, nullable=False),
+        CheckConstraint("purpose IN ('VENDOR_LOGIN', 'NEW_VENDOR_REGISTRATION')"),
+        CheckConstraint("attempt_count >= 0"), CheckConstraint("max_attempts > 0"),
+    )
+    Index("idx_auth_otp_phone_created", otp.c.phone_hash, otp.c.created_at)
+    sessions = Table(
+        "auth_sessions", metadata,
+        Column("session_id", Text, primary_key=True),
+        Column("session_token_hash", Text, nullable=False, unique=True),
+        Column("role", Text, nullable=False), Column("vendor_id", Text), Column("admin_id", Text),
+        Column("new_vendor_phone_hash", Text), Column("created_at", Text, nullable=False),
+        Column("expires_at", Text, nullable=False), Column("revoked_at", Text),
+        CheckConstraint("role IN ('VENDOR', 'ADMIN', 'NEW_VENDOR_ONBOARDING')"),
+        CheckConstraint("(role = 'VENDOR' AND vendor_id IS NOT NULL AND admin_id IS NULL AND new_vendor_phone_hash IS NULL) OR "
+                        "(role = 'ADMIN' AND admin_id IS NOT NULL AND vendor_id IS NULL AND new_vendor_phone_hash IS NULL) OR "
+                        "(role = 'NEW_VENDOR_ONBOARDING' AND new_vendor_phone_hash IS NOT NULL AND vendor_id IS NULL AND admin_id IS NULL)"),
+    )
+    Index("idx_auth_sessions_token_active", sessions.c.session_token_hash,
+          sessions.c.revoked_at, sessions.c.expires_at)
+    conversations = Table(
+        "whatsapp_conversations", metadata,
+        Column("conversation_key", Text, primary_key=True),
+        Column("phone_hash", Text, nullable=False, unique=True), Column("vendor_id", Text),
+        Column("language", Text, nullable=False, server_default="en"),
+        Column("flow", Text, nullable=False, server_default="START"),
+        Column("step", Text, nullable=False, server_default="START"),
+        Column("state_json", Text, nullable=False, server_default="{}"),
+        Column("invalid_count", Integer, nullable=False, server_default="0"),
+        Column("updated_at", Text, nullable=False), Column("expires_at", Text, nullable=False),
+        CheckConstraint("language IN ('en', 'mr', 'hi')"), CheckConstraint("invalid_count >= 0"),
+    )
+    Index("idx_whatsapp_conversations_vendor", conversations.c.vendor_id)
+    messages = Table(
+        "whatsapp_processed_messages", metadata,
+        Column("message_id", Text, primary_key=True), Column("phone_hash", Text, nullable=False),
+        Column("status", Text, nullable=False, server_default="PROCESSING"),
+        Column("received_at", Text, nullable=False), Column("processed_at", Text),
+        Column("error_code", Text),
+        CheckConstraint("status IN ('PROCESSING', 'PROCESSED', 'IGNORED', 'FAILED')"),
+    )
+    Index("idx_whatsapp_processed_phone_received", messages.c.phone_hash, messages.c.received_at)
+    layouts = Table("pilot_slot_layouts", metadata,
+                    Column("zone_id", Text, primary_key=True),
+                    Column("metadata_json", Text, nullable=False),
+                    Column("created_at", Text, nullable=False))
+    slots = Table(
+        "pilot_slots", metadata,
+        Column("zone_id", Text, ForeignKey(layouts.c.zone_id), primary_key=True),
+        Column("slot_id", Text, primary_key=True),
+        Column("width_m", Float, nullable=False), Column("depth_m", Float, nullable=False),
+        Column("x_m", Float, nullable=False), Column("y_m", Float, nullable=False),
+        Column("geometry_json", Text, nullable=False), Column("status", Text, nullable=False),
+        Column("assigned_vendor_id", Text), Column("validation_state", Text, nullable=False),
+        Column("updated_at", Text, nullable=False), Column("parent_boundary_id", Text),
+        Column("geometry_crs", Text, nullable=False, server_default="LOCAL_SCHEMATIC_METRES"),
+        Column("is_deleted", Integer, nullable=False, server_default="0"),
+        CheckConstraint("width_m > 0"), CheckConstraint("depth_m > 0"),
+        CheckConstraint("status IN ('AVAILABLE','RESERVED','OCCUPIED','BLOCKED')"),
+        CheckConstraint("validation_state = 'ILLUSTRATIVE_UNVERIFIED'"),
+        CheckConstraint("assigned_vendor_id IS NULL OR status IN ('RESERVED','OCCUPIED')"),
+        CheckConstraint("is_deleted IN (0, 1)"),
+    )
+    Index("one_active_demo_slot_per_vendor", slots.c.assigned_vendor_id, unique=True,
+          sqlite_where=text("assigned_vendor_id IS NOT NULL"),
+          postgresql_where=text("assigned_vendor_id IS NOT NULL"))
+    Table(
+        "pilot_slot_events", metadata,
+        Column("event_id", Integer, primary_key=True, autoincrement=True),
+        Column("zone_id", Text, nullable=False), Column("slot_id", Text, nullable=False),
+        Column("actor", Text, nullable=False), Column("before_json", Text, nullable=False),
+        Column("after_json", Text, nullable=False), Column("created_at", Text, nullable=False),
+        ForeignKeyConstraint(["zone_id", "slot_id"], ["pilot_slots.zone_id", "pilot_slots.slot_id"]),
+    )
+    return metadata
+
+
+METADATA = _build_metadata()
+
+
+def _database_url(database: str | Path | None = None) -> str:
+    target = DATABASE_PATH if database is None else database
+    if isinstance(target, Path) or "://" not in str(target):
+        path = Path(target).resolve()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return f"sqlite:///{path.as_posix()}"
+    url = str(target)
+    return "postgresql+psycopg://" + url.removeprefix("postgresql://") if url.startswith("postgresql://") else url
+
+
+def database_backend(database: str | Path | None = None) -> str:
+    return "postgresql" if _database_url(database).startswith("postgresql") else "sqlite"
+
+
+@lru_cache(maxsize=32)
+def _cached_engine(url: str) -> Engine:
+    if url.startswith("sqlite:"):
+        engine = create_engine(url, connect_args={"timeout": 30, "check_same_thread": False}, poolclass=NullPool)
+
+        @event.listens_for(engine, "connect")
+        def _sqlite_foreign_keys(dbapi_connection, _connection_record) -> None:
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA foreign_keys = ON")
+            cursor.close()
+        return engine
+    return create_engine(url, pool_pre_ping=True)
+
+
+def get_engine(database: str | Path | None = None) -> Engine:
+    """Return the shared synchronous engine for the configured operational DB."""
+    return _cached_engine(_database_url(database))
+
+
+class DatabaseRow(Mapping[str, Any]):
+    """Mapping-first row with temporary positional-read compatibility."""
+    def __init__(self, row: RowMapping) -> None:
+        self._row = row
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            return tuple(self._row.values())[key]
+        return self._row[key]
+
+    def __iter__(self):
+        # sqlite3.Row iterated values; retain that narrow compatibility while
+        # keys()/items() and string subscripting provide mapping semantics.
+        return iter(self._row.values())
+
+    def __len__(self) -> int:
+        return len(self._row)
+
+    def keys(self):
+        return self._row.keys()
+
+    def items(self):
+        return self._row.items()
+
+
+class DatabaseResult:
+    """Small mapping-result facade preserving the repository's historical API."""
+    def __init__(self, result) -> None:
+        self._result = result.mappings()
+        self.rowcount = result.rowcount
+
+    def fetchone(self):
+        row = self._result.fetchone()
+        return DatabaseRow(row) if row is not None else None
+
+    def fetchall(self):
+        return [DatabaseRow(row) for row in self._result.fetchall()]
+
+    def __iter__(self):
+        return (DatabaseRow(row) for row in self._result)
+
+
+def _named_statement(statement: str, parameters: Any) -> tuple[Any, Mapping[str, Any]]:
+    """Normalize legacy positional calls at the repository boundary.
+
+    New code uses named parameters. This narrow compatibility path keeps older
+    service calls portable while they are progressively converted.
+    """
+    if parameters is None:
+        return text(statement), {}
+    if isinstance(parameters, Mapping):
+        return text(statement), parameters
+    values: Sequence[Any] = tuple(parameters)
+    pieces = statement.split("?")
+    if len(pieces) - 1 != len(values):
+        raise ValueError("SQL placeholder count does not match parameter count")
+    rebuilt = pieces[0]
+    params: dict[str, Any] = {}
+    for index, value in enumerate(values):
+        name = f"p{index}"
+        rebuilt += f":{name}" + pieces[index + 1]
+        params[name] = value
+    return text(rebuilt), params
+
+
+class DatabaseConnection:
+    """SQLAlchemy connection exposing mapping rows and portable execution."""
+    def __init__(self, connection: Connection) -> None:
+        self.raw = connection
+
+    @property
+    def backend(self) -> str:
+        return self.raw.dialect.name
+
+    def execute(self, statement: str | Any, parameters: Any = None) -> DatabaseResult:
+        if isinstance(statement, str):
+            statement, parameters = _named_statement(statement, parameters)
+        result = self.raw.execute(statement, parameters or {})
+        return DatabaseResult(result)
+
+    def commit(self) -> None:
+        self.raw.commit()
+
+    def rollback(self) -> None:
+        self.raw.rollback()
+
+    def close(self) -> None:
+        self.raw.close()
+
+
+def get_connection(database_path: str | Path = DATABASE_PATH) -> DatabaseConnection:
+    return DatabaseConnection(get_engine(database_path).connect())
+
+
+def connect(database_path: str | Path = DATABASE_PATH) -> DatabaseConnection:
+    """Compatibility alias for callers using the historical repository API."""
+    return get_connection(database_path)
 
 
 @contextmanager
@@ -276,11 +600,14 @@ def transaction(
     database_path: str | Path = DATABASE_PATH,
     *,
     immediate: bool = False,
-) -> Iterator[sqlite3.Connection]:
+) -> Iterator[DatabaseConnection]:
     """Yield a connection and atomically commit or roll back its work."""
     connection = connect(database_path)
     try:
-        connection.execute("BEGIN IMMEDIATE" if immediate else "BEGIN")
+        if immediate and connection.backend == "sqlite":
+            connection.raw.exec_driver_sql("BEGIN IMMEDIATE")
+        else:
+            connection.raw.begin()
         yield connection
         connection.commit()
     except Exception:
@@ -288,6 +615,28 @@ def transaction(
         raise
     finally:
         connection.close()
+
+
+def initialize_schema(database_path: str | Path = DATABASE_PATH) -> None:
+    """Create every missing operational table and index without deleting data."""
+    METADATA.create_all(get_engine(database_path), checkfirst=True)
+
+
+def inspect_schema(database_path: str | Path = DATABASE_PATH) -> dict[str, dict[str, Any]]:
+    """Return dialect-independent table, column, and index information."""
+    inspector = inspect(get_engine(database_path))
+    return {
+        table_name: {
+            "columns": [column["name"] for column in inspector.get_columns(table_name)],
+            "indexes": [index["name"] for index in inspector.get_indexes(table_name)],
+        }
+        for table_name in inspector.get_table_names()
+    }
+
+
+def for_update(connection: DatabaseConnection) -> str:
+    """Lock selected rows on PostgreSQL; SQLite is protected by BEGIN IMMEDIATE."""
+    return " FOR UPDATE" if connection.backend == "postgresql" else ""
 
 
 def _read_official_zones(zones_path: str | Path) -> list[dict[str, Any]]:
@@ -331,7 +680,7 @@ def _application_id_year(created_at: str | None, fallback_year: int) -> int:
     return fallback_year
 
 
-def _sync_application_id_counters(connection: sqlite3.Connection) -> None:
+def _sync_application_id_counters(connection: DatabaseConnection) -> None:
     maximum_by_year: dict[int, int] = {}
     rows = connection.execute(
         "SELECT application_vendor_id FROM operational_vendors "
@@ -347,15 +696,19 @@ def _sync_application_id_counters(connection: sqlite3.Connection) -> None:
             """INSERT INTO application_vendor_id_counters (year, last_sequence)
                VALUES (?, ?)
                ON CONFLICT(year) DO UPDATE SET
-                   last_sequence = MAX(last_sequence, excluded.last_sequence)""",
+                   last_sequence = CASE
+                       WHEN application_vendor_id_counters.last_sequence > excluded.last_sequence
+                       THEN application_vendor_id_counters.last_sequence
+                       ELSE excluded.last_sequence
+                   END""",
             (year, sequence),
         )
 
 
-def _next_application_vendor_id(connection: sqlite3.Connection, year: int) -> str:
+def _next_application_vendor_id(connection: DatabaseConnection, year: int) -> str:
     """Allocate a public ID while the caller holds a BEGIN IMMEDIATE transaction."""
     connection.execute(
-        "INSERT OR IGNORE INTO application_vendor_id_counters (year, last_sequence) VALUES (?, 0)",
+        "INSERT INTO application_vendor_id_counters (year, last_sequence) VALUES (?, 0) ON CONFLICT DO NOTHING",
         (year,),
     )
     connection.execute(
@@ -364,7 +717,7 @@ def _next_application_vendor_id(connection: sqlite3.Connection, year: int) -> st
     )
     sequence = connection.execute(
         "SELECT last_sequence FROM application_vendor_id_counters WHERE year = ?", (year,)
-    ).fetchone()[0]
+    ).fetchone()["last_sequence"]
     return f"NV-{year:04d}-{sequence:06d}"
 
 
@@ -377,9 +730,10 @@ def initialize_database(
     inserted = 0
     now = utc_now()
     backfilled_application_ids = 0
+    initialize_schema(database_path)
+    schema = inspect_schema(database_path)
     with transaction(database_path, immediate=True) as connection:
-        connection.executescript(SCHEMA)
-        pilot_columns = {row["name"] for row in connection.execute("PRAGMA table_info(pilot_slots)")}
+        pilot_columns = set(schema.get("pilot_slots", {}).get("columns", []))
         for name, definition in {
             "parent_boundary_id": "TEXT NULL",
             "geometry_crs": "TEXT NOT NULL DEFAULT 'LOCAL_SCHEMATIC_METRES'",
@@ -389,9 +743,7 @@ def initialize_database(
                 connection.execute(f"ALTER TABLE pilot_slots ADD COLUMN {name} {definition}")
         # SQLite has no portable ADD COLUMN IF NOT EXISTS. Inspect first so this
         # remains safe for databases created before vendor identity was added.
-        vendor_columns = {
-            row["name"] for row in connection.execute("PRAGMA table_info(operational_vendors)")
-        }
+        vendor_columns = set(schema.get("operational_vendors", {}).get("columns", []))
         if "full_name" not in vendor_columns:
             connection.execute("ALTER TABLE operational_vendors ADD COLUMN full_name TEXT NULL")
         if "business_name" not in vendor_columns:
@@ -433,15 +785,17 @@ def initialize_database(
                 initial_status = "FULL"
             cursor = connection.execute(
                 """
-                INSERT OR IGNORE INTO zone_live_status (
+                INSERT INTO zone_live_status (
                     zone_id, official_capacity, current_vendor_count,
                     available_capacity, status, updated_at
-                ) VALUES (?, ?, 0, ?, ?, ?)
+                ) VALUES (?, ?, 0, ?, ?, ?) ON CONFLICT DO NOTHING
                 """,
                 (zone["zone_id"], capacity, capacity, initial_status, now),
             )
             inserted += cursor.rowcount
-        total_rows = connection.execute("SELECT COUNT(*) FROM zone_live_status").fetchone()[0]
+        total_rows = connection.execute(
+            "SELECT COUNT(*) AS row_count FROM zone_live_status"
+        ).fetchone()["row_count"]
     return {
         "official_zones": len(zones),
         "zone_live_status_rows": total_rows,
@@ -466,7 +820,7 @@ def get_zone_live_status(zone_id: str, database_path: str | Path = DATABASE_PATH
 def list_zone_live_status(
     status: str | None = None,
     database_path: str | Path = DATABASE_PATH,
-) -> list[sqlite3.Row]:
+) -> list[RowMapping]:
     query = "SELECT * FROM zone_live_status"
     parameters: tuple[Any, ...] = ()
     if status is not None:
@@ -522,8 +876,8 @@ def get_admin_overview(database_path: str | Path = DATABASE_PATH) -> dict[str, A
             )
         })
         total_zones = connection.execute(
-            "SELECT COUNT(zone_id) FROM zone_live_status"
-        ).fetchone()[0]
+            "SELECT COUNT(zone_id) AS zone_count FROM zone_live_status"
+        ).fetchone()["zone_count"]
         return {
             "total_official_zones": total_zones,
             "zone_status_counts": zone_counts,
@@ -541,7 +895,7 @@ def get_allocation_request(request_id: str, database_path: str | Path = DATABASE
 def list_allocation_requests(
     status: str | None = None,
     database_path: str | Path = DATABASE_PATH,
-) -> list[sqlite3.Row]:
+) -> list[RowMapping]:
     query = "SELECT * FROM allocation_requests"
     parameters: tuple[Any, ...] = ()
     if status is not None:
@@ -627,7 +981,7 @@ def get_allocation(allocation_id: str, database_path: str | Path = DATABASE_PATH
 def list_allocations(
     status: str | None = None,
     database_path: str | Path = DATABASE_PATH,
-) -> list[sqlite3.Row]:
+) -> list[RowMapping]:
     query = "SELECT * FROM allocations"
     parameters: tuple[Any, ...] = ()
     if status is not None:
@@ -654,7 +1008,7 @@ def create_allocation_request(
     preferred_division: str | None = None,
     notes: str | None = None,
     database_path: str | Path = DATABASE_PATH,
-) -> sqlite3.Row:
+) -> RowMapping:
     """Create a pending request after atomically checking operational state."""
     vendor_id = vendor_id.strip()
     zone_id = zone_id.strip()
@@ -671,7 +1025,8 @@ def create_allocation_request(
     now = utc_now()
     with transaction(database_path) as connection:
         zone = connection.execute(
-            "SELECT * FROM zone_live_status WHERE zone_id = ?", (zone_id,)
+            "SELECT * FROM zone_live_status WHERE zone_id = ?" + for_update(connection),
+            (zone_id,),
         ).fetchone()
         if zone is None:
             raise OperationalNotFoundError(f"Unknown zone_id: {zone_id}")
@@ -722,14 +1077,12 @@ def create_allocation_request(
                     notes,
                 ),
             )
-        except sqlite3.IntegrityError as exc:
+        except IntegrityError as exc:
             # The partial unique index closes the race after the explicit,
             # user-friendly duplicate check above.
-            if "allocation_requests.vendor_id, allocation_requests.zone_id" in str(exc):
-                raise OperationalConflictError(
-                    f"Vendor already has a pending request for zone {zone_id}"
-                ) from exc
-            raise
+            raise OperationalConflictError(
+                f"Vendor already has a pending request for zone {zone_id}"
+            ) from exc
         details = json.dumps(
             {"vendor_id": vendor_id, "zone_id": zone_id, "request_type": request_type},
             sort_keys=True,
@@ -748,13 +1101,14 @@ def create_allocation_request(
 def cancel_allocation_request(
     request_id: str,
     database_path: str | Path = DATABASE_PATH,
-) -> sqlite3.Row:
+) -> RowMapping:
     """Cancel a pending request and record the action in the same transaction."""
     now = utc_now()
     audit_id = f"AUD_{uuid.uuid4().hex}"
     with transaction(database_path) as connection:
         request = connection.execute(
-            "SELECT * FROM allocation_requests WHERE request_id = ?", (request_id,)
+            "SELECT * FROM allocation_requests WHERE request_id = ?" + for_update(connection),
+            (request_id,),
         ).fetchone()
         if request is None:
             raise OperationalNotFoundError(f"Unknown allocation request: {request_id}")
@@ -799,7 +1153,7 @@ def update_zone_live_status(
     verified_by: str,
     database_path: str | Path = DATABASE_PATH,
     zones_path: str | Path = OFFICIAL_ZONES_PATH,
-) -> sqlite3.Row:
+) -> RowMapping:
     """Apply a guarded manual operational status transition for a FREE zone."""
     requested_status = requested_status.strip().upper()
     verified_by = verified_by.strip()
@@ -811,7 +1165,8 @@ def update_zone_live_status(
     now = utc_now()
     with transaction(database_path, immediate=True) as connection:
         row = connection.execute(
-            "SELECT * FROM zone_live_status WHERE zone_id = ?", (zone_id,)
+            "SELECT * FROM zone_live_status WHERE zone_id = ?" + for_update(connection),
+            (zone_id,),
         ).fetchone()
         if row is None:
             raise OperationalNotFoundError(f"Unknown zone_id: {zone_id}")
@@ -854,7 +1209,7 @@ def update_zone_live_status(
 
 
 def _audit(
-    connection: sqlite3.Connection,
+    connection: DatabaseConnection,
     action: str,
     entity_type: str,
     entity_id: str,
@@ -879,8 +1234,8 @@ def _audit(
 
 
 def _increment_zone_occupancy(
-    connection: sqlite3.Connection,
-    zone: sqlite3.Row,
+    connection: DatabaseConnection,
+    zone: RowMapping,
     now: str,
 ) -> tuple[int, int | None, str]:
     old_count = zone["current_vendor_count"]
@@ -904,8 +1259,8 @@ def _increment_zone_occupancy(
 
 
 def _decrement_zone_occupancy(
-    connection: sqlite3.Connection,
-    zone: sqlite3.Row,
+    connection: DatabaseConnection,
+    zone: RowMapping,
     policy_zone_type: str,
     now: str,
 ) -> tuple[int, int | None, str]:
@@ -939,7 +1294,7 @@ def approve_allocation_request(
     notes: str | None = None,
     database_path: str | Path = DATABASE_PATH,
     zones_path: str | Path = OFFICIAL_ZONES_PATH,
-) -> dict[str, sqlite3.Row | None]:
+) -> dict[str, RowMapping | None]:
     """Atomically approve a new allocation or complete a relocation."""
     approved_by = approved_by.strip()
     if not approved_by:
@@ -952,7 +1307,8 @@ def approve_allocation_request(
     # read, serializing competing approvals for a final available slot.
     with transaction(database_path, immediate=True) as connection:
         request = connection.execute(
-            "SELECT * FROM allocation_requests WHERE request_id = ?", (request_id,)
+            "SELECT * FROM allocation_requests WHERE request_id = ?" + for_update(connection),
+            (request_id,),
         ).fetchone()
         if request is None:
             raise OperationalNotFoundError(f"Unknown allocation request: {request_id}")
@@ -962,7 +1318,8 @@ def approve_allocation_request(
             )
 
         target_zone = connection.execute(
-            "SELECT * FROM zone_live_status WHERE zone_id = ?", (request["zone_id"],)
+            "SELECT * FROM zone_live_status WHERE zone_id = ?" + for_update(connection),
+            (request["zone_id"],),
         ).fetchone()
         if target_zone is None:
             raise OperationalNotFoundError(f"Unknown zone_id: {request['zone_id']}")
@@ -974,7 +1331,7 @@ def approve_allocation_request(
             )
 
         active = connection.execute(
-            "SELECT * FROM allocations WHERE vendor_id = ? AND status = 'ACTIVE'",
+            "SELECT * FROM allocations WHERE vendor_id = ? AND status = 'ACTIVE'" + for_update(connection),
             (request["vendor_id"],),
         ).fetchone()
         released_allocation = None
@@ -989,7 +1346,8 @@ def approve_allocation_request(
                 raise OperationalConflictError("Relocation target must differ from the active allocation zone")
             old_zone_id = active["zone_id"]
             old_zone = connection.execute(
-                "SELECT * FROM zone_live_status WHERE zone_id = ?", (old_zone_id,)
+                "SELECT * FROM zone_live_status WHERE zone_id = ?" + for_update(connection),
+                (old_zone_id,),
             ).fetchone()
             if old_zone is None:
                 raise OperationalNotFoundError(f"Unknown old allocation zone: {old_zone_id}")
@@ -1133,7 +1491,7 @@ def reject_allocation_request(
     rejection_reason: str,
     notes: str | None = None,
     database_path: str | Path = DATABASE_PATH,
-) -> sqlite3.Row:
+) -> RowMapping:
     """Atomically reject a pending allocation request without changing occupancy."""
     reviewed_by = reviewed_by.strip()
     rejection_reason = rejection_reason.strip()
@@ -1185,7 +1543,7 @@ def get_operational_vendor(vendor_id: str, database_path: str | Path = DATABASE_
 def create_operational_vendor(
     profile: dict[str, Any],
     database_path: str | Path = DATABASE_PATH,
-) -> sqlite3.Row:
+) -> RowMapping:
     """Register a non-PII operational vendor and write its audit row atomically."""
     now = utc_now()
     vendor_id = f"NV_{uuid.uuid4().hex}"
@@ -1237,7 +1595,7 @@ def save_operational_vendor_profile(
     vendor_type: str,
     profile: dict[str, Any],
     database_path: str | Path = DATABASE_PATH,
-) -> sqlite3.Row:
+) -> RowMapping:
     """Update an operational row or create an overlay for a historical vendor."""
     now = utc_now()
     with transaction(database_path, immediate=True) as connection:
