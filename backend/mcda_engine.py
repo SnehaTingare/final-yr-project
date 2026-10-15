@@ -37,7 +37,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from backend.database import DATABASE_PATH, get_live_zone_status_map
-from backend.decision_policy import FACTOR_ORDER, RESEARCH_BASELINE_WEIGHTS, derive_mcda_weights, normalize_weights
+from backend.decision_policy import FACTOR_ORDER, RESEARCH_BASELINE_WEIGHTS, derive_mcda_weights, normalize_weights, active_mcda_configuration
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -223,7 +223,7 @@ def _empty_scored(
 ) -> pd.DataFrame:
     """Create an empty result while preserving recommendation metadata."""
 
-    result = pd.DataFrame()
+    result = pd.DataFrame(columns=["zone_id", "score", "score_coverage", "scoreability_reason"])
 
     result.attrs.update(
         metadata
@@ -863,6 +863,7 @@ def _apply_live_filter(
     candidate_count_after_live_filter = len(
         zones
     )
+    before_verified = zones.copy()
 
 
     if require_verified:
@@ -889,6 +890,8 @@ def _apply_live_filter(
         "require_verified":
             bool(require_verified),
     }
+    if require_verified:
+        metadata["unverified_zone_ids"] = before_verified.loc[~before_verified.zone_id.isin(zones.zone_id), "zone_id"].tolist()
 
 
     return (
@@ -1502,6 +1505,7 @@ def score_candidates(
         float,
     ]
     | None = None,
+    include_unscorable: bool = False,
 ) -> pd.DataFrame:
     """Score every eligible zone for one vendor/request context.
 
@@ -1565,9 +1569,7 @@ def score_candidates(
 
     # Only legally/model-eligible FREE analytical references.
     zones = (
-        _eligible_reference_candidates(
-            zones
-        )
+        zones.loc[zones.zone_type.eq("FREE")].copy() if include_unscorable else _eligible_reference_candidates(zones)
     )
 
 
@@ -1726,6 +1728,10 @@ def score_candidates(
         weights,
     )
 
+    usable = zones.geometry_usable_for_reference_model.astype(str).str.lower().isin(["true", "1", "yes"])
+    zones["scoreability_reason"] = np.where(usable, None, "NO_USABLE_ZONE_REFERENCE")
+    zones.loc[~usable, ["score", "score_coverage"] + [f"{factor}_contribution" for factor in FACTOR_ORDER]] = np.nan
+
 
     # -----------------------------------------------------------------------
     # Output semantics / safeguards
@@ -1835,6 +1841,8 @@ def rank_candidates(
         scored.attrs
     )
 
+    scored = scored.loc[scored.score.notna()].copy()
+
 
     if scored.empty:
 
@@ -1852,7 +1860,7 @@ def rank_candidates(
     # If fewer than Top-N local zones survive, explicitly fill with the best
     # candidates from other divisions and mark them as fallback results.
 
-    if division:
+    if division and active_mcda_configuration() is None:
 
         local = scored.loc[
 
@@ -1988,6 +1996,7 @@ def recommend(
     use_live_status=False,
     database_path=None,
     factor_weights=None,
+    include_all=False,
 ):
     """Return ranked Top-N recommendations.
 
@@ -2030,6 +2039,7 @@ def recommend(
         factor_weights=(
             factor_weights
         ),
+        include_unscorable=include_all,
     )
 
 
@@ -2047,7 +2057,7 @@ def recommend(
     )
 
 
-    return rank_candidates(
+    result = rank_candidates(
 
         scored,
 
@@ -2059,6 +2069,9 @@ def recommend(
             top_n
         ),
     )
+    if include_all:
+        result.attrs["all_candidates"] = scored
+    return result
 
 
 # ---------------------------------------------------------------------------

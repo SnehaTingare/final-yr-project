@@ -27,7 +27,7 @@ export function Details({r,onClose}){
   if(!r)return <div className="detail-empty"><MapPin size={27}/><h3>Select a zone</h3><p>Choose a recommendation to inspect its location, evidence and scoring details.</p></div>;
   const strengths=[...(r.factors||[])].filter(f=>f.key!=="preference"&&f.key!=="historical"&&f.score!=null).sort((a,b)=>b.score-a.score).slice(0,2);
   return <div className="detail-content">
-    <div className="detail-top"><div><span className="micro-label">ZONE DETAILS</span><h2>{zoneName(r)}</h2><p>{r.zone_division}</p></div><button className="icon-button" onClick={onClose} aria-label="Close details"><X size={18}/></button></div>
+    <div className="detail-top"><div><span className="micro-label">ZONE DETAILS</span><h2>{r.zone_id}</h2><p>{r.zone_division}</p></div><button className="icon-button" onClick={onClose} aria-label="Close details"><X size={18}/></button></div>
     <div className="detail-score-card"><div><span>Overall suitability</span><strong>{num(r.score)}<small>/100</small></strong></div><span className="method-pill">MCDA</span></div>
     <p className="detail-description">{zoneDescription(r)}</p>
     <div className="detail-meta"><div><span>Official listed capacity</span><strong>{r.official_capacity??"Not listed"}</strong></div><div><span>Zone type</span><strong>NMC designated vending zone</strong></div></div>
@@ -38,11 +38,11 @@ export function Details({r,onClose}){
   </div>;
 }
 export function ResultRow({r,selected,onClick}){
-  const title=zoneName(r);
+  const title=r.zone_id;
 
   return <button className={`result-row ${selected?"selected":""}`} onClick={onClick}>
     <div className="row-rank">{String(r.rank).padStart(2,"0")}</div>
-    <div className="row-body"><div className="row-title"><strong>{title}</strong>{r.fallback_used&&<span className="fallback-chip">Other division</span>}</div><p>{r.zone_id}</p><div className="row-meta"><MapPin size={13}/>{r.zone_division}</div></div>
+    <div className="row-body"><div className="row-title"><strong>{title}</strong>{r.fallback_used&&<span className="fallback-chip">Other division</span>}</div><p>{zoneName(r)}</p><div className="row-meta"><MapPin size={13}/>{r.zone_division}</div></div>
     <div className="row-right"><strong>{num(r.score)}</strong><span>INDEX</span><ChevronRight size={17}/></div>
   </button>;
 }

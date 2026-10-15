@@ -10,6 +10,10 @@ from backend.core.serialization import clean
 from backend.recommendation_evaluation import evaluate_weight_sensitivity
 from backend.services.explanations import explain
 from backend.mcda_engine import recommend
+import pandas as pd
+from backend.core.data_paths import CATALOG, dataset_path
+from backend.services.eligibility import zone_ineligibility_reason
+from backend.repositories.database import get_live_zone_status_map
 from backend.services.recommendation_context import resolve_recommendation_context
 from fastapi import APIRouter
 router = APIRouter()
@@ -76,6 +80,7 @@ def recommendations(
             factor_weights=(
                 effective_weights
             ),
+            include_all=True,
         )
 
 
@@ -181,6 +186,41 @@ def recommendations(
     }
 
 
+    all_candidates = result.attrs["all_candidates"]
+    ranks = {zone_id:index+1 for index,zone_id in enumerate(all_candidates.loc[all_candidates.score.notna(), "zone_id"])}
+    def record(row):
+        item = {key:row.get(key) for key in fields}
+        item.update({"title":row.zone_id, "description":row.get("official_description"),
+                     "rank":ranks.get(row.zone_id),
+                     "location_source":row.get("reference_location_source"),
+                     "scoreability_reason":row.get("scoreability_reason"),
+                     "factors":explain(row, effective_weights)})
+        return clean(item)
+
+    # One score calculation supplies both the highlighted and complete lists.
+    # These additions retain the existing recommendations/count response contract.
+    fields = list(all_candidates.columns)
+    remaining = all_candidates.loc[all_candidates.score.notna() & ~all_candidates.zone_id.isin(result.zone_id)]
+    unscorable = all_candidates.loc[all_candidates.score.isna()]
+    live = get_live_zone_status_map(dependencies.DATABASE_PATH)
+    official = pd.read_csv(dataset_path("official_zones"), keep_default_na=False)
+    eligible_ids = set(all_candidates.zone_id)
+    ineligible = []
+    for zone in official.itertuples(index=False):
+        if zone.zone_id == req.exclude_zone:
+            reason = "CURRENT_ZONE_EXCLUDED"
+        elif zone.zone_id in eligible_ids:
+            continue
+        else:
+            reason = zone_ineligibility_reason(zone.zone_type, live.get(zone.zone_id)) or "AVAILABILITY_NOT_RECENTLY_VERIFIED"
+        ineligible.append({"zone_id":zone.zone_id, "title":zone.zone_id, "description":zone.official_description,
+                           "division":zone.division, "zone_type":zone.zone_type, "reason":reason})
+    metadata.update({"remaining_recommendations":[record(row) for _,row in remaining.iterrows()],
+                     "eligible_unscorable_zones":[record(row) for _,row in unscorable.iterrows()],
+                     "ineligible_zones":ineligible, "eligible_scoreable_count":int(all_candidates.score.notna().sum()),
+                     "eligible_unscorable_count":len(unscorable), "official_free_zone_count":int(official.zone_type.eq("FREE").sum()),
+                     "model_version":CATALOG.get("active_model_version"),
+                     "locality_scoring":{"applied":False, "reason":"REVIEWED_LOCALITY_REFERENCE_UNAVAILABLE" if profile and profile.get("preferred_locality") else "NO_LOCALITY_PREFERENCE"}})
     if result.empty:
 
         return {
@@ -243,6 +283,7 @@ def recommendations(
         "live_status",
         "current_vendor_count",
         "available_capacity",
+        "reference_location_source",
     ]
 
 
@@ -270,6 +311,7 @@ def recommendations(
             row,
             effective_weights,
         )
+        item.update({"title":row.zone_id, "description":row.get("official_description"), "location_source":row.get("reference_location_source")})
 
 
         records.append(

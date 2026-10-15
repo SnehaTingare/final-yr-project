@@ -1,0 +1,26 @@
+{
+  "version": "manual-142-v2",
+  "generated_utc": "2026-10-14T12:15:01.980319+00:00",
+  "passed": true,
+  "focused_backend_checks": 14,
+  "frontend_api_client_checks": 6,
+  "frontend_syntax_checks": 9,
+  "official_zones": 308,
+  "official_free_zones": 166,
+  "scoreable_reference_candidates": 146,
+  "unscorable_reference_candidates": 20,
+  "pilot_zones": 4,
+  "saved_slots_unchanged": 85,
+  "unchanged_original_data_files": 76,
+  "locality_scoring_enabled": false,
+  "competition_scoring_enabled": false,
+  "existing_translation_test_failures": [
+    "category label expectation predates current Stall wording",
+    "unknown status expectation predates readable fallback"
+  ],
+  "write_checks": "Disposable SQLite only",
+  "limitations": [
+    "No established zone-specific business restriction mapping exists; no policy was invented."
+  ],
+  "verified_rollback": "Atomic version switch checked against a disposable catalog; v1 policy and input bindings verified."
+}

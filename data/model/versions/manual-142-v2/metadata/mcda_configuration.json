@@ -1,0 +1,17 @@
+{
+  "version": "manual-142-v2",
+  "baseline_weights": {"business": 0.25, "commercial": 0.20, "access": 0.20, "facilities": 0.15, "preference": 0.10, "historical": 0.10},
+  "baseline_blend": 0.40,
+  "priority_blend": 0.60,
+  "checkbox_factors": {"market_preference": "commercial", "transport_preference": "access", "parking_preference": "facilities"},
+  "high_multiplier": 3.0,
+  "neutral_multiplier": 1.0,
+  "locality_scoring_enabled": false,
+  "future_locality_distance_scale_m": 3000,
+  "future_locality_baseline_weight": 0.10,
+  "locality_disabled_reason": "REVIEWED_LOCALITY_REFERENCE_UNAVAILABLE",
+  "competition_scoring_enabled": false,
+  "missing_factors": "RENORMALIZE_AVAILABLE_WEIGHTS",
+  "ranking": "SCORE_DESCENDING_ZONE_ID_ASCENDING",
+  "coordinate_priority": ["PILOT_SAVED_PROVISIONAL", "MANUAL_PROVISIONAL", "ORIGINAL_ANALYTICAL", "MISSING"]
+}

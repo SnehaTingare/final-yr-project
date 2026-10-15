@@ -14,6 +14,17 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 import numpy as np
+from backend.core.data_paths import CATALOG, dataset_path
+
+
+def active_mcda_configuration():
+    """Versioned personalization is opt-in; catalog rollback restores v1 policy."""
+    if "mcda_configuration" not in CATALOG["datasets"]:
+        return None
+    configuration = json.loads(dataset_path("mcda_configuration").read_text(encoding="utf-8"))
+    if configuration["baseline_weights"] != RESEARCH_BASELINE_WEIGHTS:
+        raise ValueError("Versioned policy must preserve the six baseline weights")
+    return configuration
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -281,6 +292,12 @@ def derive_mcda_weights(
         vendor_profile or {}
     )
 
+    configuration = active_mcda_configuration()
+    if configuration is not None and profile.get("priority_profile") is not None and not isinstance(profile["priority_profile"], str):
+        raise ValueError("priority_profile must be a supported string value")
+    if configuration is not None and base_weights is None:
+        base_weights = configuration["baseline_weights"]
+
     if base_weights is not None:
         policy = {
             "weights": normalize_weights(
@@ -323,7 +340,21 @@ def derive_mcda_weights(
     if priority_factor:
         multipliers[
             priority_factor
-        ] *= 1.25
+        ] *= configuration["high_multiplier"] if configuration is not None else 1.25
+
+    if configuration is not None:
+        for control, factor in configuration["checkbox_factors"].items():
+            value = profile.get(control, False)
+            if not isinstance(value, (bool, int)) or value not in (False, True, 0, 1):
+                raise ValueError(f"{control} must be a boolean")
+            if value:
+                multipliers[factor] = configuration["high_multiplier"]
+        priority_distribution = normalize_weights({factor:base[factor]*multipliers[factor] for factor in FACTOR_ORDER})
+        final_weights = normalize_weights({factor:configuration["baseline_blend"]*base[factor] + configuration["priority_blend"]*priority_distribution[factor] for factor in FACTOR_ORDER})
+        return {"base_weights":dict(base), "multipliers":multipliers, "priority_distribution":priority_distribution,
+                "final_weights":final_weights, "weight_source":"APPROVED_SIX_CRITERION_POLICY",
+                "ahp_consistency_ratio":None, "policy_path":str(dataset_path("mcda_configuration")),
+                "model_version":CATALOG.get("active_model_version")}
 
     if bool(
         profile.get(

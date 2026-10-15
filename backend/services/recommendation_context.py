@@ -85,11 +85,10 @@ def resolve_recommendation_context(
             engine_vendor_id = ""
 
 
-    weight_profile = (
-        derive_mcda_weights(
-            profile
-        )
-    )
+    try:
+        weight_profile = derive_mcda_weights(profile)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
 
 
     return {

@@ -1,0 +1,309 @@
+﻿zone_id,reference_group_id,shared_reference_group_size,shared_reference,reference_audit_status,reference_warning
+NE_F_001,RG_45e0623b98b787c0,3.0,True,ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED,"Manual point unresolved; original analytical fallback, not a verified site."
+NE_F_002,RG_be06111b40145d30,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_003,RG_e88f67336c4266c3,4.0,True,ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED,"Manual point unresolved; original analytical fallback, not a verified site."
+NE_F_004,RG_254b715f1a3e9f4b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_005,RG_0c517c2d88b51b2d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_006,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NE_F_007,RG_7d16f4582e8ad654,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_008,RG_d765726be6caf80b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_009,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NE_F_010,RG_6a4c4986097b3287,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_011,RG_b7c6db4e4c88bbc6,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_012,RG_aade051b34c192de,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_013,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NE_F_014,RG_6dfdd590a4534436,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_015,RG_77e8e4a7792bbd09,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_F_016,RG_fe3c60ebe342f35d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NE_R_001,RG_a75c6e2a3c84a239,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NE_R_002,RG_d31a094586fe26a1,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_F_001,RG_c5442f51cb110169,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_002,RG_c4aa73f8c2717838,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_003,RG_26d61349e16bf290,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_004,RG_acc7d7a777d7ba95,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_005,RG_01bef57f116ad378,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_006,RG_035f66a593941444,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_007,RG_24a1bc9a6484d147,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_008,RG_45ca065718c93de1,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_009,RG_dc5872ed34aef5bb,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_010,RG_3f4a1ec2f82fa9f1,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_011,RG_a8c2ddaa46293a79,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_012,RG_09520709ade8f2a0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_013,RG_725378871ca38bea,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_014,RG_fc2d18c401a2b991,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_015,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_F_016,RG_1905c5fe6da93080,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_017,RG_59b4e26dfc5cf45b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_018,RG_c5878ed2b489d108,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_019,RG_1746d7a2f269e121,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_020,RG_172a829c45c5bb52,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_021,RG_79f5e19ba08a4040,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_022,RG_e9d7ce9802066077,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_023,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_F_024,RG_9b2948fab21c73f4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_025,RG_4021fad588a45d83,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_026,RG_8d545323c6314118,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_F_027,RG_5708fd7154e9dc76,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NW_R_001,RG_286074d82aacd8fa,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_002,RG_2ac86d568fb072aa,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_003,RG_ac4dcc1fd27a1ffe,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_004,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_005,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_006,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_007,RG_3879aa6e84c9718e,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_008,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_009,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_010,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_011,RG_3da939f255e98db0,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_012,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_013,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_014,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_015,RG_918020d5d016cce5,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_016,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NW_R_017,RG_1c71f42508cf153a,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_018,RG_faa0a348de868d8a,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NW_R_019,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+PAN_F_001,RG_5e15c7f561370da9,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_002,RG_4a4d218b14ad529a,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_003,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+PAN_F_004,RG_f0d204be6f51ecd5,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_005,RG_509f91761894dda4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_006,RG_18998393c1e317a1,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_007,RG_cd282adac313d3b6,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_008,RG_2776e807aa36639a,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_009,RG_b53ad8b4fd90633e,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_010,RG_f379621c999b5687,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_011,RG_fc1c922b64d8feac,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_012,RG_d634315348c7153c,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_013,RG_3dc4272ac044b3b2,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_014,RG_669a09d7cb21af54,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_015,RG_434fe51600b3c1c6,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_016,RG_b250dca8ff35abc5,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_017,RG_da593cab5f3192c4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_018,RG_62b8492db0cd99dd,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_019,RG_7baf69c0ea974780,1.0,False,PILOT_SAVED_PROVISIONAL,Saved provisional pilot vending area reference; not a surveyed official boundary or pedestrian entrance.
+PAN_F_020,RG_c1d84d21cc0b221c,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_021,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+PAN_F_022,RG_523bf9d0e2323108,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_023,RG_ef9b8f28d48fc84e,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_024,RG_d2165a6d1f36bfa9,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_025,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+PAN_F_026,RG_c5de1d4449378bd9,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_027,RG_6af92cd316e0613e,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_028,RG_d1a1f9e966c478b0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_029,RG_8768d0a2cbc9ec75,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_030,RG_6eea331e28045cae,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_031,RG_3229c4f2ce0abb8d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_032,RG_d39ce5cd6f51d9fd,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_033,RG_0a4e2c37749142fc,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_034,RG_dc1ada2eaaad4979,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_035,RG_dfb56d35432b611a,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_036,RG_ff4d5f6b37014b5e,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_F_037,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+PAN_F_038,RG_32eb5f4d90ba82f0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+PAN_R_001,RG_7c5af2bb644bdc70,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_002,RG_7c5af2bb644bdc70,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_003,RG_c7e2a8f2963f32da,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_004,RG_79091628b972e9e4,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_005,RG_681880cfd7a3b2c7,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_006,RG_b9bbdec77ea246d6,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_007,RG_68fe27f93c0b9eab,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_008,RG_a5a4430b18c87ec7,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_009,RG_9297ec41dc550592,6.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_010,RG_9297ec41dc550592,6.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_011,RG_2b60f08ae4691e67,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+PAN_R_012,RG_3da939f255e98db0,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_F_001,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_F_002,RG_746a2f504975f1bc,1.0,False,ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED,"Manual point unresolved; original analytical fallback, not a verified site."
+NR_F_003,RG_e941097ffe20a391,1.0,False,PILOT_SAVED_PROVISIONAL,Saved provisional pilot vending area reference; not a surveyed official boundary or pedestrian entrance.
+NR_F_004,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_F_005,RG_1fb64767c38ab8ae,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_006,RG_9a9576b873e89d95,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_007,RG_90306f5ae373d2f1,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_008,RG_d86b957cd634d18b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_009,RG_5c95e23bb553f6a4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_010,RG_827666d41d533ae1,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_011,RG_3d7fe533ee5c79a0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_012,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_F_013,RG_e9b4790cbd6370f0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_014,RG_26918a052ab372f6,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_015,RG_14a7958065596e88,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_016,RG_ec6b7876e37a342c,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_017,RG_3b036cc153b4ff87,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_018,RG_e9c08c68b658af7d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_019,RG_b9ad486b7ba6f484,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_020,RG_920aaa8e4e8fc670,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_021,RG_402b791b2462618c,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_022,RG_17f3085a1b209af2,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_023,RG_78d46b443f583592,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_024,RG_81bff3557838fcbd,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_025,RG_c9e226f2f32bfe8c,1.0,False,ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED,"Manual point unresolved; original analytical fallback, not a verified site."
+NR_F_026,RG_297d1f74f8c58fcc,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_027,RG_538fe2055fa1f924,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_028,RG_2512b522ee3a566b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_029,RG_e549d1d98f4d1f49,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_030,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_F_031,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_F_032,RG_7c72452133d8025d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_033,RG_5605bc9c56a34012,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_034,RG_feff8132a9dfc16b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_035,RG_2a67a730d4f872fd,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_036,RG_91d36f964e8b60b3,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_037,RG_b206debf15b1d577,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_038,RG_b4dd7f85a1f7d5c9,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_039,RG_51e54f50be5d7800,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_040,RG_c452446684f14cfe,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_041,RG_3aa977beb9c4a681,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_042,RG_9eec166a61074459,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_043,RG_8f88966a4b67129e,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NR_F_044,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_R_001,RG_d09d8a9f91e0db35,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_R_002,RG_e3257b5d703702fa,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_R_003,RG_9297ec41dc550592,6.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_R_004,RG_e88f67336c4266c3,4.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_R_005,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NR_R_006,RG_2b9fd06239f1d903,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_R_007,RG_b41c4f188fcf14a4,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NR_R_008,RG_9297ec41dc550592,6.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_F_001,RG_4cc202d2f088dca9,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_002,RG_beec15c2bc798bb5,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_003,RG_d7d9bbae02519e7b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_004,RG_b455daeebdec673c,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_005,RG_d8859838af5cdd63,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_006,RG_911569ebb32a1aa6,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_007,RG_de051d23814a757a,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_008,RG_2cba3608ad42f8f2,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_009,RG_7fbfc4065a7f7600,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_010,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NN_F_011,RG_11aa715d930eb60b,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_012,RG_55f2734013c5f82f,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+NN_F_013,RG_9fb579bdb3f21536,1.0,False,PILOT_SAVED_PROVISIONAL,Saved provisional pilot vending area reference; not a surveyed official boundary or pedestrian entrance.
+NN_F_014,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NN_F_015,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NN_F_016,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NN_R_001,RG_aa83f73600c127a9,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_002,RG_451a28cfbd69e58b,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_003,RG_aa83f73600c127a9,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_004,RG_3a55d1595cb689ed,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_005,RG_45e0623b98b787c0,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_006,RG_d48dde9a1cc449f0,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_007,RG_59e631e3cd0f47ef,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_008,RG_301d84e42f753e68,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_009,RG_9297ec41dc550592,6.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_010,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NN_R_011,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NN_R_012,RG_19026d32d623eb64,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_013,RG_25e78713a760c47f,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_014,RG_e3257b5d703702fa,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NN_R_015,RG_9feacbefba62f2cf,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+SAT_F_001,RG_308e39e0411c16d7,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_002,RG_410badfa9f770f22,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_003,RG_c79500010b1fba68,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_004,RG_b5471bbc0c26320d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_005,RG_1f19cfc3b6695ec3,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_006,RG_e3e53d8730bbac76,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_007,RG_1219e57a2194ee3f,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_008,RG_680e86154e9107e4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_009,RG_0a8bb394dbba255f,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_010,RG_db3c1d68a6bcad62,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_011,RG_c5312987684b96b5,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_012,RG_257fc595eb66c0f7,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_013,RG_333f2232b0af1186,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_014,RG_30d00c309ee3d075,1.0,False,PILOT_SAVED_PROVISIONAL,Saved provisional pilot vending area reference; not a surveyed official boundary or pedestrian entrance.
+SAT_F_015,RG_2d3cbf6d93aecad2,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_016,RG_93e351a4ba70c0e5,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_017,RG_480b6cd204ff96e4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_018,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+SAT_F_019,RG_fb5e85769b5ebc05,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_020,RG_5cf0a4a8421f98b0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_021,RG_ff4ca39e1f16d7c4,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_022,RG_502cd652bceffa7d,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_023,RG_40f8bc13b599a8a0,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_024,RG_ade3b6fdc6200fba,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_F_025,RG_b238b71bc45fdb67,1.0,False,MANUAL_PROVISIONAL,Provisional manual analytical point; not independently verified or surveyed.
+SAT_R_001,RG_9c80258f63aef18d,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+SAT_R_002,RG_88cdd5e6118b6ba3,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+SAT_R_003,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_001,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_002,RG_a28d72fc542ca6da,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_003,RG_ad1c691c508f61f3,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_004,RG_a28d72fc542ca6da,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_005,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_006,RG_aa29f17fb4285c13,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_007,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_008,RG_b79d6a80316ebd1a,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_009,RG_4b56a516e8ac50bc,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_010,RG_95f6a65c06d3ec6a,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_011,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_012,RG_6862a50e34079c5f,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_013,RG_29124d3189b7813c,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_014,RG_c7180e384555797a,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_015,RG_942580c60e687e21,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_016,RG_942580c60e687e21,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_017,RG_942580c60e687e21,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_018,RG_c7180e384555797a,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_019,RG_7885f6cee335192f,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_020,RG_9e5fd7838a2f5f19,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_021,RG_c7180e384555797a,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_022,RG_c7cbf2c58a3d45b3,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_023,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_024,RG_b79d6a80316ebd1a,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_025,RG_3671a2e72a0ef155,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_026,RG_71c21502c11ea4d2,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_027,RG_c7cbf2c58a3d45b3,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_028,RG_5a64847c7cb6b1a0,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_029,RG_4b56a516e8ac50bc,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_030,RG_c860878efa209b09,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_031,RG_a46f3283241f2c7f,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_032,RG_07b670f6fe697d9f,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_033,RG_45327ba47d338c86,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_034,RG_fbe49a48fd15807d,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_035,RG_38e83abb9eae9545,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_036,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_037,RG_07b670f6fe697d9f,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_038,RG_13ba49e7c19e5204,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_039,RG_b6746596f730ecc2,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_040,RG_cfd703bffacd65f5,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_041,RG_a203b3a363e6ff8e,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_042,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_043,RG_806ab6182ba6f2dc,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_044,RG_4ecfd46d7bbc1d09,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_045,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_046,RG_0153edd60983a662,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_047,RG_faa0a348de868d8a,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_048,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_049,RG_71c21502c11ea4d2,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_050,RG_968d4563eeaf1c42,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_051,RG_5e0bd2ec62b5ac4e,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_052,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_053,RG_681880cfd7a3b2c7,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_054,RG_c5cd711214c022c9,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_055,RG_45e0623b98b787c0,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_056,RG_f8b4722598466038,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_057,RG_9d7339fe272f94bd,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_058,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_059,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_060,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_061,RG_e88f67336c4266c3,4.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_062,RG_e88f67336c4266c3,4.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_063,RG_0587c9f75fe7563c,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_064,RG_e7b76562e3bef341,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_065,RG_19026d32d623eb64,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_066,RG_a7bca394f7a2bdc6,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_067,RG_d48dde9a1cc449f0,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_068,RG_5c5ce832bbca2c9e,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_069,RG_e7b76562e3bef341,2.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_070,RG_a3d95198926450b0,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_071,RG_faa0a348de868d8a,3.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_072,RG_783dc523603613ea,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_073,RG_4af6b4b046a5365a,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_074,RG_da64003d6377e723,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_075,RG_9297ec41dc550592,6.0,True,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_076,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_077,RG_de2bc4b39f715527,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_078,RG_f12b345411092f2b,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_079,RG_3321055e375791a7,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_080,RG_bebdaf0273280440,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_081,RG_7a8ee9216d12f815,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.
+NV_082,,,False,MISSING,Original analytical reference; not a verified vending boundary.
+NV_083,RG_2de48751b58dd515,1.0,False,ORIGINAL_ANALYTICAL,Original analytical reference; not a verified vending boundary.

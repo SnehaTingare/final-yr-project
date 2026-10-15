@@ -205,7 +205,7 @@ def main():
     parser.add_argument("--high-only", action="store_true",
                         help="Use only HIGH source-confidence geometries.")
     parser.add_argument("--version", default="manual-142-v1")
-    parser.add_argument("--reference-source", choices=["manual", "original"], default="manual")
+    parser.add_argument("--reference-source", choices=["resolved", "manual", "original"], default="manual")
     parser.add_argument("--compact-metadata", action="store_true")
     args = parser.parse_args()
     version_root = model_version_path(args.version)
@@ -289,6 +289,28 @@ def main():
             zones.loc[i, "geometry_review_status"] = "NOT_INDEPENDENTLY_VERIFIED"
             zones.loc[i, "reference_location_source"] = "MANUAL_PROVISIONAL"
         record(manual_path, len(manual)); record(status_path, len(status))
+    if args.reference_source == "resolved":
+        from backend.geo.zone_locations import resolve_zone_locations
+        resolved = resolve_zone_locations()
+        for i, zone in zones.iterrows():
+            location = resolved[zone.zone_id]
+            zones.loc[i, "reference_location_source"] = location["location_source"]
+            zones.loc[i, "manual_reference_status"] = location["manual_reference_status"]
+            if location["coordinates"] is None:
+                zones.loc[i, "geometry_usable_for_reference_model"] = False
+                continue
+            zones.loc[i, "geometry"] = Point(location["easting"], location["northing"])
+            zones.loc[i, "geometry_usable_for_reference_model"] = True
+            if location["location_source"] in ("PILOT_SAVED_PROVISIONAL", "MANUAL_PROVISIONAL"):
+                zones.loc[i, "geometry_status"] = location["location_source"]
+                zones.loc[i, "geometry_method"] = "SAVED_AREA_POINT_ON_SURFACE" if location["location_source"] == "PILOT_SAVED_PROVISIONAL" else "USER_MANUAL_POINT"
+                zones.loc[i, "source_confidence"] = "PROVISIONAL_NOT_SURVEYED"
+                zones.loc[i, "geometry_source_evidence"] = location["source_provenance"]
+        pd.DataFrame([{**r, "longitude": r["coordinates"][0] if r["coordinates"] else None,
+                       "latitude": r["coordinates"][1] if r["coordinates"] else None}
+                      for r in resolved.values()]).drop(columns="coordinates").to_csv(
+            REPORT / "resolved_zone_locations.csv", index=False, encoding="utf-8-sig")
+        record(dataset_path("manual_points"), 142); record(dataset_path("manual_status"), 146)
     flag = normalized(zones["geometry_usable_for_reference_model"]).isin(["true", "1", "yes"])
     source_conf = normalized(zones["source_confidence"])
     valid = zones.geometry.notna() & ~zones.geometry.is_empty & zones.geometry.is_valid
@@ -380,7 +402,7 @@ def main():
             continue
         geom = zone.geometry
         centre = geom.representative_point()
-        if zone.reference_location_source != "MANUAL_PROVISIONAL" and original_points is not None and zid in original_points.index:
+        if zone.reference_location_source not in ("MANUAL_PROVISIONAL", "PILOT_SAVED_PROVISIONAL") and original_points is not None and zid in original_points.index:
             easting, northing = original_points.loc[zid, ["reference_point_easting", "reference_point_northing"]]
             if np.isfinite([easting, northing]).all():
                 centre = Point(float(easting), float(northing))
@@ -491,6 +513,7 @@ def main():
     source_by_id = features.set_index("zone_id").reference_location_source
     reference_audit["reference_audit_status"] = reference_audit.zone_id.map(source_by_id)
     reference_audit["reference_warning"] = reference_audit.reference_audit_status.map(lambda source:
+        "Saved provisional pilot vending area reference; not a surveyed official boundary or pedestrian entrance." if source == "PILOT_SAVED_PROVISIONAL" else
         "Manual point unresolved; original analytical fallback, not a verified site." if source == "ORIGINAL_ANALYTICAL_FALLBACK_UNRESOLVED" else
         "Provisional manual analytical point; not independently verified or surveyed." if source == "MANUAL_PROVISIONAL" else
         "Original analytical reference; not a verified vending boundary.")

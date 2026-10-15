@@ -73,6 +73,16 @@ function locationPair(lat, lng) {
 }
 export function zoneMapLocation(zone) {
   const id = typeof zone === "string" ? zone : zone?.zone_id;
+  const resolved = typeof zone === "object" ? zone?.resolved_location : null;
+  if (resolved) {
+    const source = resolved.location_source;
+    const kind = source === "PILOT_SAVED_PROVISIONAL" ? "pilot" : source === "MANUAL_PROVISIONAL" ? "manual" : "approximate";
+    const label = !resolved.coordinates ? "Location not verified" : kind === "pilot" ? "Saved provisional pilot area" : kind === "manual" ? "Manually mapped reference - not independently verified" : "Unverified analytical fallback - not a confirmed vending site";
+    return {coordinates: resolved.coordinates, kind, label, record: {...displayLocations.get(id), confidence: source, location_note: label}};
+  }
+  if (catalog.datasets.mcda_configuration && ["NN_F_013", "PAN_F_019", "SAT_F_014", "NR_F_003"].includes(id)) {
+    return {coordinates:null, kind:"pilot", label:"Saved pilot reference requires current layout data", record:displayLocations.get(id)};
+  }
   const previous = displayLocations.get(id), manual = manualPoints.get(id), status = manualStatuses.get(id);
   const accepted = manual && manual.coordinate_status === "USER_PINNED_UNVERIFIED" && status?.manual_coordinate_status === "USER_PINNED_UNVERIFIED" && manual.pin_number === status.pin_number;
   const record = accepted ? {...previous, display_latitude: manual.latitude, display_longitude: manual.longitude,

@@ -5,6 +5,7 @@ import {cancelAllocationRequest, createAllocationRequest, getActiveAllocation, g
 import {profileDisplayName} from "../../shared/utils/profileIdentity.js";
 import {useDialogFocus} from "../../shared/utils/dialogFocus.js";
 import {useI18n} from "../../i18n/react.jsx";
+import {mergeRecommendationContext, latestRecommendationRequest} from "./viewModel.js";
 
 import {initialPilotState, pilotReducer, PILOT_ZONE_IDS} from "../pilot-slots/pilotState.js";
 
@@ -28,6 +29,9 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   const {language, t, selectLanguage} = useI18n();
   const [options, setOptions] = useState({categories: [], divisions: []});
   const [profile, setProfile] = useState(null);
+  const [profileReady, setProfileReady] = useState(false);
+  const recommendationRequest = useRef(latestRecommendationRequest());
+  const actionRequest = useRef(latestRecommendationRequest());
   const [draft, setDraft] = useState(draftFromProfile());
   const [activeAllocation, setActiveAllocation] = useState(null);
   const [pilot, dispatchPilot] = useReducer(pilotReducer, initialPilotState);
@@ -57,13 +61,19 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   }, [sessionProfile?.vendor_id]);
   useEffect(() => {
     if (!sessionProfile?.vendor_id) return;
+    setProfileReady(false);
+    recommendationRequest.current.invalidate();
     let active = true;
-    getVendorProfile(sessionProfile.vendor_id).then(vendor => {if (active) {setProfile(vendor); setDraft(draftFromProfile(vendor));}}).catch(err => {if (active) {setError(err.message);}});
+    getVendorProfile(sessionProfile.vendor_id).then(vendor => {if (active) {setProfile(vendor); setDraft(draftFromProfile(vendor)); setProfileReady(true);}}).catch(err => {if (active) {setError(err.message);}});
     return () => {active = false;};
   }, [sessionProfile?.vendor_id]);
   const run = async action => {
+    const actionId = actionRequest.current.begin();
     setBusy(true); setError(""); setSuccess("");
-    try { return await action(); } catch (err) { setError(err.message); return null; } finally { setBusy(false); }
+    try { return await action(); } catch (err) {
+      if (actionRequest.current.isCurrent(actionId)) setError(err.message);
+      return null;
+    } finally {if (actionRequest.current.isCurrent(actionId)) setBusy(false);}
   };
   const refreshDashboard = useCallback(async (quiet = false) => {
     if (!sessionProfile?.vendor_id) return null;
@@ -86,6 +96,7 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   }, [onboarding, sessionProfile?.vendor_id, view, refreshDashboard]);
   const hydrateVendor = async vendor => {
     setProfile(vendor); setDraft(draftFromProfile(vendor)); selectLanguage(vendor.preferred_language, {deliberate: false});
+    setProfileReady(true);
     const active = await getActiveAllocation(vendor.vendor_id);
     setActiveAllocation(active.allocation);
   };
@@ -94,6 +105,7 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     await hydrateVendor(vendor); await onRegistered?.(); setSuccess(t("onboarding.created"));
   }); };
   const persistProfile = () => run(async () => {
+    recommendationRequest.current.invalidate();
     const vendor = await updateVendorProfile(profile.vendor_id, {full_name: draft.full_name, business_name: draft.business_name, business_category: draft.business_category, preferred_division: draft.preferred_division || null, preferred_locality: draft.preferred_locality || null});
     setProfile(vendor); setDraft(draftFromProfile(vendor)); selectLanguage(vendor.preferred_language); setRecommendationData(null); await refreshDashboard(true); setSuccess(t("profile.saved"));
   });
@@ -104,33 +116,46 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
     return vendor;
   });
   const saveRankingPreferences = event => {event.preventDefault(); run(async () => {
+    recommendationRequest.current.invalidate();
     const vendor = await updateVendorProfile(profile.vendor_id, {priority_profile: draft.priority_profile,
       market_preference: draft.market_preference, transport_preference: draft.transport_preference, parking_preference: draft.parking_preference});
-    setProfile(vendor); await refreshDashboard(true); await findZones({navigate: false}); setSuccess(t("profile.saved"));
+    setProfile(vendor); setDraft(draftFromProfile(vendor)); await refreshDashboard(true);
+    await loadRecommendations(vendor, {navigate:false}); setSuccess(t("profile.saved"));
   });};
   const saveProfile = event => {
     event.preventDefault();
     if (recommendationData) setPreferenceConfirm(true);
     else persistProfile();
   };
-  const findZones = ({navigate = true} = {}) => run(async () => {
-    const active = await getActiveAllocation(profile.vendor_id);
-    setActiveAllocation(active.allocation);
-    const [data, context] = await Promise.all([
-      getRecommendations(profile.vendor_id, active.allocation?.zone_id || "", {
-        business: draft.business_category,
-        division: draft.preferred_division,
-      }),
-      getVendorEligibleZones(),
-    ]);
-    setMapUnavailableIds(null);
-    setMapContext(context); setRecommendationData(data); setSelectedId(data.recommendations[0]?.zone_id || "");
-    if (navigate) onNavigate("vendor-recommendations");
-  });
+  const loadRecommendations = async (vendor, {navigate = true} = {}) => {
+    const requestId = recommendationRequest.current.begin();
+    try {
+      const active = await getActiveAllocation(vendor.vendor_id);
+      if (!recommendationRequest.current.isCurrent(requestId)) return;
+      setActiveAllocation(active.allocation);
+      const [data, context] = await Promise.all([
+        getRecommendations(vendor.vendor_id, active.allocation?.zone_id || "", {
+          business: vendor.business_category,
+          division: vendor.preferred_division || "",
+        }),
+        getVendorEligibleZones(),
+      ]);
+      if (!recommendationRequest.current.isCurrent(requestId)) return;
+      setMapUnavailableIds(null);
+      setMapContext(mergeRecommendationContext(data, context)); setRecommendationData(data);
+      const ids = new Set([...data.recommendations, ...(data.remaining_recommendations || []), ...(data.eligible_unscorable_zones || [])].map(zone => zone.zone_id));
+      setSelectedId(current => ids.has(current) ? current : data.recommendations[0]?.zone_id || "");
+      if (navigate) onNavigate("vendor-recommendations");
+    } catch (error) {
+      if (recommendationRequest.current.isCurrent(requestId)) throw error;
+    }
+  };
+  const findZones = ({navigate = true} = {}) => run(() => loadRecommendations(profile, {navigate}));
   useEffect(() => {
     const recommendationView = view === "vendor-recommendations" || view === "vendor-recommendation-detail";
-    if (recommendationView && profile && !recommendationData && (view === "vendor-recommendation-detail" || !dashboard?.action_state?.has_pending_request)) findZones({navigate: false});
-  }, [view, profile?.vendor_id, dashboard?.action_state?.has_pending_request]);
+    if (recommendationView && profileReady && profile && !recommendationData && (view === "vendor-recommendation-detail" || !dashboard?.action_state?.has_pending_request)) findZones({navigate: false});
+  }, [view, profileReady, profile?.vendor_id, recommendationData, dashboard?.action_state?.has_pending_request]);
+  useEffect(() => () => {recommendationRequest.current.invalidate(); actionRequest.current.invalidate();}, []);
   const submitZone = () => run(async () => {
     const requestType = activeAllocation ? "RELOCATION" : "NEW_ALLOCATION";
     const created = await createAllocationRequest({
@@ -176,5 +201,5 @@ export default function useVendorWorkspace({sessionProfile = null, onboarding = 
   const hour = new Date().getHours();
   const greetingPeriod = t(hour < 12 ? "vendor.morning" : hour < 17 ? "vendor.afternoon" : "vendor.evening");
 
-  return {language, t, options, profile, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, saveRankingPreferences, saveAccountLanguage, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod};
+  return {language, t, options, profile, profileReady, draft, setDraft, activeAllocation, pilot, dispatchPilot, pilotSummary, recommendationData, mapContext, selectedId, setSelectedId, confirmZone, setConfirmZone, cancelTarget, setCancelTarget, preferenceConfirm, setPreferenceConfirm, dashboard, dashboardLoading, busy, error, setError, success, setSuccess, mapUnavailableIds, stage, setStage, handleGeometryStatus, refreshDashboard, register, persistProfile, saveProfile, saveRankingPreferences, saveAccountLanguage, findZones, submitZone, cancelRequest, changeLanguage, recommendations, displayName, greetingPeriod};
 }

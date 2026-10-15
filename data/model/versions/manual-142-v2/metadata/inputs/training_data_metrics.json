@@ -1,0 +1,76 @@
+{
+  "created_utc": "2026-10-14T11:54:00.920713+00:00",
+  "stage": "03_build_training_data",
+  "version": "1.0.0",
+  "vendor_records": 7259,
+  "official_zones": 308,
+  "historical_proposed_pairs": 7087,
+  "unmapped_vendor_records": 172,
+  "historical_text_associations": 5310,
+  "historical_review_candidates": 1777,
+  "candidate_zones_before_live_capacity": 166,
+  "potential_pairs": 1204994,
+  "pairs_materialized": false,
+  "development_split_counts": {
+    "train": 5764,
+    "test": 793,
+    "validation": 702
+  },
+  "independent_suitability_labels": 0,
+  "historical_compatibility_records": 5310,
+  "historical_compatibility_alpha": 20.0,
+  "historical_compatibility_source": "text_association only; descriptive, not fitted suitability",
+  "citywide_category_shares": {
+    "vegetable_fruit": 0.4760828625235405,
+    "food": 0.22165725047080978,
+    "clothing": 0.055178907721280604,
+    "flower": 0.01431261770244821,
+    "general_goods": 0.12259887005649718,
+    "other": 0.09529190207156309,
+    "unknown": 0.01487758945386064
+  },
+  "input_manifest": [
+    {
+      "file": "data\\raw\\nmc\\official_zones.csv",
+      "sha256": "4896da86e2ad448f5598eac75c5103555dd2d808a8a0717a5d1f88f6d1a38a7a",
+      "rows": 308
+    },
+    {
+      "file": "data\\raw\\nmc\\vendors.csv",
+      "sha256": "cfa62342d8ec9294c7c129a3bc2ae32a8f04acdd0caebe28c154fc4f0b192a11",
+      "rows": 7259
+    },
+    {
+      "file": "data\\raw\\nmc\\vendor_zone_assignments.csv",
+      "sha256": "c55441184e01c84225cd58d4e6f2025dbac611822a6cf2c02f0fd171a47046aa",
+      "rows": 7259
+    },
+    {
+      "file": "data\\raw\\nmc\\zone_vendor_evidence.csv",
+      "sha256": "d1e8c3a45a508752f56bae385abe565c430a9e59be6b996cb8c76458d04c87ee",
+      "rows": 308
+    },
+    {
+      "file": "data\\model\\versions\\manual-142-v2\\features\\zone_features.csv",
+      "sha256": "253ecc5cd1bb980377b0e1588c3cc6f9207a62aaf87e731dd13e92d538150cc3",
+      "rows": 308
+    },
+    {
+      "file": "data\\model\\versions\\manual-142-v2\\kmeans\\zones_with_clusters.csv",
+      "sha256": "51c0566f2fd75ca4fe95ea5ad70ed1b860f5b05217c97d144c3dbdc476bbfcdd",
+      "rows": 308
+    }
+  ],
+  "limitations": [
+    "All candidate pairs are unlabeled for suitability.",
+    "Proposed associations are not verified successful allocations.",
+    "Unobserved pairs are not negative labels.",
+    "Historical compatibility uses the full evidence set; it is not an outcome predictor.",
+    "Compatibility must be fitted on training-only evidence during a future evaluated model.",
+    "Historical evidence derived from the same vendors can leak targets if used as an evaluation feature.",
+    "Current capacity and legal status require verified live municipal data.",
+    "Reference geometry is not an official legal boundary.",
+    "These development splits do not constitute a validated recommendation test set.",
+    "No accuracy, F1, ROC-AUC, or NDCG is claimed."
+  ]
+}
