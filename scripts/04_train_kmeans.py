@@ -29,7 +29,7 @@ INPUT = dataset_path("zone_features")
 OUT = dataset_path("kmeans_output")
 MODELS = dataset_path("kmeans_artifacts")
 REPORT = ROOT / "reports/metrics"
-SEEDS = [11, 23, 37, 53, 71]
+SEEDS = [42, 43, 44, 45, 46]
 GROUPS = {
     "road_access": ["distance_to_major_road_m", "road_density_250m_per_km2",
                     "pedestrian_road_density_250m_per_km2"],
@@ -95,14 +95,16 @@ def experiment(x,k):
           for i,a in enumerate(trials) for b in trials[i+1:]]
     scores=[t[2]["silhouette"] for t in trials]
     best=max(trials,key=lambda t:t[2]["silhouette"])
-    sizes=np.bincount(best[1],minlength=k)
+    sizes=np.concatenate([np.bincount(t[1],minlength=k) for t in trials])
     result={"k":k,"silhouette_mean":float(np.mean(scores)),
             "silhouette_std":float(np.std(scores)),
             "stability_ari_mean":float(np.mean(aris)) if aris else np.nan,
             "stability_ari_min":float(np.min(aris)) if aris else np.nan,
+            "stability_ari_median":float(np.median(aris)) if aris else np.nan,
             "min_cluster_size":int(sizes.min()),
             "max_cluster_size":int(sizes.max()),"best_seed":int(best[0].random_state)}
-    result.update({key:val for key,val in best[2].items() if key!="silhouette"})
+    result.update({key:float(np.mean([trial[2][key] for trial in trials])) for key in best[2] if key!="silhouette"})
+    result["completed_seeds"] = len(trials)
     return result,best
 
 def main():
@@ -113,6 +115,8 @@ def main():
     parser.add_argument("--variant",choices=["balanced","unweighted","robust"],default="balanced")
     parser.add_argument("--version")
     args = parser.parse_args()
+    if args.version == "manual-142-v2" and (args.k_min != 2 or args.k_max != 8 or args.variant != "balanced"):
+        raise ValueError("manual-142-v2 requires the approved K=2..8 range and existing balanced preprocessing")
     if args.version:
         version_root = model_version_path(args.version)
         INPUT = version_root / "features/zone_features.csv"
@@ -152,17 +156,19 @@ def main():
     evaluation=pd.DataFrame(results)
     if evaluation.empty:raise ValueError("No valid clustering result")
     # Selection is a documented heuristic, not a claim of true optimal K.
-    minimum=max(3,int(np.ceil(.02*len(X))))
+    minimum=max(5,int(np.ceil(.03*len(X))))
     eligible=evaluation[(evaluation.min_cluster_size>=minimum)&
-                        (evaluation.stability_ari_mean>=.80)].copy()
-    selection_note="Silhouette among stable, non-tiny cluster solutions."
+                        (evaluation.stability_ari_median>=.80)&
+                        (evaluation.completed_seeds==len(SEEDS))].copy()
+    selection_note="Highest mean silhouette; smaller K within 0.01; median ARI >= 0.80 and minimum cluster size >= max(5, ceil(3% of records))."
     if eligible.empty:
-        eligible=evaluation.copy()
-        selection_note="No solution met stability/size thresholds; provisional silhouette selection."
-    chosen=eligible.sort_values(["silhouette_mean","stability_ari_mean","k"],
-                                ascending=[False,False,True]).iloc[0]
-    k=int(chosen.k)
-    model,labels,_=best_models[k]
+        k=2
+        selection_note="No K satisfied the approved stability/size criteria; retaining K=2 on refreshed inputs."
+    else:
+        contenders=eligible.loc[eligible.silhouette_mean >= eligible.silhouette_mean.max() - .01 - 1e-12]
+        k=int(contenders.k.min())
+    model=KMeans(n_clusters=k,n_init=20,random_state=42)
+    labels=model.fit_predict(X)
     population["cluster"]=labels
     population["distance_to_centroid"]=np.min(model.transform(X),axis=1)
     # Save all official records, including those without usable references.
@@ -183,6 +189,9 @@ def main():
     metadata={"generated_utc":datetime.now(timezone.utc).isoformat(),
               "input_sha256":hash_file(INPUT),"training_rows":len(population),
               "selected_k":k,"selection_note":selection_note,"variant":args.variant,
+              "seeds":SEEDS,"random_state":42,"n_init":20,"minimum_cluster_size_required":minimum,
+              "selected_evaluation":evaluation.loc[evaluation.k.eq(k)].iloc[0].to_dict(),
+              "final_fit_metrics":metrics_for(X,labels,model),
               "features":FEATURES,"active_features":[FEATURES[i] for i in active],
               "excluded_features":["official_capacity","zone_type",
                   "reference_geometry_area_sqm","reference_geometry_perimeter_m",

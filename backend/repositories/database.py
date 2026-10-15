@@ -1023,6 +1023,7 @@ def create_allocation_request(
     request_id = f"REQ_{uuid.uuid4().hex}"
     audit_id = f"AUD_{uuid.uuid4().hex}"
     now = utc_now()
+    policy_types = _official_zone_type_map(str(OFFICIAL_ZONES_PATH.resolve()))
     with transaction(database_path) as connection:
         zone = connection.execute(
             "SELECT * FROM zone_live_status WHERE zone_id = ?" + for_update(connection),
@@ -1030,6 +1031,10 @@ def create_allocation_request(
         ).fetchone()
         if zone is None:
             raise OperationalNotFoundError(f"Unknown zone_id: {zone_id}")
+        from backend.services.eligibility import zone_ineligibility_reason
+        reason = zone_ineligibility_reason(policy_types.get(zone_id), zone)
+        if reason:
+            raise OperationalConflictError(f"Zone {zone_id} is ineligible ({reason})")
         if zone["official_capacity"] is not None and zone["available_capacity"] <= 0:
             raise OperationalConflictError(f"Zone {zone_id} has no available capacity")
         if zone["status"] != "OPEN":
@@ -1038,13 +1043,15 @@ def create_allocation_request(
             )
 
         active_allocation = connection.execute(
-            "SELECT allocation_id FROM allocations WHERE vendor_id = ? AND status = 'ACTIVE'",
+            "SELECT allocation_id, zone_id FROM allocations WHERE vendor_id = ? AND status = 'ACTIVE'",
             (vendor_id,),
         ).fetchone()
         if request_type == "NEW_ALLOCATION" and active_allocation is not None:
             raise OperationalConflictError("Vendor already has an active allocation")
         if request_type == "RELOCATION" and active_allocation is None:
             raise OperationalConflictError("Relocation requires an active allocation")
+        if request_type == "RELOCATION" and active_allocation["zone_id"] == zone_id:
+            raise OperationalConflictError("Relocation target must differ from the active allocation zone")
 
         duplicate = connection.execute(
             """SELECT request_id FROM allocation_requests
@@ -1316,6 +1323,9 @@ def approve_allocation_request(
             raise OperationalConflictError(
                 f"Only PENDING requests can be approved (current status: {request['status']})"
             )
+        profile = connection.execute("SELECT business_category FROM operational_vendors WHERE vendor_id=?", (request["vendor_id"],)).fetchone()
+        if profile is not None and request["business_category"] and request["business_category"] != profile["business_category"]:
+            raise OperationalConflictError("Vendor business category changed; submit an updated application before approval")
 
         target_zone = connection.execute(
             "SELECT * FROM zone_live_status WHERE zone_id = ?" + for_update(connection),
@@ -1323,6 +1333,10 @@ def approve_allocation_request(
         ).fetchone()
         if target_zone is None:
             raise OperationalNotFoundError(f"Unknown zone_id: {request['zone_id']}")
+        from backend.services.eligibility import zone_ineligibility_reason
+        reason = zone_ineligibility_reason(policy_types.get(request["zone_id"]), target_zone)
+        if reason:
+            raise OperationalConflictError(f"Zone {request['zone_id']} is ineligible ({reason})")
         if target_zone["official_capacity"] is not None and target_zone["available_capacity"] <= 0:
             raise OperationalConflictError(f"Zone {request['zone_id']} has no available capacity")
         if target_zone["status"] != "OPEN":

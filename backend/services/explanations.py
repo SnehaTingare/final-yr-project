@@ -358,10 +358,9 @@ def explain(
             "details":
                 (
                     "A preferred-division match receives a higher "
-                    "preference score. When fewer than the requested "
-                    "number of local candidates qualify, clearly "
-                    "identified alternatives outside the division "
-                    "may be returned."
+                    "preference suitability. The active versioned policy "
+                    "ranks eligible zones by overall score; division "
+                    "membership never adds a separate bonus."
                 ),
 
             "evidence": [

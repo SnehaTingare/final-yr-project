@@ -1,0 +1,147 @@
+{
+  "previous_version": "manual-142-v1",
+  "version": "manual-142-v2",
+  "business": "food",
+  "old_balanced_top3": [
+    "NW_F_025",
+    "NR_F_034",
+    "NW_F_007"
+  ],
+  "preference_comparisons": {
+    "BALANCED": {
+      "weights": {
+        "business": 0.25,
+        "commercial": 0.2,
+        "access": 0.2,
+        "facilities": 0.15,
+        "preference": 0.1,
+        "historical": 0.1
+      },
+      "top3": [
+        {
+          "zone_id": "NW_F_025",
+          "score": 69.85513819076694
+        },
+        {
+          "zone_id": "NR_F_034",
+          "score": 66.25321026038966
+        },
+        {
+          "zone_id": "NW_F_007",
+          "score": 61.87538050152095
+        }
+      ]
+    },
+    "COMMERCIAL": {
+      "weights": {
+        "business": 0.20714285714285713,
+        "commercial": 0.3371428571428572,
+        "access": 0.1657142857142857,
+        "facilities": 0.12428571428571426,
+        "preference": 0.08285714285714285,
+        "historical": 0.08285714285714285
+      },
+      "top3": [
+        {
+          "zone_id": "NW_F_025",
+          "score": 72.0946255616883
+        },
+        {
+          "zone_id": "NR_F_034",
+          "score": 62.4124592259556
+        },
+        {
+          "zone_id": "NW_F_007",
+          "score": 61.458650084593565
+        }
+      ]
+    },
+    "ACCESSIBILITY": {
+      "weights": {
+        "business": 0.20714285714285713,
+        "commercial": 0.1657142857142857,
+        "access": 0.3371428571428572,
+        "facilities": 0.12428571428571426,
+        "preference": 0.08285714285714285,
+        "historical": 0.08285714285714285
+      },
+      "top3": [
+        {
+          "zone_id": "NW_F_025",
+          "score": 70.3794291311641
+        },
+        {
+          "zone_id": "NR_F_034",
+          "score": 70.30229505606077
+        },
+        {
+          "zone_id": "PAN_F_031",
+          "score": 66.62381344899833
+        }
+      ]
+    },
+    "FACILITIES": {
+      "weights": {
+        "business": 0.21538461538461537,
+        "commercial": 0.17230769230769233,
+        "access": 0.17230769230769233,
+        "facilities": 0.2676923076923077,
+        "preference": 0.08615384615384616,
+        "historical": 0.08615384615384616
+      },
+      "top3": [
+        {
+          "zone_id": "NW_F_025",
+          "score": 67.97134982589151
+        },
+        {
+          "zone_id": "NR_F_034",
+          "score": 64.78191461034307
+        },
+        {
+          "zone_id": "PAN_F_031",
+          "score": 64.12796665703543
+        }
+      ]
+    },
+    "PREFERRED_DIVISION_NASHIK_EAST": {
+      "top3": [
+        {
+          "zone_id": "NW_F_025",
+          "score": 64.85513819076692
+        },
+        {
+          "zone_id": "NR_F_034",
+          "score": 61.25321026038966
+        },
+        {
+          "zone_id": "NE_F_008",
+          "score": 57.9909055756603
+        }
+      ]
+    }
+  },
+  "changed_spatial_zone_ids": [
+    "PAN_F_019",
+    "NR_F_003",
+    "NN_F_013",
+    "SAT_F_014"
+  ],
+  "environmental_features": 60,
+  "cluster_changes": 1,
+  "cluster_comparison_ari": 0.9842658225472917,
+  "median_absolute_balanced_score_change": 0.0,
+  "maximum_absolute_balanced_score_change": 13.3442768754423,
+  "live_counts": {
+    "scoreable": 146,
+    "unscorable": 20,
+    "ineligible": 142
+  },
+  "locality_scoring": "DISABLED_REVIEWED_REFERENCE_UNAVAILABLE",
+  "competition_scoring": "DISABLED_NO_NEW_CRITERION",
+  "scoring_missing_factors": "RENORMALIZE_AVAILABLE_WEIGHTS",
+  "limitations": [
+    "Zone-specific business restriction mapping is not defined in the existing backend; no new policy was invented.",
+    "Pilot, manual and fallback references remain provisional, not surveyed boundaries."
+  ]
+}

@@ -4,6 +4,9 @@ from backend.core import context as dependencies
 from backend.schemas.api import ActiveVendorAllocationResponse
 from backend.services.authentication import AuthError
 from backend.mcda_engine import DATA
+from backend.decision_policy import active_mcda_configuration
+from backend.geo.zone_locations import resolve_zone_locations
+from backend.services.eligibility import zone_ineligibility_reason
 from fastapi import Request as FastAPIRequest
 from fastapi import HTTPException
 from backend.repositories.database import OperationalConflictError
@@ -676,23 +679,9 @@ def vendor_eligible_zones(
     )
 
 
-    zones = zones.loc[
-        zones.zone_type.eq(
-            "FREE"
-        )
-        & zones[
-            "geometry_usable_for_reference_model"
-        ]
-        .astype(str)
-        .str.lower()
-        .isin(
-            [
-                "true",
-                "1",
-                "yes",
-            ]
-        )
-    ].copy()
+    zones = zones.loc[zones.zone_type.eq("FREE")].copy()
+    if active_mcda_configuration() is None:
+        zones = zones.loc[zones.geometry_usable_for_reference_model.astype(str).str.lower().isin(["true","1","yes"])].copy()
 
 
     activity = (
@@ -778,20 +767,7 @@ def vendor_eligible_zones(
         ]
 
 
-        eligible = bool(
-            state[
-                "status"
-            ]
-            == "OPEN"
-
-            and (
-                available
-                is None
-
-                or available
-                > 0
-            )
-        )
+        eligible = zone_ineligibility_reason(row.zone_type, state) is None
 
 
         if (
@@ -853,6 +829,12 @@ def vendor_eligible_zones(
         )
 
 
+    if active_mcda_configuration() is not None:
+        locations = resolve_zone_locations(dependencies.DATABASE_PATH)
+        for record in records:
+            record["resolved_location"] = locations[record["zone_id"]]
+            record["title"] = record["zone_id"]
+            record["description"] = record.get("official_description")
     return {
         "zones":
             records,

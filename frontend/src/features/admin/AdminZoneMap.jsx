@@ -76,7 +76,7 @@ export function AdminZoneMap({zones, geometry, onZone, division = "", onDivision
   const model = useMemo(() => buildAdminMapModel(zones, displayGeometry), [zones, displayGeometry]);
   const referenceModel = useMemo(() => {
     const reference = analyticalDisplayGeometry(zones, geometry);
-    reference.features = reference.features.filter(feature => !zoneMapLocation(feature.properties.zone_id).coordinates && insideDivision(feature.geometry?.type === "Point" ? feature.geometry.coordinates : null, division));
+    reference.features = reference.features.filter(feature => !zoneMapLocation(zones.find(zone => zone.zone_id === feature.properties.zone_id) || feature.properties.zone_id).coordinates && insideDivision(feature.geometry?.type === "Point" ? feature.geometry.coordinates : null, division));
     return buildAdminMapModel(zones, reference);
   }, [zones, geometry, division]);
   const focusGroups = useMemo(() => referenceEnabled ? [...model.groups, ...referenceModel.groups] : model.groups, [model.groups, referenceModel.groups, referenceEnabled]);
@@ -92,8 +92,8 @@ export function AdminZoneMap({zones, geometry, onZone, division = "", onDivision
         pathOptions={{color: selected ? "#0f172a" : pilot ? "#075985" : group.shared ? "#3f586c" : "#fff", weight: selected ? 4 : pilot ? 3 : group.shared ? 2 : 1.5, dashArray: location.kind === "approximate" ? "3 3" : undefined, fillOpacity: location.kind === "approximate" ? .35 : .85, fillColor: location.kind === "pilot" ? "#075985" : location.kind === "manual" ? "#087f72" : location.kind === "landmark" ? "#b45309" : "#718596"}}>
         <Tooltip direction="top">{group.shared ? `${group.zones.length} zones share this display location` : `${zoneName(primary)} - ${location.label}`}</Tooltip>
         <Popup className="admin-shared-popup" minWidth={group.shared ? 310 : 235}>
-          <strong>{group.shared ? "Shared display location" : zoneName(primary)}</strong>
-          <div className="admin-shared-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}><span><i style={{background: STATUS_COLORS[zone.live_status] || "#64748b"}}/><b>{zoneName(zone)}{PILOT_ZONE_IDS.includes(zone.zone_id) ? " - Geographic pilot" : ""}</b></span><em>{pretty(zone.live_status)}</em><small>Official division: {officialZoneDivision(zone)}</small>{officialZoneDivision(zone) !== division && <small>Shown inside {division} illustrative polygon; official division differs.</small>}<small>{zoneMapLocation(zone).label}</small><small>Confidence: {pretty(zoneMapLocation(zone).record?.confidence)}</small><small>{pretty(zone.zone_type)} | Capacity: {zone.official_capacity ?? "Not recorded"}</small><small>{zone.available_capacity == null ? "Capacity unknown" : `${zone.available_capacity} available`}</small></button>)}</div>
+          <strong>{group.shared ? "Shared display location" : primary.zone_id}</strong>
+          <div className="admin-shared-list">{group.zones.map(zone => <button key={zone.zone_id} onClick={() => onZone(zone)}><span><i style={{background: STATUS_COLORS[zone.live_status] || "#64748b"}}/><b>{zone.zone_id}{PILOT_ZONE_IDS.includes(zone.zone_id) ? " - Geographic pilot" : ""}</b></span><em>{pretty(zone.live_status)}</em><small>Official division: {officialZoneDivision(zone)}</small>{officialZoneDivision(zone) !== division && <small>Shown inside {division} illustrative polygon; official division differs.</small>}<small>{zoneMapLocation(zone).label}</small><small>Confidence: {pretty(zoneMapLocation(zone).record?.confidence)}</small><small>{pretty(zone.zone_type)} | Capacity: {zone.official_capacity ?? "Not recorded"}</small><small>{zone.available_capacity == null ? "Capacity unknown" : `${zone.available_capacity} available`}</small></button>)}</div>
           {group.shared && <p>These official zones share the same unverified display location. They remain separate NMC zone records.</p>}
         </Popup>
       </CircleMarker>;})}

@@ -43,3 +43,38 @@ Object.assign(hi, {"account.settings":"खाता सेटिंग्स", "
 Object.assign(en, {"map.manualNotice":"Locations remain provisional. GIS features now use the manually mapped references; unresolved manual locations retain labelled original-reference fallbacks."});
 Object.assign(mr, {"map.manualNotice":"जागा अद्याप तात्पुरत्या आहेत. GIS वैशिष्ट्ये आता हाताने दर्शवलेल्या संदर्भांवर आधारित आहेत; अनिर्णित जागांसाठी मूळ संदर्भ स्पष्टपणे दर्शवले आहेत."});
 Object.assign(hi, {"map.manualNotice":"स्थान अभी अस्थायी हैं। GIS विशेषताएँ अब हाथ से दर्शाए संदर्भों पर आधारित हैं; अनिर्णीत स्थानों के लिए मूल संदर्भ स्पष्ट रूप से चिह्नित हैं।"});
+
+
+
+// Preference copy stays accurate across the supported model versions.
+const policyCopy = {
+    en: {"account.rankingEvidence":"Priority profiles and selected market, transport and parking preferences adjust commercial activity, accessibility and facility weights. Save changes to recalculate recommendations; the actual weights are shown below.", "account.localityEvidence":"Saved as a preference. Geographic locality scoring is disabled until reviewed locality coordinates are available.", "map.manualNotice":"Map references remain provisional and unverified. They do not establish surveyed official boundaries, pedestrian entrances or current occupancy."},
+    mr: {"account.rankingEvidence":"प्राधान्य प्रोफाइल आणि निवडलेल्या बाजार, वाहतूक व पार्किंग पसंती व्यावसायिक क्रियाकलाप, प्रवेश व सुविधा वजन बदलतात. शिफारसी पुन्हा मोजण्यासाठी बदल जतन करा; प्रत्यक्ष वजन खाली दाखवले आहे.", "account.localityEvidence":"प्राधान्य म्हणून साठवले जाते. पुनरावलोकन केलेले परिसराचे निर्देशांक उपलब्ध होईपर्यंत अंतरावर आधारित गुणांकन बंद आहे.", "map.manualNotice":"नकाशाचे संदर्भ तात्पुरते व अप्रमाणित आहेत. ते अधिकृत सर्वेक्षण केलेल्या सीमा, पादचारी प्रवेश किंवा सध्याचे वाटप दर्शवत नाहीत."},
+    hi: {"account.rankingEvidence":"प्राथमिकता प्रोफाइल और चुनी गई बाजार, परिवहन व पार्किंग पसंद व्यावसायिक गतिविधि, पहुँच व सुविधाओं के भार बदलती हैं। सुझाव फिर से गणना करने के लिए बदलाव सहेजें; वास्तविक भार नीचे दिखाए गए हैं।", "account.localityEvidence":"पसंद के रूप में सहेजा जाता है। समीक्षा किए गए इलाके के निर्देशांक उपलब्ध होने तक दूरी पर आधारित अंक बंद हैं।", "map.manualNotice":"मानचित्र के संदर्भ अस्थायी और अप्रमाणित हैं। वे आधिकारिक सर्वेक्षित सीमाएँ, पैदल प्रवेश या वर्तमान आवंटन स्थापित नहीं करते।"}
+};
+Object.assign(en, policyCopy.en); Object.assign(mr, policyCopy.mr); Object.assign(hi, policyCopy.hi);
+
+Object.assign(en, {
+  "explorer.title":"Explore suitable zones", "explorer.back":"Back to Top 3", "explorer.counts":"{scored} ranked zones · {unscored} eligible zones without a score",
+  "explorer.search":"Search zone ID, address or landmark", "explorer.availability":"Availability", "explorer.allAvailability":"All availability", "explorer.open":"Open for applications",
+  "explorer.knownCapacity":"Available capacity recorded", "explorer.unknownCapacity":"Capacity not recorded", "explorer.view":"Explorer view", "explorer.list":"List", "explorer.map":"Map",
+  "explorer.ranked":"Ranked suitable zones", "explorer.unscored":"Eligible zones without a score", "explorer.unscoredHelp":"No usable geographic reference is available for scoring. You can view details and apply subject to the same allocation checks.",
+  "explorer.notScored":"Not scored", "explorer.available":"Available: {count}", "explorer.details":"View Details", "explorer.request":"Request Allocation", "explorer.noMatches":"No zones match these filters.",
+  "explorer.sharedCount":"{count} zones share this reference", "explorer.availableMarker":"Suitable zone", "explorer.missingLocations":"Zones without a usable reference remain in the list."
+});
+Object.assign(mr, {
+  "explorer.title":"योग्य क्षेत्रे पाहा", "explorer.back":"सर्वोत्तम 3 क्षेत्रांकडे परत", "explorer.counts":"{scored} क्रमवारीतील क्षेत्रे · {unscored} गुण नसलेली पात्र क्षेत्रे",
+  "explorer.search":"क्षेत्र ID, पत्ता किंवा खूण शोधा", "explorer.availability":"उपलब्धता", "explorer.allAvailability":"सर्व उपलब्धता", "explorer.open":"अर्जांसाठी खुले",
+  "explorer.knownCapacity":"उपलब्ध क्षमता नोंदवलेली", "explorer.unknownCapacity":"क्षमता नोंदवलेली नाही", "explorer.view":"पाहण्याची पद्धत", "explorer.list":"यादी", "explorer.map":"नकाशा",
+  "explorer.ranked":"योग्य क्षेत्रांची क्रमवारी", "explorer.unscored":"गुण नसलेली पात्र क्षेत्रे", "explorer.unscoredHelp":"गुणांकनासाठी वापरण्यायोग्य भौगोलिक संदर्भ उपलब्ध नाही. त्याच वाटप तपासण्यांनुसार तपशील पाहून अर्ज करता येतो.",
+  "explorer.notScored":"गुण उपलब्ध नाहीत", "explorer.available":"उपलब्ध: {count}", "explorer.details":"तपशील पाहा", "explorer.request":"वाटपासाठी अर्ज करा", "explorer.noMatches":"या शोधासाठी कोणतेही क्षेत्र नाही.",
+  "explorer.sharedCount":"{count} क्षेत्रांचा संदर्भ समान आहे", "explorer.availableMarker":"योग्य क्षेत्र", "explorer.missingLocations":"वापरण्यायोग्य संदर्भ नसलेली क्षेत्रे यादीत उपलब्ध आहेत."
+});
+Object.assign(hi, {
+  "explorer.title":"उपयुक्त क्षेत्र देखें", "explorer.back":"शीर्ष 3 क्षेत्रों पर वापस", "explorer.counts":"{scored} क्रमबद्ध क्षेत्र · {unscored} अंक रहित पात्र क्षेत्र",
+  "explorer.search":"क्षेत्र ID, पता या स्थलचिह्न खोजें", "explorer.availability":"उपलब्धता", "explorer.allAvailability":"सभी उपलब्धता", "explorer.open":"आवेदनों के लिए खुला",
+  "explorer.knownCapacity":"उपलब्ध क्षमता दर्ज है", "explorer.unknownCapacity":"क्षमता दर्ज नहीं है", "explorer.view":"देखने का तरीका", "explorer.list":"सूची", "explorer.map":"मानचित्र",
+  "explorer.ranked":"उपयुक्त क्षेत्रों की क्रमबद्ध सूची", "explorer.unscored":"अंक रहित पात्र क्षेत्र", "explorer.unscoredHelp":"अंक निकालने के लिए उपयोगी भौगोलिक संदर्भ उपलब्ध नहीं है। उन्हीं आवंटन जाँचों के साथ विवरण देखकर आवेदन कर सकते हैं।",
+  "explorer.notScored":"अंक उपलब्ध नहीं", "explorer.available":"उपलब्ध: {count}", "explorer.details":"विवरण देखें", "explorer.request":"आवंटन का आवेदन करें", "explorer.noMatches":"इन फ़िल्टर से कोई क्षेत्र नहीं मिला।",
+  "explorer.sharedCount":"{count} क्षेत्रों का संदर्भ समान है", "explorer.availableMarker":"उपयुक्त क्षेत्र", "explorer.missingLocations":"उपयोगी संदर्भ रहित क्षेत्र सूची में उपलब्ध हैं।"
+});
