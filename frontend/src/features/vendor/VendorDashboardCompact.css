@@ -1,0 +1,512 @@
+
+/* ==========================================
+   Vendor Dashboard — Reference-Inspired UI
+   Append to VendorDashboardCompact.css
+   ========================================== */
+
+.service-vendor .vendor-dashboard-redesign {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  gap: 20px;
+  color: #17324d;
+}
+
+/* Main dashboard cards */
+.service-vendor .vendor-dashboard-redesign .vendor-dashboard-card,
+.service-vendor .vendor-dashboard-redesign .vendor-account-card {
+  background: #ffffff;
+  border: 1px solid #e1e5df;
+  border-radius: 18px;
+  box-shadow: 0 3px 12px rgb(23 50 77 / 4%);
+}
+
+/* Overview: allocation and request status */
+.service-vendor .vendor-dashboard-redesign .vendor-dashboard-overview {
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.service-vendor .vendor-dashboard-redesign
+.vendor-dashboard-overview > .vendor-dashboard-card {
+  min-height: 250px;
+  height: auto;
+  padding: 24px;
+}
+
+/* Section headings */
+.service-vendor .vendor-dashboard-redesign .dashboard-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.service-vendor .vendor-dashboard-redesign .dashboard-section-heading h2 {
+  margin: 6px 0 0;
+  color: #17324d;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-eyebrow {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Secondary buttons */
+.service-vendor .vendor-dashboard-redesign .vendor-secondary {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid #d4dfda;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #17324d;
+  font-weight: 500;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-secondary:hover {
+  background: #f1f6f3;
+  border-color: #9bbcb1;
+}
+
+/* Active allocation badge */
+.service-vendor .vendor-dashboard-redesign .request-status.status-active {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 11px;
+  border: 0;
+  border-radius: 999px;
+  background: #e7f5eb;
+  color: #17643c;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Current vending zone */
+.service-vendor .vendor-dashboard-redesign .allocation-zone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid #e7eeeb;
+  border-radius: 12px;
+  background: #edf3f5;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-zone svg {
+  flex-shrink: 0;
+  color: #24536f;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-zone strong {
+  display: block;
+  color: #173d5c;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-zone p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* Allocation details */
+.service-vendor .vendor-dashboard-redesign .allocation-card .service-disclosure {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #dbe5e0;
+}
+
+.service-vendor .vendor-dashboard-redesign .service-disclosure summary {
+  color: #17324d;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-facts > div {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e7ece9;
+  border-radius: 10px;
+  background: #f8faf9;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-facts span,
+.service-vendor .vendor-dashboard-redesign .allocation-facts strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-facts span {
+  margin-bottom: 5px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.service-vendor .vendor-dashboard-redesign .allocation-facts strong {
+  color: #17324d;
+  font-size: 13px;
+}
+
+/* Request overview */
+.service-vendor .vendor-dashboard-redesign .request-summary-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.service-vendor .vendor-dashboard-redesign .request-summary-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #edf0ed;
+  border-radius: 12px;
+  background: #f7f9f8;
+}
+
+.service-vendor .vendor-dashboard-redesign .request-summary-card span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.service-vendor .vendor-dashboard-redesign .request-summary-card strong {
+  margin: 0;
+  color: #17324d;
+  font-size: 23px;
+  font-weight: 750;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* Request status accents */
+.service-vendor .vendor-dashboard-redesign .status-border-approved {
+  border-left: 4px solid #299768;
+}
+
+.service-vendor .vendor-dashboard-redesign .status-border-pending {
+  border-left: 4px solid #e3a63c;
+}
+
+.service-vendor .vendor-dashboard-redesign .status-border-rejected {
+  border-left: 4px solid #d95e5e;
+}
+
+.service-vendor .vendor-dashboard-redesign .status-border-empty {
+  border-left: 4px solid #a8b5b0;
+}
+
+/* Recommendation / primary action banner */
+.service-vendor .vendor-dashboard-command-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.service-vendor .vendor-dashboard-command-row .service-next-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  min-height: 68px;
+  padding: 18px 22px;
+  border: 1px solid #087568;
+  border-radius: 12px;
+  background: #087568;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 650;
+  text-align: left;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.service-vendor .vendor-dashboard-command-row .service-next-action:hover {
+  background: #066459;
+  box-shadow: 0 5px 14px rgb(8 117 104 / 16%);
+}
+
+.service-vendor .vendor-dashboard-command-row .service-next-action:focus-visible,
+.service-vendor .vendor-dashboard-redesign button:focus-visible,
+.service-vendor .vendor-dashboard-redesign a:focus-visible {
+  outline: 3px solid #e7b8a4;
+  outline-offset: 3px;
+}
+
+/* Slot / zone availability prompt */
+.service-vendor .vendor-dashboard-redesign .vendor-slot-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid #d7e8e2;
+  border-radius: 14px;
+  background: #eaf5f1;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-slot-prompt strong {
+  display: block;
+  margin-top: 5px;
+  color: #173d4d;
+  font-size: 16px;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-slot-prompt .field-note {
+  margin-top: 5px;
+  color: #647b76;
+  line-height: 1.6;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-slot-prompt .vendor-primary {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 9px;
+  white-space: nowrap;
+}
+
+/* Profile section */
+.service-vendor .vendor-dashboard-redesign .vendor-preferences-card {
+  overflow: hidden;
+  border: 1px solid #dce5e0;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-preferences-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 64px;
+  padding: 16px 22px;
+  border: 0;
+  background: #ffffff;
+  color: #17324d;
+  text-align: left;
+  cursor: pointer;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-preferences-toggle b {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-preferences-toggle svg {
+  transition: transform 180ms ease;
+}
+
+.service-vendor .vendor-dashboard-redesign
+.vendor-preferences-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-preferences-content {
+  padding: 20px 22px 22px;
+  border-top: 1px solid #e7ece9;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-account-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-account-grid > div {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #e3e9e6;
+  border-radius: 10px;
+  background: #f6f8fa;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-account-grid span,
+.service-vendor .vendor-dashboard-redesign .vendor-account-grid strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-account-grid span {
+  margin-bottom: 7px;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.service-vendor .vendor-dashboard-redesign .vendor-account-grid strong {
+  color: #17324d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Empty states */
+.service-vendor .vendor-dashboard-redesign .dashboard-empty {
+  margin-top: 20px;
+  padding: 22px;
+  border: 1px dashed #d7e2dc;
+  border-radius: 12px;
+  background: #f8faf9;
+}
+
+.service-vendor .vendor-dashboard-redesign .dashboard-empty > svg {
+  color: #087568;
+}
+
+.service-vendor .vendor-dashboard-redesign .dashboard-empty strong {
+  display: block;
+  margin-top: 10px;
+  color: #17324d;
+}
+
+.service-vendor .vendor-dashboard-redesign .dashboard-empty p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* Tablet */
+@media (max-width: 960px) {
+  .service-vendor .vendor-dashboard-redesign .vendor-account-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .service-vendor .vendor-dashboard-redesign {
+    gap: 12px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-dashboard-overview {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign
+  .vendor-dashboard-overview > .vendor-dashboard-card {
+    min-height: 0;
+    padding: 17px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .dashboard-section-heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .dashboard-section-heading h2 {
+    font-size: 18px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .dashboard-section-heading .vendor-secondary {
+    flex-shrink: 0;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .allocation-zone {
+    gap: 12px;
+    margin-top: 16px;
+    padding: 15px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .allocation-zone strong {
+    font-size: 16px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .request-summary-grid {
+    margin-top: 17px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .request-summary-card {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .request-summary-card strong {
+    font-size: 20px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-slot-prompt {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    padding: 17px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-slot-prompt .vendor-primary {
+    width: 100%;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-preferences-toggle {
+    min-height: 58px;
+    padding: 14px 17px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-preferences-content {
+    padding: 16px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-account-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-account-grid > div {
+    padding: 12px;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .allocation-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Very narrow screens */
+@media (max-width: 380px) {
+  .service-vendor .vendor-dashboard-redesign .dashboard-section-heading {
+    flex-wrap: wrap;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .vendor-account-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .service-vendor .vendor-dashboard-redesign .request-summary-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .service-vendor .vendor-dashboard-redesign .request-summary-card strong {
+    text-align: left;
+  }
+}

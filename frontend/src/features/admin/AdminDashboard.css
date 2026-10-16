@@ -36,3 +36,7 @@
 @media(max-width:760px){.zone-management-table{min-width:1240px}.zone-management-table th,.zone-management-table td{padding:12px 8px}}
 
 .allocation-pagination{display:flex;align-items:center;justify-content:center;gap:15px;padding:14px;color:#66766e;font-size:11px}.allocation-pagination button{display:inline-flex;align-items:center;gap:5px}.allocation-pagination button:disabled{opacity:.45;cursor:not-allowed}
+.admin-pending-requests .admin-table{min-width:1180px}
+.admin-pending-requests .admin-table th:last-child,.admin-pending-requests .admin-table td:last-child{min-width:220px}
+.admin-table .table-actions{flex-wrap:nowrap;min-width:max-content}
+.admin-table .table-actions button{flex:0 0 auto;min-height:30px;white-space:nowrap}

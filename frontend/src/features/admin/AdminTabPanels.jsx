@@ -13,7 +13,7 @@ export function AdminHome({pending, allocationCounts, summaryCards, zoneCounts, 
 }
 
 export function PendingRequests({pending, zones, openRequest, setDialog}) {
-  return <section>
+  return <section className="admin-pending-requests">
     <div className="admin-section-heading">
       <div><span className="admin-eyebrow">OFFICER REVIEW</span><h2>Pending allocation requests</h2></div>
       <span className="admin-count">{pending.length} pending</span>

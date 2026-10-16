@@ -12,12 +12,14 @@ import {categoryLabel, factorLabel, priorityLabel, requestTypeLabel, statusLabel
 import "./VendorPortal.css";
 import "../../shared/maps/MapGrouping.css";
 import "./VendorDashboard.css";
+import "./VendorDashboardCompact.css";
+import "./VendorApplications.css";
 import {LANGUAGES, RANK_COLORS, pretty, score, displayCapacity} from "./viewModel.js";
 import {getVendorAccountSettings, getVendorProfilePhoto, saveVendorProfilePhoto} from "../../services/api.js";
 import {RecommendationMap, ZoneExplorer} from "./RecommendationMap.jsx";
 import {PreferenceFields} from "./PreferenceFields.jsx";
 import RecommendationDetailPage from "./RecommendationDetailPage.jsx";
-import {ProfileSummary, AllocationCard, RequestSummary, RequestHistory, DashboardSkeleton} from "./DashboardSections.jsx";
+import {ApplicationAllocationSummary, ApplicationSummary, ProfileSummary, AllocationCard, RequestSummary, RequestHistory, DashboardSkeleton} from "./DashboardSections.jsx";
 import useVendorWorkspace from "./useVendorWorkspace.js";
 
 const escapeXml = value => String(value ?? "").replace(/[&<>"']/g, character => ({
@@ -192,11 +194,13 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
     <ToastRegion success={success} error={error} onDismissSuccess={() => setSuccess("")} onDismissError={() => setError("")}/>
 
     {!onboarding && view === "vendor-dashboard" && dashboardLoading && !dashboard && <DashboardSkeleton label={t("requests.loadingDashboard")}/>}
-    {!onboarding && view === "vendor-dashboard" && dashboard && !pilot.open && <div className="vendor-dashboard-stack">
-      <div className="vendor-dashboard-overview"><AllocationCard allocation={dashboard.active_allocation}/><section className="vendor-dashboard-card dashboard-request-status"><div className="dashboard-section-heading"><div><span className="vendor-eyebrow">{t("requests.overview")}</span><h2>{t("requests.statusTitle")}</h2></div><button className="vendor-secondary" onClick={() => onNavigate("vendor-requests")}>{t("requests.viewAll")}</button></div><RequestSummary summary={dashboard.request_summary}/></section></div>
-      {PILOT_ZONE_IDS.includes(dashboard.active_allocation?.zone_id) && <section className="vendor-dashboard-card"><p>{pilotSummary?.my_slot_id ? t("display.assignedSlot", {slot:pilotSummary.my_slot_id}) : t("display.noSlot")}</p><button className="vendor-primary" onClick={() => dispatchPilot({type: "open"})}>{t("display.viewSlot")}</button></section>}
-      {!PILOT_ZONE_IDS.includes(dashboard.active_allocation?.zone_id) && <button className="vendor-primary service-next-action" onClick={() => onNavigate(dashboard.action_state.has_pending_request ? "vendor-requests" : "vendor-recommendations")}>{t(dashboard.action_state.has_pending_request ? "requests.open" : "requests.viewRecommendations")}<ArrowRight size={17}/></button>}
-      {dashboard.action_state.blocked_reason && <div className="vendor-action-notice"><Clock3 size={18}/><div><strong>{dashboard.action_state.blocked_reason}</strong><p>{t("requests.follow")}</p></div></div>}
+    {!onboarding && view === "vendor-dashboard" && dashboard && !pilot.open && <div className="vendor-dashboard-stack vendor-dashboard-redesign">
+      <div className="vendor-dashboard-overview"><AllocationCard allocation={dashboard.active_allocation}/><section className="vendor-dashboard-card dashboard-request-status"><div className="dashboard-section-heading"><div><span className="vendor-eyebrow">{t("requests.overview")}</span><h2>{t("requests.statusTitle")}</h2></div><button className="vendor-secondary" onClick={() => onNavigate("vendor-requests")}>{t("requests.viewAll")}</button></div><RequestSummary requests={dashboard.requests}/></section></div>
+      <div className="vendor-dashboard-command-row">
+        {!PILOT_ZONE_IDS.includes(dashboard.active_allocation?.zone_id) && <button className="vendor-primary service-next-action" onClick={() => onNavigate(dashboard.action_state.has_pending_request ? "vendor-requests" : "vendor-recommendations")}>{t(dashboard.action_state.has_pending_request ? "requests.open" : "requests.viewRecommendations")}<ArrowRight size={17}/></button>}
+        {dashboard.action_state.blocked_reason && <div className="vendor-action-notice"><Clock3 size={18}/><div><strong>{dashboard.action_state.blocked_reason}</strong><p>{t("requests.follow")}</p></div></div>}
+      </div>
+      {PILOT_ZONE_IDS.includes(dashboard.active_allocation?.zone_id) && <section className="vendor-dashboard-card vendor-slot-prompt"><div><span className="vendor-eyebrow">{t("display.ownSlot")}</span><strong>{pilotSummary?.my_slot_id ? t("display.assignedSlot", {slot:pilotSummary.my_slot_id}) : t("display.noSlot")}</strong><small className="field-note">{t("display.provisionalNotice")}</small></div><button className="vendor-primary" onClick={() => dispatchPilot({type: "open"})}>{t("display.viewSlot")}</button></section>}
       <ProfileSummary profile={dashboard.profile} onEdit={() => onNavigate("vendor-profile")}/>
     </div>}
 
@@ -206,7 +210,7 @@ export default function VendorPortal({sessionProfile = null, onboarding = false,
     {!onboarding && view === "vendor-help" && <HelpSupport/>}
 
     {!onboarding && view === "vendor-requests" && dashboardLoading && !dashboard && <DashboardSkeleton label={t("requests.loadingHistory")}/>}
-    {!onboarding && view === "vendor-requests" && dashboard && <div className="vendor-dashboard-stack"><section className="requests-overview-strip"><span className="vendor-eyebrow">{t("requests.overview")}</span><RequestSummary summary={dashboard.request_summary}/></section><RequestHistory requests={dashboard.requests} actionState={dashboard.action_state} busy={busy} onCancel={setCancelTarget} onRefresh={() => refreshDashboard()} onNavigate={onNavigate}/></div>}
+    {!onboarding && view === "vendor-requests" && dashboard && <div className="vendor-dashboard-stack vendor-applications-page"><header className="applications-page-header"><nav aria-label="Breadcrumb"><span>Vendor Portal</span><span aria-hidden="true">/</span><strong>{t("requests.heading")}</strong></nav><div><span className="vendor-eyebrow">{t("requests.overview")}</span><h1>{t("requests.heading")}</h1><p>Track your requests, review decisions, and manage your vending allocation.</p></div></header><ApplicationSummary summary={dashboard.request_summary}/><ApplicationAllocationSummary allocation={dashboard.active_allocation} onNavigate={onNavigate}/><RequestHistory requests={dashboard.requests} actionState={dashboard.action_state} busy={busy} onCancel={setCancelTarget} onRefresh={() => refreshDashboard()} onNavigate={onNavigate}/></div>}
 
     {!onboarding && view === "vendor-recommendations" && dashboard?.action_state?.has_pending_request && <div className="vendor-empty"><Clock3 size={30}/><h3>{t("requests.pendingExists")}</h3><p>{t("requests.pendingHelp")}</p><button className="vendor-primary" onClick={() => onNavigate("vendor-requests")}>{t("requests.open")}</button></div>}
 
